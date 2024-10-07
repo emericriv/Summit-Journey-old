@@ -1,3 +1,14 @@
+// Vrai JS
+  document.querySelector('.navbar-brand').addEventListener('click', function(e) {
+    e.preventDefault(); // Empêche le comportement par défaut du lien
+
+    // Trouve la tab Accueil et active-la
+    var homeTab = new bootstrap.Tab(document.querySelector('#home-tab'));
+    homeTab.show();
+  });
+
+
+// Laboratoire
 const dropZone = document.getElementById('dropzone');
 const inputFile = document.getElementById('imageUpload');
 

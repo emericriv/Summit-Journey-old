@@ -1,0 +1,7 @@
+<svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main triangle (large) -->
+    <polygon points="5,135 105,135 55,10" stroke-width="5" fill="none" stroke="#b1d0ee"/>
+
+    <!-- Second triangle (smaller and in the background) -->
+    <polyline points="82,80 100,44 135,135 105,135" stroke-width="5" fill="none" stroke="#b1d0ee"/>
+</svg>

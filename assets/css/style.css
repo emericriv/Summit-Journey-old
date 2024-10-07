@@ -28,19 +28,39 @@ body {
     padding: 20px;
 }
 
+#session-tab-pane form {
+    padding: 20px;
+    border-radius: 10px;
+}
+
 /* Personnalisation de la navbar */
 .navbar {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-image: url('/assets/img/site-background.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0;
+}
+
+.navbar-div {
+    background-color: rgba(24, 22, 22, 0.5);
 }
 
 .navbar-brand {
     font-weight: bold;
-    font-size: 1.5rem;
-    color: #b1d0ee; /* Couleur plus foncée pour le logo */
+    font-size: 24px;
+    color: #b1d0ee !important;
+}
+
+.navbar-brand svg {
+    max-height: 40px; /* Hauteur maximale pour le logo */
+    width: auto; /* Largeur automatique pour conserver le ratio d'aspect */
 }
 
 .navbar-brand:hover {
-    color: white; /* Couleur plus claire pour le logo */
+    color: white !important;
+    cursor: pointer;
 }
 
 .nav-pills .nav-link, .btn {
