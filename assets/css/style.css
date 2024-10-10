@@ -1,183 +1,207 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden; /* Empêche le scroll horizontal */
-    background-image: url('/assets/img/site-background.jpg');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+	margin: 0;
+	font-family: Arial, sans-serif;
+	overflow-x: hidden; /* Empêche le scroll horizontal */
+	background-image: url("/assets/img/site-background.jpg");
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .red-border {
-    border : 1px solid red;
+	border: 1px solid red;
 }
 
 .blue-border {
-    border : 1px solid blue;
+	border: 1px solid blue;
 }
 
-.welcome, .card, #session-tab-pane form, .navbar, footer {
-    background-color: rgba(24, 22, 22, 0.5);
-    color: white;
+.welcome,
+.card,
+#session-tab-pane form,
+.navbar,
+footer {
+	background-color: rgba(24, 22, 22, 0.5);
+	color: white;
 }
 
 .welcome {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	padding: 20px;
 }
 
 #session-tab-pane form {
-    padding: 20px;
-    border-radius: 10px;
+	padding: 20px;
+	border-radius: 10px;
 }
 
 /* Personnalisation de la navbar */
 .navbar {
-    background-image: url('/assets/img/site-background.jpg');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 0;
+	background-image: url("/assets/img/site-background.jpg");
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 0;
 }
 
 .navbar-div {
-    background-color: rgba(24, 22, 22, 0.5);
+	background-color: rgba(24, 22, 22, 0.5);
 }
 
 .navbar-brand {
-    font-weight: bold;
-    font-size: 24px;
-    color: #b1d0ee !important;
+	font-weight: bold;
+	font-size: 24px;
+	color: #b1d0ee !important;
 }
 
 .navbar-brand svg {
-    max-height: 40px; /* Hauteur maximale pour le logo */
-    width: auto; /* Largeur automatique pour conserver le ratio d'aspect */
+	max-height: 40px; /* Hauteur maximale pour le logo */
+	width: auto; /* Largeur automatique pour conserver le ratio d'aspect */
 }
 
 .navbar-brand:hover {
-    color: white !important;
-    cursor: pointer;
+	color: white !important;
+	cursor: pointer;
 }
 
-.nav-pills .nav-link, .btn {
-    background-color: rgba(255, 169, 28, 0.8); /* Couleur du fond (orange terreux) */
-    color: #ffffff; /* Couleur du texte */
-    border-radius: 10px; /* Arrondir les coins */
-    padding: 5px 10px; /* Espacement intérieur pour agrandir les boutons */
-    margin: 5px; /* Espacement extérieur entre les boutons */
-    text-align: center; /* Centrer le texte */
-    text-transform: uppercase; /* Texte en majuscules pour un effet stylisé */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Transition fluide pour hover */
+.nav-pills .nav-link,
+.btn {
+	background-color: rgba(
+		255,
+		169,
+		28,
+		0.8
+	); /* Couleur du fond (orange terreux) */
+	color: #ffffff; /* Couleur du texte */
+	border-radius: 10px; /* Arrondir les coins */
+	padding: 5px 10px; /* Espacement intérieur pour agrandir les boutons */
+	margin: 5px; /* Espacement extérieur entre les boutons */
+	text-align: center; /* Centrer le texte */
+	text-transform: uppercase; /* Texte en majuscules pour un effet stylisé */
+	transition: background-color 0.3s ease, transform 0.3s ease; /* Transition fluide pour hover */
 }
 
 .nav-pills .nav-link:hover {
-    background-color: #e08a12; /* Changement de couleur au survol */
-    transform: translateY(-1px); /* Légère remontée au survol */
-    text-decoration: none; /* Supprimer la décoration du texte (souligné) */
+	background-color: #e08a12; /* Changement de couleur au survol */
+	transform: translateY(-1px); /* Légère remontée au survol */
+	text-decoration: none; /* Supprimer la décoration du texte (souligné) */
 }
 
 .btn:hover {
-    background-color: #e08a12; /* Changement de couleur au survol */
-    text-decoration: none; /* Supprimer la décoration du texte (souligné) */
+	background-color: #e08a12; /* Changement de couleur au survol */
+	text-decoration: none; /* Supprimer la décoration du texte (souligné) */
 }
 
-.nav-pills .nav-link.active, .btn.active {
-    background-color: #d47910; /* Couleur pour l'élément actif */
-    color: #ffffff; /* Couleur du texte pour l'élément actif */
+.nav-pills .nav-link.active,
+.btn.active {
+	background-color: #d47910; /* Couleur pour l'élément actif */
+	color: #ffffff; /* Couleur du texte pour l'élément actif */
 }
 
-.nav-pills .nav-link:focus, .btn:focus {
-    outline: none; /* Supprimer le contour bleu de focus de Bootstrap */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Ombre subtile en focus */
+.nav-pills .nav-link:focus,
+.btn:focus {
+	outline: none; /* Supprimer le contour bleu de focus de Bootstrap */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Ombre subtile en focus */
 }
 
 /* Footer */
 footer {
-    text-align: center;
-    font-size: 0.9rem;
+	text-align: center;
+	font-size: 0.9rem;
 }
 
 #session-tab-pane form {
-    border-radius: 10px;
+	border-radius: 10px;
 }
 
-h2, h3 {
-    color: #e9ecef;
+h2,
+h3 {
+	color: #e9ecef;
 }
 
 /* Style pour les ronds de difficulté */
 .difficulty-circle {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 10px;
-    vertical-align: middle;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	margin-right: 10px;
+	vertical-align: middle;
 }
 
 /* Couleurs des cercles de difficulté */
-.bg-warning { background-color: yellow; }
-.bg-success { background-color: green; }
-.bg-primary { background-color: blue; }
-.bg-danger { background-color: red; }
-.bg-dark { background-color: black; }
-.bg-purple { background-color: purple; }
+.bg-warning {
+	background-color: yellow;
+}
+.bg-success {
+	background-color: green;
+}
+.bg-primary {
+	background-color: blue;
+}
+.bg-danger {
+	background-color: red;
+}
+.bg-dark {
+	background-color: black;
+}
+.bg-purple {
+	background-color: purple;
+}
 
-#session-tab-pane input, #session-tab-pane select {
-    opacity: 0.8;
+#session-tab-pane input,
+#session-tab-pane select {
+	opacity: 0.8;
 }
 
 /* Zone de drag and drop */
 .drag-drop-area {
-    height: 200px; /* Hauteur fixée */
-    width: 100%;
-    border: 2px dashed #6c757d;
-    padding: 20px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start; /* Aligner les images à gauche */
-    background-color: rgba(248, 249, 250, 0.8);
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    overflow: hidden; /* Pour éviter les débordements */
+	height: 200px; /* Hauteur fixée */
+	width: 100%;
+	border: 2px dashed #6c757d;
+	padding: 20px;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start; /* Aligner les images à gauche */
+	background-color: rgba(248, 249, 250, 0.8);
+	cursor: pointer;
+	text-align: center;
+	position: relative;
+	overflow: hidden; /* Pour éviter les débordements */
 }
 
 /* Style des images */
 .drag-drop-area img {
-    max-width: 50px; /* Largeur maximum pour les images */
-    height: auto;     /* Conserver le ratio d'aspect */
-    margin: 5px;      /* Espacement entre les images */
+	max-width: 50px; /* Largeur maximum pour les images */
+	height: auto; /* Conserver le ratio d'aspect */
+	margin: 5px; /* Espacement entre les images */
 }
 
 /* Cacher le champ de sélection de fichier */
 #imageUpload {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
 }
 
 /* Ajouter effet de survol pour drag-drop-area */
 .drag-drop-area:hover {
-    background-color: #e9ecef; /* Couleur de fond lors du survol */
+	background-color: #e9ecef; /* Couleur de fond lors du survol */
 }
 
 /* Dashboard */
 
 .dashboard h1 {
-    color : #e9ecef;
-    font-weight: bold;
-    text-shadow:
-        -1px -1px 0 #000, /* Ombre en haut à gauche */
-        1px -1px 0 #000,  /* Ombre en haut à droite */
-        -1px 1px 0 #000,  /* Ombre en bas à gauche */
-        1px 1px 0 #000;   /* Ombre en bas à droite */
+	color: #e9ecef;
+	font-weight: bold;
+	text-shadow: -1px -1px 0 #000, /* Ombre en haut à gauche */ 1px -1px 0 #000,
+		/* Ombre en haut à droite */ -1px 1px 0 #000,
+		/* Ombre en bas à gauche */ 1px 1px 0 #000; /* Ombre en bas à droite */
 }
