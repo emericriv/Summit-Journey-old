@@ -1,0 +1,4 @@
+{
+  "terminal.integrated.cwd": "${workspaceFolder}/SummitJourney-front",
+  "liveServer.settings.port": 5501
+}

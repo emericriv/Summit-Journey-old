@@ -1,0 +1,223 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  /* Empêche le scroll horizontal */
+  background-image: url("/src/assets/img/site-background.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.red-border {
+  border: 1px solid red;
+}
+
+.blue-border {
+  border: 1px solid blue;
+}
+
+.welcome,
+.card,
+.newSession form,
+.navbar,
+.footer {
+  background-color: rgba(24, 22, 22, 0.5);
+  color: white;
+}
+
+.offcanvas {
+  background-color: rgb(24, 22, 22);
+  color: white;
+}
+
+.btn-close {
+  filter: invert(1);
+}
+
+.welcome {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.newSession form {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Personnalisation de la navbar */
+.navbar,
+.footer {
+  background-image: url("/src/assets/img/site-background.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0;
+}
+
+.navbar-div,
+.footer-div {
+  height: 10vh;
+  background-color: rgba(24, 22, 22, 0.5);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 24px;
+  color: #b1d0ee !important;
+}
+
+.offcanvas-title {
+  color: #b1d0ee !important;
+}
+
+.navbar-brand svg {
+  max-height: 40px;
+  /* Hauteur maximale pour le logo */
+  width: auto;
+  /* Largeur automatique pour conserver le ratio d'aspect */
+}
+
+.navbar-brand:hover {
+  color: white !important;
+  cursor: pointer;
+}
+
+.nav-pills .nav-link,
+.btn {
+  background-color: rgba(255,
+      169,
+      28,
+      0.8);
+  /* Couleur du fond (orange terreux) */
+  color: #ffffff;
+  /* Couleur du texte */
+  border-radius: 10px;
+  /* Arrondir les coins */
+  padding: 5px 10px;
+  /* Espacement intérieur pour agrandir les boutons */
+  margin: 5px;
+  /* Espacement extérieur entre les boutons */
+  text-align: center;
+  /* Centrer le texte */
+  text-transform: uppercase;
+  /* Texte en majuscules pour un effet stylisé */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  /* Transition fluide pour hover */
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #e08a12;
+  /* Changement de couleur au survol */
+  transform: translateY(-1px);
+  /* Légère remontée au survol */
+  text-decoration: none;
+  /* Supprimer la décoration du texte (souligné) */
+}
+
+.btn:hover {
+  background-color: #e08a12;
+  /* Changement de couleur au survol */
+  text-decoration: none;
+  /* Supprimer la décoration du texte (souligné) */
+}
+
+.nav-pills .nav-link.active,
+.btn.active {
+  background-color: #d47910;
+  /* Couleur pour l'élément actif */
+  color: #ffffff;
+  /* Couleur du texte pour l'élément actif */
+}
+
+.nav-pills .nav-link:focus,
+.btn:focus {
+  outline: none;
+  /* Supprimer le contour bleu de focus de Bootstrap */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  /* Ombre subtile en focus */
+}
+
+/* Hero Banner like for each page */
+.hero-banner {
+  min-height: 80vh;
+}
+
+/* New session */
+/* Style pour les ronds de difficulté */
+.difficulty-circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Couleurs des cercles de difficulté */
+.difficulty-yellow {
+  background-color: yellow;
+}
+
+.difficulty-green {
+  background-color: green;
+}
+
+.difficulty-blue {
+  background-color: blue;
+}
+
+.difficulty-red {
+  background-color: red;
+}
+
+.difficulty-black {
+  background-color: black;
+}
+
+.difficulty-purple {
+  background-color: purple;
+}
+
+.newSession input,
+.newSession select {
+  opacity: 0.8;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 0.9rem;
+  height: 10vh;
+}
+
+.sticky-bottom {
+  z-index: 1000; /*Reduced from 1020 to 1000 to avoid overlapping with the navbar*/
+}
+
+.newSession form {
+  border-radius: 10px;
+}
+
+h2,
+h3 {
+  color: #e9ecef;
+}
+
+/* Dashboard */
+
+.dashboard h1 {
+  color: #e9ecef;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #000,
+    /* Ombre en haut à gauche */
+    1px -1px 0 #000,
+    /* Ombre en haut à droite */
+    -1px 1px 0 #000,
+    /* Ombre en bas à gauche */
+    1px 1px 0 #000;
+  /* Ombre en bas à droite */
+}
