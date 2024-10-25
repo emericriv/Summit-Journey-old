@@ -45,6 +45,7 @@ footer {
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding: 0;
+	height: 10%;
 }
 
 .navbar-div {
@@ -88,6 +89,10 @@ footer {
 	background-color: #e08a12; /* Changement de couleur au survol */
 	transform: translateY(-1px); /* Légère remontée au survol */
 	text-decoration: none; /* Supprimer la décoration du texte (souligné) */
+}
+
+.tab-content {
+	min-height: 90%;
 }
 
 .btn:hover {
