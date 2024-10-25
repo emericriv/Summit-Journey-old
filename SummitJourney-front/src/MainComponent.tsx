@@ -1,16 +1,16 @@
 import React from "react";
-import Header from "./components/header";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NewSessionPage from "./pages/NewSessionPage";
 import LocationsPage from "./pages/LocationsPage";
 import ProfilePage from "./pages/ProfilePage";
 import Footer from "./components/footer";
+import Navbar from "./components/Navbar";
 
 const MainComponent: React.FC = () => {
   return (
     <>
-      <Header />
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/session" element={<NewSessionPage />} />

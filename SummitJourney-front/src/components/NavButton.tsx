@@ -4,10 +4,8 @@ import { NavButtonProps } from "../model/PropsInterface";
 
 const NavButton: React.FC<NavButtonProps> = ({ to, children }) => {
   return (
-    <li>
-      <Link to={to} className="nav-link" id="home-tab">
-        {children}
-      </Link>
+    <li className="nav-button mx-2">
+      <Link to={to}>{children}</Link>
     </li>
   );
 };

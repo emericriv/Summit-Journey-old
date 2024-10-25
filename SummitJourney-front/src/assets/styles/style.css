@@ -10,12 +10,15 @@ body {
   background-size: cover;
 }
 
-.red-border {
-  border: 1px solid red;
+a {
+  text-decoration: none;
+  color: white;
 }
 
-.blue-border {
-  border: 1px solid blue;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .welcome,
@@ -25,15 +28,6 @@ body {
 .footer {
   background-color: rgba(24, 22, 22, 0.5);
   color: white;
-}
-
-.offcanvas {
-  background-color: rgb(24, 22, 22);
-  color: white;
-}
-
-.btn-close {
-  filter: invert(1);
 }
 
 .welcome {
@@ -48,7 +42,7 @@ body {
 }
 
 /* Personnalisation de la navbar */
-.navbar,
+.nav-bar,
 .footer {
   background-image: url("/src/assets/img/site-background.jpg");
   background-attachment: fixed;
@@ -64,76 +58,77 @@ body {
   background-color: rgba(24, 22, 22, 0.5);
 }
 
-.navbar-brand {
+.brand {
   font-weight: bold;
   font-size: 24px;
   color: #b1d0ee !important;
 }
 
-.offcanvas-title {
-  color: #b1d0ee !important;
-}
-
-.navbar-brand svg {
+.brand svg {
   max-height: 40px;
   /* Hauteur maximale pour le logo */
   width: auto;
   /* Largeur automatique pour conserver le ratio d'aspect */
 }
 
-.navbar-brand:hover {
+.brand:hover {
   color: white !important;
   cursor: pointer;
 }
 
-.nav-pills .nav-link,
+.nav-button,
 .btn {
-  background-color: rgba(255,
-      169,
-      28,
-      0.8);
-  /* Couleur du fond (orange terreux) */
+  position: relative;
+  font-size: 1rem;
+  font-weight: 600;
   color: #ffffff;
-  /* Couleur du texte */
-  border-radius: 10px;
-  /* Arrondir les coins */
-  padding: 5px 10px;
-  /* Espacement intérieur pour agrandir les boutons */
-  margin: 5px;
-  /* Espacement extérieur entre les boutons */
   text-align: center;
-  /* Centrer le texte */
   text-transform: uppercase;
-  /* Texte en majuscules pour un effet stylisé */
   transition: background-color 0.3s ease, transform 0.3s ease;
-  /* Transition fluide pour hover */
 }
 
-.nav-pills .nav-link:hover {
+.btn {
   background-color: #e08a12;
-  /* Changement de couleur au survol */
-  transform: translateY(-1px);
-  /* Légère remontée au survol */
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.nav-button>a:hover {
+  color :#e08a12;
   text-decoration: none;
-  /* Supprimer la décoration du texte (souligné) */
+  cursor: pointer;
+}
+
+.nav-button a:hover::after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: #e08a12;
+  position: absolute;
+  bottom: -4px;
+  left: 0px;
+}
+
+.mobile {
+  display: none;
+}
+
+.mobile i{
+  color: #fff;
+  align-items: center;
+  font-size: 1.5rem;
 }
 
 .btn:hover {
   background-color: #e08a12;
-  /* Changement de couleur au survol */
   text-decoration: none;
-  /* Supprimer la décoration du texte (souligné) */
 }
 
-.nav-pills .nav-link.active,
 .btn.active {
   background-color: #d47910;
-  /* Couleur pour l'élément actif */
   color: #ffffff;
-  /* Couleur du texte pour l'élément actif */
 }
 
-.nav-pills .nav-link:focus,
 .btn:focus {
   outline: none;
   /* Supprimer le contour bleu de focus de Bootstrap */
