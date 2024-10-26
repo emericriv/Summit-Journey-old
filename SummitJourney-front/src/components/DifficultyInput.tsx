@@ -1,5 +1,5 @@
 import React from "react";
-import { DifficultyInputProps } from "../model/PropsInterface";
+import { DifficultyInputProps } from "../models/PropsInterface";
 
 const DifficultyInput: React.FC<DifficultyInputProps> = ({ color }) => {
   return (

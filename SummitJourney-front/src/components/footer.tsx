@@ -10,11 +10,17 @@ const Footer: React.FC = () => {
           </p>
           <p className="m-0">
             Arrière plan de{" "}
-            <a href="https://unsplash.com/fr/@mtlwebdesign?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+            <a
+              href="https://unsplash.com/fr/@mtlwebdesign?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+              className="text-decoration-underline"
+            >
               Jonathan Ouimet
             </a>{" "}
             sur{" "}
-            <a href="https://unsplash.com/fr/photos/homme-escalade-qcXff4UhZ-4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+            <a
+              href="https://unsplash.com/fr/photos/homme-escalade-qcXff4UhZ-4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+              className="text-decoration-underline"
+            >
               Unsplash
             </a>
           </p>

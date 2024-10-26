@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NavButtonProps } from "../model/PropsInterface";
+import { NavButtonProps } from "../models/PropsInterface";
 
 const NavButton: React.FC<NavButtonProps> = ({
   to,
