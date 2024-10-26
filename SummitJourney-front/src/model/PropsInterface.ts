@@ -5,4 +5,6 @@ export interface DifficultyInputProps {
 export interface NavButtonProps {
   to: string;
   children: React.ReactNode;
+  isActive: boolean;
+  onClick: () => void;
 }

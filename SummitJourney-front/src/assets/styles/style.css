@@ -66,9 +66,7 @@ ul {
 
 .brand svg {
   max-height: 40px;
-  /* Hauteur maximale pour le logo */
   width: auto;
-  /* Largeur automatique pour conserver le ratio d'aspect */
 }
 
 .brand:hover {
@@ -87,19 +85,29 @@ ul {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.btn {
-  background-color: #e08a12;
-  border-radius: 10px;
-  padding: 5px 10px;
-}
-
-.nav-button>a:hover {
+.nav-button a:hover,
+.nav-button.active a {
   color :#e08a12;
   text-decoration: none;
   cursor: pointer;
 }
 
+.nav-button a::after{
+  transition: 0.3s ease-in-out;
+  content: "";
+  width: 0%;
+  height: 2px;
+  background-color: #e08a12;
+  position: absolute;
+  bottom: -4px;
+  left: 0px;
+}
+
 .nav-button a:hover::after {
+  width: 100%;
+}
+
+.nav-button.active a::after {
   content: "";
   width: 100%;
   height: 2px;
@@ -119,6 +127,12 @@ ul {
   font-size: 1.5rem;
 }
 
+.btn {
+  background-color: #e08a12;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
 .btn:hover {
   background-color: #e08a12;
   text-decoration: none;
@@ -131,12 +145,9 @@ ul {
 
 .btn:focus {
   outline: none;
-  /* Supprimer le contour bleu de focus de Bootstrap */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  /* Ombre subtile en focus */
 }
 
-/* Hero Banner like for each page */
 .hero-banner {
   min-height: 80vh;
 }
@@ -208,11 +219,7 @@ h3 {
   color: #e9ecef;
   font-weight: bold;
   text-shadow: -1px -1px 0 #000,
-    /* Ombre en haut à gauche */
     1px -1px 0 #000,
-    /* Ombre en haut à droite */
     -1px 1px 0 #000,
-    /* Ombre en bas à gauche */
     1px 1px 0 #000;
-  /* Ombre en bas à droite */
 }
