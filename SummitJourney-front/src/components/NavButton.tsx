@@ -9,11 +9,10 @@ const NavButton: React.FC<NavButtonProps> = ({
   onClick,
 }) => {
   return (
-    <li
-      className={`nav-button mx-2 ${isActive ? "active" : ""}`}
-      onClick={onClick}
-    >
-      <Link to={to}>{children}</Link>
+    <li className={`nav-button mx-2 ${isActive ? "active" : ""}`}>
+      <Link to={to} onClick={onClick}>
+        {children}
+      </Link>
     </li>
   );
 };
