@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 # Python virtual env
-.env
+venv
 
 # IDE preferences
 .vscode
