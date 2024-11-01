@@ -1,34 +1,76 @@
-import { useState } from "react";
-import { createClimbingSession } from "../services/apiServices";
+import { useForm } from "react-hook-form";
+import Select from "react-select";
+import { useEffect, useState } from "react";
+
+import {
+  createClimbingSession,
+  fetchClimbingGyms,
+} from "../services/apiServices";
 import { ClimbingSession } from "../models/ClimbingSession";
+import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
 // import DifficultyInput from "../components/DifficultyInput";
 
+interface FormValues {
+  date: string;
+  location: string;
+  climbType: string;
+  height: number;
+  comments: string;
+}
+
 const NewSessionPage: React.FC = () => {
-  // const [date, setDate] = useState("");
-  // const [location, setLocation] = useState("");
-  // const [climbingType, setClimbingType] = useState("interior");
-  // const [height, setHeight] = useState(0);
-  // const [comments, setComments] = useState("");
-
-  // const [formData, setFormData] = useState<ClimbingSession>({
-  //   date: "2024-10-30",
-  //   location: "iriji",
-  //   climbType: "interior",
-  //   height: 0,
-  //   comments: "jojoij",
-  // });
-
-  const [formData, setFormData] = useState({
-    date: "",
-    location: "",
-    climbType: "IN",
-    height: 5,
-    comments: "",
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    // formState: { errors },
+  } = useForm({
+    defaultValues: {
+      date: "",
+      location: "",
+      climbType: "IN",
+      height: 0,
+      comments: "",
+    },
   });
 
-  const addSession = async () => {
-    const newSession: ClimbingSession = formData;
-    // newSession.climbType = newSession.climbType === "interior" ? "IN" : "OUT";
+  const [gymOptions, setGymOptions] = useState<
+    { label: string; value: string }[]
+  >([]);
+  const [allGyms, setAllGyms] = useState<ClimbingGymLocation[]>([]);
+
+  // Charger les salles d'escalade lors du montage du composant
+  useEffect(() => {
+    const fetchGyms = async () => {
+      const allGyms = await fetchClimbingGyms();
+      setAllGyms(allGyms);
+      const options = allGyms.map((gym: { gymName: string }) => ({
+        label: gym.gymName,
+        value: gym.gymName,
+      }));
+      setGymOptions(options);
+    };
+    fetchGyms();
+  }, []);
+
+  const addSession = async (data: FormValues) => {
+    const selectedGym: ClimbingGymLocation | undefined = allGyms.find((gym) => {
+      return gym.gymName === data.location;
+    });
+
+    if (!selectedGym) {
+      console.error("Aucune salle d'escalade trouvée pour ce nom.");
+      return; // Arrête la fonction si aucune salle n'est trouvée
+    }
+
+    const newSession: ClimbingSession = {
+      date: data.date,
+      location: selectedGym.id || 0,
+      climbType: data.climbType,
+      height: data.height,
+      comments: data.comments,
+      climber: 1,
+    };
 
     console.log("Nouvelle session à ajouter:", newSession);
 
@@ -50,33 +92,32 @@ const NewSessionPage: React.FC = () => {
         role="tabpanel"
         aria-labelledby="session-tab"
       >
-        <form>
+        <form
+          onSubmit={handleSubmit((data) => {
+            console.log(data);
+            addSession(data);
+          })}
+        >
           <div className="row mb-3">
             <div className="col-md-6">
               <label htmlFor="sessionDate" className="form-label">
                 Date de la session
               </label>
               <input
+                {...register("date", { required: true })}
                 type="date"
                 className="form-control"
                 id="sessionDate"
-                value={formData.date}
-                onChange={(e) =>
-                  setFormData({ ...formData, date: e.target.value })
-                }
               />
             </div>
             <div className="col-md-6">
-              <label htmlFor="location" className="form-label">
-                Lieu
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="location"
-                value={formData.location}
-                onChange={(e) =>
-                  setFormData({ ...formData, location: e.target.value })
+              <label className="form-label">Lieu</label>
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                options={gymOptions}
+                onChange={(selectedOption) =>
+                  setValue("location", selectedOption?.value || "")
                 }
                 placeholder="Lieu de la grimpe"
               />
@@ -88,12 +129,9 @@ const NewSessionPage: React.FC = () => {
               Type de grimpe
             </label>
             <select
+              {...register("climbType", { required: true })}
               className="form-select"
               id="climbingType"
-              value={formData.climbType}
-              onChange={(e) =>
-                setFormData({ ...formData, climbType: e.target.value })
-              }
             >
               <option value="IN">Intérieur</option>
               <option value="OUT">Extérieur</option>
@@ -112,14 +150,11 @@ const NewSessionPage: React.FC = () => {
             </div> */}
             <p>Hauteur</p>
             <input
+              {...register("height", { required: true })}
               type="number"
               className="form-control"
-              id="height"
-              value={formData.height}
-              onChange={(e) =>
-                setFormData({ ...formData, height: parseInt(e.target.value) })
-              }
               placeholder="Hauteur grimpée en mètres"
+              id="height"
             />
           </div>
 
@@ -138,20 +173,15 @@ const NewSessionPage: React.FC = () => {
               Commentaires
             </label>
             <textarea
+              {...register("comments")}
               className="form-control"
-              id="comments"
               placeholder="Commentaires sur la session"
-              onChange={(e) =>
-                setFormData({ ...formData, comments: e.target.value })
-              }
-              value={formData.comments}
+              id="comments"
             ></textarea>
           </div>
-        </form>
 
-        <button onClick={addSession} className="btn">
-          Enregistrer la session
-        </button>
+          <input type="submit" className="btn" value="Enregistrer la session" />
+        </form>
       </div>
     </div>
   );

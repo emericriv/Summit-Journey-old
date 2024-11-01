@@ -1,10 +1,14 @@
 from rest_framework import viewsets
 from .models import ClimbingSession
-from .serializer import ClimbingSessionSerializer
+from .serializer import ClimbingSessionCreateUpdateSerializer, ClimbingSessionRetreiveSerializer
 
 class ClimbingSessionViewSet(viewsets.ModelViewSet):
     queryset = ClimbingSession.objects.all()
-    serializer_class = ClimbingSessionSerializer
+    
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ClimbingSessionRetreiveSerializer
+        return ClimbingSessionCreateUpdateSerializer
 
 
 # @api_view(['GET'])

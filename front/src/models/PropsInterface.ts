@@ -10,7 +10,10 @@ export interface NavButtonProps {
   isActive: boolean;
 }
 
-export interface MapProps {
-  locations: ClimbingGymLocation[];
-  userCity: string;
+export interface MapComponentProps {
+  gyms: ClimbingGymLocation[];
+}
+
+export interface MarkerWithInfoWindowProps {
+  gym: ClimbingGymLocation;
 }

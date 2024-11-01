@@ -1,12 +1,11 @@
-from django.urls import include, path
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from .views import ClimbingGymLocationsViewSet, ClimbingGymLocationSearch
 
-from .views import ClimbingGymLocationsViewSet, SearchGymsView
-    
 router = DefaultRouter()
-router.register(r'locations', ClimbingGymLocationsViewSet)
+router.register(r'gyms', ClimbingGymLocationsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('search-gyms/', SearchGymsView.as_view(), name='search_gyms')
+    path('gyms/search/<str:city_name>/', ClimbingGymLocationSearch.as_view(), name='gym-location-search'),
 ]

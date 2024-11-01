@@ -2,10 +2,11 @@ import { ClimbingGymLocation } from "./ClimbingGymLocation";
 
 export interface ClimbingSession {
   id?: number;
-  date: string
-  location: ClimbingGymLocation;
+  date: string;
+  location: ClimbingGymLocation | number;
   climbType: string;
   height: number;
   comments: string;
+  climber: number; // Change to Climber when the model is created
   // media?: string;        // URL vers l'image, si ce champ est ajouté plus tard
 }

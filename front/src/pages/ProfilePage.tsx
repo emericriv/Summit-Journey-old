@@ -41,7 +41,13 @@ const ProfilePage: React.FC = () => {
                 <tr key={session.id}>
                   {/* Utilise une clé unique */}
                   <td>{session.date}</td>
-                  <td>{session.location.gymName}</td>
+                  <td>
+                    {
+                      typeof session.location === "object" && session.location
+                        ? session.location.gymName // Afficher le gymName si c'est un objet
+                        : "N/A" // Afficher N/A si c'est un nombre (ID)
+                    }
+                  </td>
                   <td>
                     {session.climbType === "IN" ? "Intérieur" : "Extérieur"}
                   </td>
