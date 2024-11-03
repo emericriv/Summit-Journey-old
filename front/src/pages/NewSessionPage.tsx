@@ -1,7 +1,6 @@
-import { useForm } from "react-hook-form";
+import { useForm, FieldValues } from "react-hook-form";
 import Select, { StylesConfig } from "react-select";
 import { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   createClimbingSession,
@@ -9,11 +8,7 @@ import {
 } from "../services/apiServices";
 import { ClimbingSession } from "../models/ClimbingSession";
 import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
-import {
-  GymOption,
-  sessionSchema,
-  TSessionSchema,
-} from "../models/PropsInterface";
+import { GymOption } from "../models/PropsInterface";
 // import DifficultyInput from "../components/DifficultyInput";
 
 const selectStyles: StylesConfig<GymOption, false> = {
@@ -41,8 +36,14 @@ const NewSessionPage: React.FC = () => {
     setValue,
     formState: { isSubmitting },
     reset,
-  } = useForm<TSessionSchema>({
-    resolver: zodResolver(sessionSchema),
+  } = useForm({
+    defaultValues: {
+      date: new Date().toISOString().split("T")[0],
+      location: "",
+      climbType: "IN",
+      height: 0,
+      comments: "",
+    },
   });
 
   const [gymOptions, setGymOptions] = useState<
@@ -66,7 +67,7 @@ const NewSessionPage: React.FC = () => {
   }, []);
 
   // Post de la nouvelle session
-  const addSession = async (data: TSessionSchema) => {
+  const addSession = async (data: FieldValues) => {
     // Récupérer la salle d'escalade sélectionnée
     const selectedGym: ClimbingGymLocation | undefined = allGyms.find((gym) => {
       return gym.gymName === data.location;
