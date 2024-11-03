@@ -1,4 +1,5 @@
 import { ClimbingGymLocation } from './ClimbingGymLocation';
+import z from "zod";
 
 export interface DifficultyInputProps {
   color: string;
@@ -17,3 +18,19 @@ export interface MapComponentProps {
 export interface MarkerWithInfoWindowProps {
   gym: ClimbingGymLocation;
 }
+
+// Used in NewSessionPage.tsx for the select element
+export interface GymOption {
+  label: string;
+  value: string;
+}
+
+export const sessionSchema = z.object({
+  date: z.string().date(),
+  location: z.string(),
+  climbType: z.string(),
+  height: z.number(),
+  comments: z.string(),
+});
+
+export type TSessionSchema = z.infer<typeof sessionSchema>;

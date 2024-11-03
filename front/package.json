@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@vis.gl/react-google-maps": "^1.4.0",
     "axios": "^1.7.7",
     "axios-error": "^1.0.4",
@@ -20,7 +21,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
     "react-router-dom": "^6.27.0",
-    "react-select": "^5.8.2"
+    "react-select": "^5.8.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",

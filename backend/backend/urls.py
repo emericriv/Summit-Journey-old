@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# URL patterns for the backend project
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('ClimbingSession.urls')),

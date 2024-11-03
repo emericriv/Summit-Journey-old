@@ -6,10 +6,13 @@ class ClimbingSessionViewSet(viewsets.ModelViewSet):
     queryset = ClimbingSession.objects.all()
     
     def get_serializer_class(self):
+        # Voir le fichier serializer.py pour plus d'informations
         if self.request.method == 'GET':
             return ClimbingSessionRetreiveSerializer
         return ClimbingSessionCreateUpdateSerializer
 
+# Ce qui suit n'est que le vestige de comment pouvais marcher l'API avant l'utilisation de viewsets
+# Je le garde pour référence et pouvoir comprendre si nécessaire
 
 # @api_view(['GET'])
 # def get_sessions(request):

@@ -134,10 +134,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Speicify the user model
 AUTH_USER_MODEL = 'CustomUser.CustomUser'
 
+# CORS settings (CORS means Cross-Origin Resource Sharing)
+# This allows the frontend to make requests to the backend
 CORS_ALLOW_ALL_ORIGINS = True
 
+# REST Framework settings
+# ALlow to convert snake_case to camelCase and vice versa to work with JS
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',

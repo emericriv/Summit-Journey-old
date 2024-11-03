@@ -1,7 +1,8 @@
 from django.db import models
 
+
+# Class attributes are the fields of the model
 class ClimbingGymLocations(models.Model):
-    
     gym_name = models.CharField(max_length=100)
     # voir si c'est mieux de stocker le type intérieur extérieur ici ou dans le modèle de session
     # Besoin de stocker l'adresse au format texte pour l'affichage ?
@@ -11,6 +12,8 @@ class ClimbingGymLocations(models.Model):
     zip_code = models.CharField(max_length=5, default=None, blank=True, null=True)
     big_city = models.CharField(max_length=100, default=None, blank=True, null=True)
 
+    # Meta class is used to specify metadata about the model
+    # verbose_name is used to specify a human-readable name for the object
     class Meta:
         verbose_name = 'Salle d\'escalade'
         verbose_name_plural = 'Salles d\'escalade'

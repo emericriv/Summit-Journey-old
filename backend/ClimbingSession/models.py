@@ -20,7 +20,7 @@ class ClimbingSession(models.Model):
     )
     # completed_grade = models.CharField(max_length=10) # Need to think about the possibility of grading by multiple colors
     height = models.IntegerField()
-    comments = models.TextField()
+    comments = models.TextField(blank=True, null=True)
     # media = models.ImageField(upload_to='media/', blank=True, null=True) # Later
     
     def __str__(self):

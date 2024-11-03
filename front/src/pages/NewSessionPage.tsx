@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
-import Select from "react-select";
+import Select, { StylesConfig } from "react-select";
 import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   createClimbingSession,
@@ -8,30 +9,40 @@ import {
 } from "../services/apiServices";
 import { ClimbingSession } from "../models/ClimbingSession";
 import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
+import {
+  GymOption,
+  sessionSchema,
+  TSessionSchema,
+} from "../models/PropsInterface";
 // import DifficultyInput from "../components/DifficultyInput";
 
-interface FormValues {
-  date: string;
-  location: string;
-  climbType: string;
-  height: number;
-  comments: string;
-}
+const selectStyles: StylesConfig<GymOption, false> = {
+  control: (provided) => ({
+    ...provided,
+    boxShadow: "none",
+    textAlign: "left",
+    opacity: 0.8,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    color: state.isSelected ? "black" : "grey",
+    backgroundColor: state.isSelected
+      ? "lightgrey"
+      : state.isFocused
+      ? "lightgrey"
+      : "white",
+  }),
+};
 
 const NewSessionPage: React.FC = () => {
   const {
     register,
     handleSubmit,
     setValue,
-    // formState: { errors },
-  } = useForm({
-    defaultValues: {
-      date: "",
-      location: "",
-      climbType: "IN",
-      height: 0,
-      comments: "",
-    },
+    formState: { isSubmitting },
+    reset,
+  } = useForm<TSessionSchema>({
+    resolver: zodResolver(sessionSchema),
   });
 
   const [gymOptions, setGymOptions] = useState<
@@ -41,10 +52,11 @@ const NewSessionPage: React.FC = () => {
 
   // Charger les salles d'escalade lors du montage du composant
   useEffect(() => {
+    console.log("Chargement des salles d'escalade...");
     const fetchGyms = async () => {
       const allGyms = await fetchClimbingGyms();
       setAllGyms(allGyms);
-      const options = allGyms.map((gym: { gymName: string }) => ({
+      const options: GymOption[] = allGyms.map((gym: { gymName: string }) => ({
         label: gym.gymName,
         value: gym.gymName,
       }));
@@ -53,26 +65,28 @@ const NewSessionPage: React.FC = () => {
     fetchGyms();
   }, []);
 
-  const addSession = async (data: FormValues) => {
+  // Post de la nouvelle session
+  const addSession = async (data: TSessionSchema) => {
+    // Récupérer la salle d'escalade sélectionnée
     const selectedGym: ClimbingGymLocation | undefined = allGyms.find((gym) => {
       return gym.gymName === data.location;
     });
 
-    if (!selectedGym) {
+    // Vérifier que la salle d'escalade existe
+    if (!selectedGym?.id) {
       console.error("Aucune salle d'escalade trouvée pour ce nom.");
       return; // Arrête la fonction si aucune salle n'est trouvée
     }
 
+    // Créer l'objet ClimbingSession à envoyer à l'API
     const newSession: ClimbingSession = {
       date: data.date,
-      location: selectedGym.id || 0,
+      location: selectedGym.id,
       climbType: data.climbType,
       height: data.height,
       comments: data.comments,
       climber: 1,
     };
-
-    console.log("Nouvelle session à ajouter:", newSession);
 
     // Appel à l'API pour ajouter la session
     createClimbingSession(newSession)
@@ -93,9 +107,10 @@ const NewSessionPage: React.FC = () => {
         aria-labelledby="session-tab"
       >
         <form
-          onSubmit={handleSubmit((data) => {
+          onSubmit={handleSubmit(async (data) => {
             console.log(data);
             addSession(data);
+            reset();
           })}
         >
           <div className="row mb-3">
@@ -111,14 +126,13 @@ const NewSessionPage: React.FC = () => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Lieu</label>
-              <Select
-                className="basic-single"
-                classNamePrefix="select"
+              <p className="form-label">Lieu</p>
+              <Select<GymOption>
                 options={gymOptions}
                 onChange={(selectedOption) =>
                   setValue("location", selectedOption?.value || "")
                 }
+                styles={selectStyles}
                 placeholder="Lieu de la grimpe"
               />
             </div>
@@ -180,7 +194,9 @@ const NewSessionPage: React.FC = () => {
             ></textarea>
           </div>
 
-          <input type="submit" className="btn" value="Enregistrer la session" />
+          <button type="submit" disabled={isSubmitting} className="btn">
+            Enregistrer la session
+          </button>
         </form>
       </div>
     </div>
