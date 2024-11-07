@@ -1,7 +1,11 @@
 import { ClimbingGymLocation } from './ClimbingGymLocation';
+import { Difficulty } from './ClimbingSession';
+import { UseFormRegister } from "react-hook-form";
 
 export interface DifficultyInputProps {
-  color: string;
+  difficulty: Difficulty;
+  register: UseFormRegister<FormSessionProps>;
+  name: `difficulties.${number}.label`;
 }
 
 export interface NavButtonProps {
@@ -23,3 +27,13 @@ export interface GymOption {
   label: string;
   value: string;
 }
+
+export interface FormSessionProps { 
+  date: string;
+  location: string;
+  climbType: string;
+  height: number;
+  comments: string;
+  difficulties: Difficulty[];
+}
+  

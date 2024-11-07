@@ -174,31 +174,6 @@ ul {
   vertical-align: middle;
 }
 
-/* Couleurs des cercles de difficulté */
-.difficulty-yellow {
-  background-color: yellow;
-}
-
-.difficulty-green {
-  background-color: green;
-}
-
-.difficulty-blue {
-  background-color: blue;
-}
-
-.difficulty-red {
-  background-color: red;
-}
-
-.difficulty-black {
-  background-color: black;
-}
-
-.difficulty-purple {
-  background-color: purple;
-}
-
 .newSession input,
 .newSession select,
 .newSession textarea {

@@ -1,15 +1,16 @@
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, FieldValues, useFieldArray } from "react-hook-form";
 import Select, { StylesConfig } from "react-select";
 import { useEffect, useState } from "react";
 
 import {
   createClimbingSession,
-  fetchClimbingGyms,
+  getClimbingGyms,
+  getDifficultySets,
 } from "../services/apiServices";
-import { ClimbingSession } from "../models/ClimbingSession";
+import { ClimbingSession, DifficultySet } from "../models/ClimbingSession";
 import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
-import { GymOption } from "../models/PropsInterface";
-// import DifficultyInput from "../components/DifficultyInput";
+import { FormSessionProps, GymOption } from "../models/PropsInterface";
+import DifficultyInput from "../components/DifficultyInput";
 
 const selectStyles: StylesConfig<GymOption, false> = {
   control: (provided) => ({
@@ -30,32 +31,41 @@ const selectStyles: StylesConfig<GymOption, false> = {
 };
 
 const NewSessionPage: React.FC = () => {
+  // Hook form
   const {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { isSubmitting },
     reset,
-  } = useForm({
+  } = useForm<FormSessionProps>({
     defaultValues: {
       date: new Date().toISOString().split("T")[0],
       location: "",
       climbType: "IN",
       height: 0,
       comments: "",
+      difficulties: [],
     },
+  });
+
+  const { fields, append } = useFieldArray({
+    control,
+    name: "difficulties",
   });
 
   const [gymOptions, setGymOptions] = useState<
     { label: string; value: string }[]
   >([]);
   const [allGyms, setAllGyms] = useState<ClimbingGymLocation[]>([]);
+  const [difficultySet, setDifficultySet] = useState<DifficultySet>();
 
   // Charger les salles d'escalade lors du montage du composant
   useEffect(() => {
     console.log("Chargement des salles d'escalade...");
-    const fetchGyms = async () => {
-      const allGyms = await fetchClimbingGyms();
+    const getGyms = async () => {
+      const allGyms = await getClimbingGyms();
       setAllGyms(allGyms);
       const options: GymOption[] = allGyms.map((gym: { gymName: string }) => ({
         label: gym.gymName,
@@ -63,8 +73,21 @@ const NewSessionPage: React.FC = () => {
       }));
       setGymOptions(options);
     };
-    fetchGyms();
+    const getfirstDifficultySet = async () => {
+      const firstDifficultySet = await getDifficultySets();
+      setDifficultySet(firstDifficultySet[1]);
+    };
+    getfirstDifficultySet();
+    getGyms();
   }, []);
+
+  useEffect(() => {
+    if (fields.length === 0 && difficultySet) {
+      difficultySet.difficulties.forEach((difficulty) => {
+        append(difficulty);
+      });
+    }
+  }, [append, difficultySet, fields.length]);
 
   // Post de la nouvelle session
   const addSession = async (data: FieldValues) => {
@@ -154,15 +177,18 @@ const NewSessionPage: React.FC = () => {
           </div>
 
           <div className="mb-3">
-            {/* <p className="form-label">Voies grimpées par difficulté</p>
+            <p className="form-label">Voies grimpées par difficulté</p>
             <div className="d-flex flex-wrap align-items-center row-gap-2">
-              <DifficultyInput color="yellow" />
-              <DifficultyInput color="green" />
-              <DifficultyInput color="blue" />
-              <DifficultyInput color="red" />
-              <DifficultyInput color="black" />
-              <DifficultyInput color="purple" />
-            </div> */}
+              {difficultySet &&
+                fields.map((field, index) => (
+                  <DifficultyInput
+                    key={index}
+                    difficulty={field}
+                    register={register}
+                    name={`difficulties.${index}.label`}
+                  />
+                ))}
+            </div>
             <p>Hauteur</p>
             <input
               {...register("height", { required: true })}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { fetchGymsByCity } from "../services/apiServices";
+import { getGymsByCity } from "../services/apiServices";
 import MapComponent from "./MapComponent";
 import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
 
@@ -11,7 +11,7 @@ const SearchClimbingGyms: React.FC = () => {
   const [city, setCity] = useState<string>("");
 
   const fetchDataAndSetGyms = async () => {
-    const gyms = await fetchGymsByCity({ city });
+    const gyms = await getGymsByCity({ city });
     setGyms(gyms);
   };
 

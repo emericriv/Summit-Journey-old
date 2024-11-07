@@ -17,6 +17,7 @@ class ClimbingGymLocations(models.Model):
     class Meta:
         verbose_name = 'Salle d\'escalade'
         verbose_name_plural = 'Salles d\'escalade'
+        ordering = ['gym_name']
         
     def __str__(self):
         return self.gym_name

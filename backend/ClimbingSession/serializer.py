@@ -1,24 +1,67 @@
 from rest_framework import serializers
-from .models import ClimbingSession, ClimbingGymLocations
+from .models import ClimbingSession, ClimbingGymLocations, Difficulty, DifficultyCompletion, DifficultySet
 from ClimbingGymLocations.serializer import ClimbingGymLocationsSerializer
 
-# Serializer pour les sessions d'escalade
+# Serializer pour afficher les difficultés avec leur nombre de complétion
+class DifficultyCompletionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DifficultyCompletion
+        fields = ['difficulty', 'count']
 
-# Ce premier serializer est utilisé pour les requêtes GET car on veut visualiser
-# les informations des salles d'escalade
-class ClimbingSessionRetreiveSerializer(serializers.ModelSerializer):
+# Serializer pour les requêtes GET - inclut la liste des difficultés complétées
+class ClimbingSessionRetrieveSerializer(serializers.ModelSerializer):
     location = ClimbingGymLocationsSerializer()
+    difficulty_completions = DifficultyCompletionSerializer(many=True, read_only=True)
 
     class Meta:
         model = ClimbingSession
         fields = '__all__'
 
-# Ce second serializer est utilisé pour les requêtes POST et PUT, ici on ne récupère
-# que l'ID de la salle d'escalade pour ensuite récupérer les informations de la salle
-# et l'assigner à la session d'escalade
+# Serializer pour les requêtes POST et PUT - accepte les IDs des difficultés et leur nombre
 class ClimbingSessionCreateUpdateSerializer(serializers.ModelSerializer):
-    location  = serializers.PrimaryKeyRelatedField(queryset=ClimbingGymLocations.objects.all())  # Accepte l'ID pour la création/mise à jour
+    location = serializers.PrimaryKeyRelatedField(queryset=ClimbingGymLocations.objects.all())
+    difficulty_completions = DifficultyCompletionSerializer(many=True)
 
     class Meta:
         model = ClimbingSession
+        fields = '__all__'
+
+    def create(self, validated_data):
+        difficulty_completions_data = validated_data.pop('difficulty_completions')
+        session = ClimbingSession.objects.create(**validated_data)
+        
+        # Crée les enregistrements de DifficultyCompletion associés
+        for completion_data in difficulty_completions_data:
+            DifficultyCompletion.objects.create(session=session, **completion_data)
+        
+        return session
+
+    def update(self, instance, validated_data):
+        difficulty_completions_data = validated_data.pop('difficulty_completions')
+        
+        # Met à jour les champs de la session
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        # Si aucune donnée de difficulté n'est fournie, on ne fait rien
+        if not difficulty_completions_data:
+            return instance
+        
+        # Met à jour ou crée les DifficultyCompletion associés
+        instance.difficulty_completions.all().delete()  # Efface les anciennes entrées
+        for completion_data in difficulty_completions_data:
+            DifficultyCompletion.objects.create(session=instance, **completion_data)
+        
+        return instance
+    
+class DifficultySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Difficulty
+        fields = ('label', 'color', 'hex_color')
+
+class DifficultySetSerializer(serializers.ModelSerializer):
+    difficulties = DifficultySerializer(many=True, read_only=True)
+    class Meta:
+        model = DifficultySet
         fields = '__all__'

@@ -10,3 +10,14 @@ export interface ClimbingSession {
   climber: number; // Change to Climber when the model is created
   // media?: string;        // URL vers l'image, si ce champ est ajouté plus tard
 }
+
+export interface Difficulty {
+  label: string;
+  color: boolean;
+  hexColor: string;
+}
+
+
+export interface DifficultySet{
+  difficulties : Difficulty[];
+}
