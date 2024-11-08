@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import ClimbingSession, DifficultySet
-from .serializer import ClimbingSessionCreateUpdateSerializer, ClimbingSessionRetrieveSerializer, DifficultySetSerializer
+from .models import ClimbingSession, DifficultyOrder, DifficultySet
+from .serializer import ClimbingSessionCreateUpdateSerializer, ClimbingSessionRetrieveSerializer, DifficultyOrderSerializer, DifficultySetSerializer
 
 class ClimbingSessionViewSet(viewsets.ModelViewSet):
     queryset = ClimbingSession.objects.all()
@@ -14,6 +14,10 @@ class ClimbingSessionViewSet(viewsets.ModelViewSet):
 class DifficultySetViewSet(viewsets.ModelViewSet):
     queryset = DifficultySet.objects.all()
     serializer_class = DifficultySetSerializer
+    
+class DifficultyOrderViewSet(viewsets.ModelViewSet):
+    queryset = DifficultyOrder.objects.all()
+    serializer_class = DifficultyOrderSerializer
 
 # Ce qui suit n'est que le vestige de comment pouvais marcher l'API avant l'utilisation de viewsets
 # Je le garde pour référence et pouvoir comprendre si nécessaire

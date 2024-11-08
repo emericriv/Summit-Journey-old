@@ -18,6 +18,12 @@ export interface Difficulty {
 }
 
 
+export interface DifficultyOrder{
+  order: number,
+  difficulty_set: DifficultySet,
+  difficulty: Difficulty
+}
+
 export interface DifficultySet{
-  difficulties : Difficulty[];
+  difficulties : DifficultyOrder[];
 }

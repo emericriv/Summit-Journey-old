@@ -75,7 +75,7 @@ const NewSessionPage: React.FC = () => {
     };
     const getfirstDifficultySet = async () => {
       const firstDifficultySet = await getDifficultySets();
-      setDifficultySet(firstDifficultySet[1]);
+      setDifficultySet(firstDifficultySet[0]);
     };
     getfirstDifficultySet();
     getGyms();
@@ -83,8 +83,9 @@ const NewSessionPage: React.FC = () => {
 
   useEffect(() => {
     if (fields.length === 0 && difficultySet) {
-      difficultySet.difficulties.forEach((difficulty) => {
-        append(difficulty);
+      // Ajouter les difficultés déjà ordonnées grâce à `ordering` défini dans le modèle Django
+      difficultySet.difficulties.forEach((difficultyOrder) => {
+        append(difficultyOrder.difficulty);
       });
     }
   }, [append, difficultySet, fields.length]);

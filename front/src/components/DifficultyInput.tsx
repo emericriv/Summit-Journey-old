@@ -22,6 +22,7 @@ const DifficultyInput: React.FC<DifficultyInputProps> = ({
         className="form-control mx-2"
         {...register(name)}
         style={{ width: "60px" }}
+        tabIndex={-1} // empêche le focus initial
       />
     </div>
   );

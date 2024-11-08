@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ClimbingSession, ClimbingGymLocations, Difficulty, DifficultyCompletion, DifficultySet
+from .models import ClimbingSession, ClimbingGymLocations, Difficulty, DifficultyCompletion, DifficultySet, DifficultyOrder
 from ClimbingGymLocations.serializer import ClimbingGymLocationsSerializer
 
 # Serializer pour afficher les difficultés avec leur nombre de complétion
@@ -58,10 +58,17 @@ class ClimbingSessionCreateUpdateSerializer(serializers.ModelSerializer):
 class DifficultySerializer(serializers.ModelSerializer):
     class Meta:
         model = Difficulty
-        fields = ('label', 'color', 'hex_color')
+        fields = ['label', 'color', 'hex_color']
+        
+class DifficultyOrderSerializer(serializers.ModelSerializer):
+    difficulty = DifficultySerializer()
+    class Meta:
+        model = DifficultyOrder
+        fields = ['difficulty', 'order']
 
 class DifficultySetSerializer(serializers.ModelSerializer):
-    difficulties = DifficultySerializer(many=True, read_only=True)
+    difficulties = DifficultyOrderSerializer(source='difficultyorder_set', many=True)
+
     class Meta:
         model = DifficultySet
-        fields = '__all__'
+        fields = ['id', 'difficulties']
