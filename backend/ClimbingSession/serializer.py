@@ -27,6 +27,7 @@ class ClimbingSessionCreateUpdateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        print(validated_data)
         difficulty_completions_data = validated_data.pop('difficulty_completions')
         session = ClimbingSession.objects.create(**validated_data)
         
@@ -58,7 +59,7 @@ class ClimbingSessionCreateUpdateSerializer(serializers.ModelSerializer):
 class DifficultySerializer(serializers.ModelSerializer):
     class Meta:
         model = Difficulty
-        fields = ['label', 'color', 'hex_color']
+        fields = '__all__'
         
 class DifficultyOrderSerializer(serializers.ModelSerializer):
     difficulty = DifficultySerializer()

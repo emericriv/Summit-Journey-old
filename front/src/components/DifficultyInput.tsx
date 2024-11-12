@@ -4,8 +4,15 @@ const DifficultyInput: React.FC<DifficultyInputProps> = ({
   difficulty,
   register,
   name,
+  onCountChange,
 }) => {
   const fillColor = difficulty.color ? difficulty.hexColor : "transparent";
+
+  // Mettre à jour le count sur changement d'input
+  const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newCount = parseInt(e.target.value, 10) || 0;
+    onCountChange(difficulty, newCount); // Remonte la difficulté et le count
+  };
   return (
     <div className="d-flex align-items-center">
       <label
@@ -23,6 +30,7 @@ const DifficultyInput: React.FC<DifficultyInputProps> = ({
         {...register(name)}
         style={{ width: "60px" }}
         tabIndex={-1} // empêche le focus initial
+        onChange={handleCountChange}
       />
     </div>
   );

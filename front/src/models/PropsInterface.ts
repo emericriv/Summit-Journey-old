@@ -6,6 +6,7 @@ export interface DifficultyInputProps {
   difficulty: Difficulty;
   register: UseFormRegister<FormSessionProps>;
   name: `difficulties.${number}.label`;
+  onCountChange: (difficulty: Difficulty, count: number) => void;
 }
 
 export interface NavButtonProps {
@@ -34,6 +35,7 @@ export interface FormSessionProps {
   climbType: string;
   height: number;
   comments: string;
+  difficultySet: string;
   difficulties: Difficulty[];
 }
   

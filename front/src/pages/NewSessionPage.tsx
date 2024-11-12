@@ -7,7 +7,13 @@ import {
   getClimbingGyms,
   getDifficultySets,
 } from "../services/apiServices";
-import { ClimbingSession, DifficultySet } from "../models/ClimbingSession";
+import {
+  ClimbingSession,
+  Difficulty,
+  DifficultyCompletion,
+  DifficultyCompletionWithId,
+  DifficultySet,
+} from "../models/ClimbingSession";
 import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
 import { FormSessionProps, GymOption } from "../models/PropsInterface";
 import DifficultyInput from "../components/DifficultyInput";
@@ -46,6 +52,7 @@ const NewSessionPage: React.FC = () => {
       climbType: "IN",
       height: 0,
       comments: "",
+      difficultySet: "",
       difficulties: [],
     },
   });
@@ -59,7 +66,11 @@ const NewSessionPage: React.FC = () => {
     { label: string; value: string }[]
   >([]);
   const [allGyms, setAllGyms] = useState<ClimbingGymLocation[]>([]);
-  const [difficultySet, setDifficultySet] = useState<DifficultySet>();
+  const [difficultySets, setDifficultySets] = useState<DifficultySet[]>();
+  const [selectedSet, setSelectedSet] = useState<DifficultySet>();
+  const [difficultyCounts, setDifficultyCounts] = useState<
+    DifficultyCompletion[]
+  >([]);
 
   // Charger les salles d'escalade lors du montage du composant
   useEffect(() => {
@@ -73,22 +84,38 @@ const NewSessionPage: React.FC = () => {
       }));
       setGymOptions(options);
     };
-    const getfirstDifficultySet = async () => {
-      const firstDifficultySet = await getDifficultySets();
-      setDifficultySet(firstDifficultySet[0]);
+    const getAllDifficultySets = async () => {
+      const DifficultySets = await getDifficultySets();
+      setDifficultySets(DifficultySets);
+      setSelectedSet(DifficultySets[0]);
     };
-    getfirstDifficultySet();
+    getAllDifficultySets();
     getGyms();
   }, []);
 
   useEffect(() => {
-    if (fields.length === 0 && difficultySet) {
+    if (fields.length === 0 && selectedSet) {
       // Ajouter les difficultés déjà ordonnées grâce à `ordering` défini dans le modèle Django
-      difficultySet.difficulties.forEach((difficultyOrder) => {
+      selectedSet.difficulties.forEach((difficultyOrder) => {
         append(difficultyOrder.difficulty);
       });
     }
-  }, [append, difficultySet, fields.length]);
+  }, [append, selectedSet, fields.length]);
+
+  const handleCountChange = (difficulty: Difficulty, count: number) => {
+    setDifficultyCounts((prevCounts) => {
+      const existing = prevCounts.find(
+        (dc) => dc.difficulty.label === difficulty.label
+      );
+      if (existing) {
+        return prevCounts.map((dc) =>
+          dc.difficulty.label === difficulty.label ? { ...dc, count } : dc
+        );
+      } else {
+        return [...prevCounts, { difficulty, count }];
+      }
+    });
+  };
 
   // Post de la nouvelle session
   const addSession = async (data: FieldValues) => {
@@ -97,11 +124,19 @@ const NewSessionPage: React.FC = () => {
       return gym.gymName === data.location;
     });
 
-    // Vérifier que la salle d'escalade existe
     if (!selectedGym?.id) {
       console.error("Aucune salle d'escalade trouvée pour ce nom.");
       return; // Arrête la fonction si aucune salle n'est trouvée
     }
+
+    //Remplacer les difficultées par leur id
+    const difficultyCountsbis: DifficultyCompletionWithId[] =
+      difficultyCounts.map((difficulty: DifficultyCompletion) => {
+        const difficultyId = selectedSet?.difficulties.find(
+          (d) => d.difficulty.label === difficulty.difficulty.label
+        )?.difficulty.id;
+        return { difficulty: difficultyId || 1, count: difficulty.count };
+      });
 
     // Créer l'objet ClimbingSession à envoyer à l'API
     const newSession: ClimbingSession = {
@@ -111,7 +146,10 @@ const NewSessionPage: React.FC = () => {
       height: data.height,
       comments: data.comments,
       climber: 1,
+      difficultySet: selectedSet?.id || 1,
+      difficultyCompletions: difficultyCountsbis,
     };
+    console.log("Nouvelle session:", newSession);
 
     // Appel à l'API pour ajouter la session
     createClimbingSession(newSession)
@@ -135,7 +173,7 @@ const NewSessionPage: React.FC = () => {
           onSubmit={handleSubmit(async (data) => {
             console.log(data);
             addSession(data);
-            reset();
+            // reset();
           })}
         >
           <div className="row mb-3">
@@ -154,9 +192,9 @@ const NewSessionPage: React.FC = () => {
               <p className="form-label">Lieu</p>
               <Select<GymOption>
                 options={gymOptions}
-                onChange={(selectedOption) =>
-                  setValue("location", selectedOption?.value || "")
-                }
+                onChange={(selectedOption) => {
+                  setValue("location", selectedOption?.value || "");
+                }}
                 styles={selectStyles}
                 placeholder="Lieu de la grimpe"
               />
@@ -178,15 +216,40 @@ const NewSessionPage: React.FC = () => {
           </div>
 
           <div className="mb-3">
+            <label htmlFor="difficultySet" className="form-label">
+              Set de difficulté
+            </label>
+            <select
+              {...register("difficultySet", { required: true })}
+              className="form-select"
+              id="difficultySet"
+              onChange={(e) => {
+                const selectedSet = difficultySets?.find(
+                  (set) => set.id === parseInt(e.target.value)
+                );
+                reset({ difficulties: [] });
+                setSelectedSet(selectedSet);
+              }}
+            >
+              {difficultySets?.map((set) => (
+                <option key={set.id} value={set.id}>
+                  {set.id}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-3">
             <p className="form-label">Voies grimpées par difficulté</p>
             <div className="d-flex flex-wrap align-items-center row-gap-2">
-              {difficultySet &&
+              {selectedSet &&
                 fields.map((field, index) => (
                   <DifficultyInput
                     key={index}
                     difficulty={field}
                     register={register}
                     name={`difficulties.${index}.label`}
+                    onCountChange={handleCountChange}
                   />
                 ))}
             </div>

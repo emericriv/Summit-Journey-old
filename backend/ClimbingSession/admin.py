@@ -7,7 +7,7 @@ class ClimbingSessionAdmin(admin.ModelAdmin):
 
 @admin.register(Difficulty)
 class DifficultyAdmin(admin.ModelAdmin):
-  list_display = ('label', 'color', 'hex_color')
+  list_display = ('id', 'label', 'color', 'hex_color')
   
 @admin.register(DifficultyOrder)
 class DifficultyOrderAdmin(admin.ModelAdmin):
