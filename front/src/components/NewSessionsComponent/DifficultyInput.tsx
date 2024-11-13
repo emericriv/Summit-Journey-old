@@ -1,4 +1,4 @@
-import { DifficultyInputProps } from "../models/PropsInterface";
+import { DifficultyInputProps } from "../../models/PropsInterface";
 
 const DifficultyInput: React.FC<DifficultyInputProps> = ({
   difficulty,
