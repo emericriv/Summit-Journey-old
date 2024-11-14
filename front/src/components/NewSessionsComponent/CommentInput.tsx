@@ -1,10 +1,5 @@
 import React from "react";
-import { UseFormRegister } from "react-hook-form";
-import { FormSessionProps } from "../../models/PropsInterface";
-
-interface CommentInputProps {
-  register: UseFormRegister<FormSessionProps>;
-}
+import { CommentInputProps } from "../../models/PropsInterface";
 
 const CommentInput: React.FC<CommentInputProps> = ({ register }) => (
   <div className="mb-3">

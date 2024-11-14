@@ -1,12 +1,6 @@
 import React from "react";
-import { UseFormSetValue } from "react-hook-form";
 import Select, { StylesConfig } from "react-select";
-import { FormSessionProps } from "../../models/PropsInterface";
-
-interface GymLocationSelectProps {
-  options: { label: string; value: string }[];
-  setValue: UseFormSetValue<FormSessionProps>;
-}
+import { GymLocationSelectProps } from "../../models/PropsInterface";
 
 const selectStyles: StylesConfig<{ label: string; value: string }, false> = {
   control: (provided) => ({
@@ -29,18 +23,25 @@ const selectStyles: StylesConfig<{ label: string; value: string }, false> = {
 const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
   options,
   setValue,
-}) => (
-  <div className="col-md-6">
-    <p className="form-label">Lieu</p>
-    <Select
-      options={options}
-      onChange={(selectedOption) => {
-        setValue("location", selectedOption?.value || "");
-      }}
-      styles={selectStyles}
-      placeholder="Lieu de la grimpe"
-    />
-  </div>
-);
+}) => {
+  return (
+    <div className="col-md-6">
+      <p className="form-label">Lieu</p>
+      <Select
+        options={options}
+        onChange={(selectedOption) => {
+          setValue("location", selectedOption?.value || "");
+        }}
+        styles={selectStyles}
+        placeholder="Lieu de la grimpe"
+        // Remove the default dropdown indicator and separator
+        components={{
+          DropdownIndicator: () => null,
+          IndicatorSeparator: () => null,
+        }}
+      />
+    </div>
+  );
+};
 
 export default GymLocationSelect;

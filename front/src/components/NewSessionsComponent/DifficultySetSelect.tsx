@@ -1,16 +1,5 @@
 import React from "react";
-import { UseFormReset, UseFormRegister } from "react-hook-form";
-import { DifficultySet } from "../../models/ClimbingSession";
-import { FormSessionProps } from "../../models/PropsInterface";
-
-interface DifficultySetSelectProps {
-  options: DifficultySet[];
-  setSelectedSet: (
-    set: React.SetStateAction<DifficultySet | undefined>
-  ) => void;
-  reset: UseFormReset<FormSessionProps>;
-  register: UseFormRegister<FormSessionProps>;
-}
+import { DifficultySetSelectProps } from "../../models/PropsInterface";
 
 const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
   options,
@@ -35,6 +24,7 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
           setSelectedSet(selectedSet);
         }
       }}
+      defaultValue={"options[0].id"}
     >
       {options.map((set) => (
         <option key={set.id} value={set.id}>

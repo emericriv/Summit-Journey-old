@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, useFieldArray, FieldValues } from "react-hook-form";
 import { createClimbingSession, getClimbingGyms, getDifficultySets } from "../services/apiServices";
-import { ClimbingSession, DifficultySet, DifficultyCompletion, Difficulty, DifficultyCompletionWithId } from "../models/ClimbingSession";
+import { ClimbingSession, DifficultySet, DifficultyCompletion, DifficultyCompletionWithId } from "../models/ClimbingSession";
 import { FormSessionProps, GymOption } from "../models/PropsInterface";
 import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
 
@@ -11,16 +11,16 @@ export const useClimbingSessionForm = () => {
     handleSubmit,
     setValue,
     control,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
     reset,
   } = useForm<FormSessionProps>({
     defaultValues: {
       date: new Date().toISOString().split("T")[0],
-      location: "",
+      location: undefined,
       climbType: "IN",
-      height: 0,
-      comments: "",
-      difficultySet: "",
+      height: 5,
+      comments: undefined,
+      difficultySet: undefined,
       difficulties: [],
     },
   });
@@ -29,11 +29,10 @@ export const useClimbingSessionForm = () => {
   const [gymOptions, setGymOptions] = useState<GymOption[]>([]);
   const [difficultySets, setDifficultySets] = useState<DifficultySet[]>([]);
   const [selectedSet, setSelectedSet] = useState<DifficultySet>();
-  const [difficultyCounts, setDifficultyCounts] = useState<DifficultyCompletion[]>([]);
 
   // Chargement des données initiales
   useEffect(() => {
-    console.log("Chargement des salles d'escalade...");
+    console.log("Chargement des salles d'escalade et des sets de difficulté...");
     const getGyms = async () => {
       const allGyms = await getClimbingGyms();
       setAllGyms(allGyms);
@@ -49,32 +48,19 @@ export const useClimbingSessionForm = () => {
       setSelectedSet(DifficultySets[0]);
     };
     getAllDifficultySets();
-    getGyms();
-  }, []);
+    getGyms().then(() => {
+      reset();
+    });
+  }, [reset]);
 
   useEffect(() => {
     if (fields.length === 0 && selectedSet) {
       // Ajouter les difficultés déjà ordonnées grâce à `ordering` défini dans le modèle Django
       selectedSet.difficulties.forEach((difficultyOrder) => {
-        append(difficultyOrder.difficulty);
+        append({ difficulty: difficultyOrder.difficulty, count: 0 });
       });
     }
   }, [append, selectedSet, fields.length]);
-
-  const handleCountChange = (difficulty: Difficulty, count: number) => {
-    setDifficultyCounts((prevCounts) => {
-      const existing = prevCounts.find(
-        (dc) => dc.difficulty.label === difficulty.label
-      );
-      if (existing) {
-        return prevCounts.map((dc) =>
-          dc.difficulty.label === difficulty.label ? { ...dc, count } : dc
-        );
-      } else {
-        return [...prevCounts, { difficulty, count }];
-      }
-    });
-  };
   
   // Post de la nouvelle session
   const addSession = async (data: FieldValues) => {
@@ -84,13 +70,14 @@ export const useClimbingSessionForm = () => {
     });
 
     if (!selectedGym?.id) {
+      console.log(data.location);
       console.error("Aucune salle d'escalade trouvée pour ce nom.");
       return; // Arrête la fonction si aucune salle n'est trouvée
     }
 
     //Remplacer les difficultées par leur id
-    const difficultyCountsbis: DifficultyCompletionWithId[] =
-      difficultyCounts.map((difficulty: DifficultyCompletion) => {
+    const difficultyCountsWithID: DifficultyCompletionWithId[] =
+      data.difficulties.map((difficulty: DifficultyCompletion) => {
         const difficultyId = selectedSet?.difficulties.find(
           (d) => d.difficulty.label === difficulty.difficulty.label
         )?.difficulty.id;
@@ -106,7 +93,7 @@ export const useClimbingSessionForm = () => {
       comments: data.comments,
       climber: 1,
       difficultySet: selectedSet?.id || 1,
-      difficultyCompletions: difficultyCountsbis,
+      difficultyCompletions: difficultyCountsWithID,
     };
     console.log("Nouvelle session:", newSession);
 
@@ -131,7 +118,7 @@ export const useClimbingSessionForm = () => {
     difficultySets,
     selectedSet,
     setSelectedSet,
-    handleCountChange,
     addSession,
+    errors,
   };
 };

@@ -1,9 +1,6 @@
 from django.contrib import admin
 from .models import ClimbingSession, Difficulty, DifficultySet, DifficultyCompletion, DifficultyOrder
 
-@admin.register(ClimbingSession)
-class ClimbingSessionAdmin(admin.ModelAdmin):
-  list_display =('climber', 'date', 'location', 'climb_type', 'height', 'comments')
 
 @admin.register(Difficulty)
 class DifficultyAdmin(admin.ModelAdmin):
@@ -25,3 +22,13 @@ class DifficultySetAdmin(admin.ModelAdmin):
 @admin.register(DifficultyCompletion)
 class DifficultyCompletionAdmin(admin.ModelAdmin):
   list_display = ('session', 'difficulty', 'count')
+  
+class DifficultyCompletionInline(admin.TabularInline):  # Utilisation de TabularInline pour un affichage compact
+    model = DifficultyCompletion
+    extra = 1  # Nombre de champs supplémentaires pour ajouter de nouvelles instances dans le formulaire
+    fields = ['difficulty', 'count']  # Les champs à afficher dans l'interface
+  
+@admin.register(ClimbingSession)
+class ClimbingSessionAdmin(admin.ModelAdmin):
+  list_display =('climber', 'date', 'location', 'climb_type', 'height', 'comments')
+  inlines = [DifficultyCompletionInline]

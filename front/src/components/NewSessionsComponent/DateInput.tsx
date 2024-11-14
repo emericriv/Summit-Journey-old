@@ -1,10 +1,5 @@
 import React from "react";
-import { UseFormRegister } from "react-hook-form";
-import { FormSessionProps } from "../../models/PropsInterface";
-
-interface DateInputProps {
-  register: UseFormRegister<FormSessionProps>;
-}
+import { DateInputProps } from "../../models/PropsInterface";
 
 const DateInput: React.FC<DateInputProps> = ({ register }) => (
   <div className="col-md-6">

@@ -1,20 +1,10 @@
 import React from "react";
-import { Difficulty, DifficultySet } from "../../models/ClimbingSession";
 import DifficultyInput from "./DifficultyInput";
-import { FieldArrayWithId, UseFormRegister } from "react-hook-form";
-import { FormSessionProps } from "../../models/PropsInterface";
-
-interface DifficultyListProps {
-  fields: FieldArrayWithId<FormSessionProps, "difficulties", "id">[];
-  register: UseFormRegister<FormSessionProps>;
-  handleCountChange: (difficulty: Difficulty, count: number) => void;
-  selectedSet: DifficultySet | undefined;
-}
+import { DifficultyListProps } from "../../models/PropsInterface";
 
 const DifficultyList: React.FC<DifficultyListProps> = ({
   fields,
   register,
-  handleCountChange,
   selectedSet,
 }) => (
   <div className="mb-3">
@@ -24,10 +14,9 @@ const DifficultyList: React.FC<DifficultyListProps> = ({
         fields.map((field, index) => (
           <DifficultyInput
             key={index}
-            difficulty={field}
+            difficulty={field.difficulty}
             register={register}
-            name={`difficulties.${index}.label`}
-            onCountChange={handleCountChange}
+            name={`difficulties[${index}].count`}
           />
         ))}
     </div>

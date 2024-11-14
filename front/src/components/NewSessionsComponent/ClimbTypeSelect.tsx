@@ -1,10 +1,5 @@
 import React from "react";
-import { UseFormRegister } from "react-hook-form";
-import { FormSessionProps } from "../../models/PropsInterface";
-
-interface ClimbTypeSelectProps {
-  register: UseFormRegister<FormSessionProps>;
-}
+import { ClimbTypeSelectProps } from "../../models/PropsInterface";
 
 const ClimbTypeSelect: React.FC<ClimbTypeSelectProps> = ({ register }) => (
   <div className="mb-3">
@@ -15,6 +10,7 @@ const ClimbTypeSelect: React.FC<ClimbTypeSelectProps> = ({ register }) => (
       {...register("climbType", { required: true })}
       className="form-select"
       id="climbingType"
+      defaultValue={"IN"}
     >
       <option value="IN">Intérieur</option>
       <option value="OUT">Extérieur</option>

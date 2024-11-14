@@ -85,6 +85,11 @@ ul {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
 .nav-button a:hover,
 .nav-button.active a {
   color :#e08a12;

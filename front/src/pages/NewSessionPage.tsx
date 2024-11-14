@@ -5,6 +5,9 @@ import ClimbTypeSelect from "../components/NewSessionsComponent/ClimbTypeSelect"
 import DifficultySetSelect from "../components/NewSessionsComponent/DifficultySetSelect";
 import DifficultyList from "../components/NewSessionsComponent/DifficultyList";
 import CommentInput from "../components/NewSessionsComponent/CommentInput";
+import HeightInput from "../components/NewSessionsComponent/HeightInput";
+import { FieldValues } from "react-hook-form";
+import { useEffect } from "react";
 
 const NewSessionPage: React.FC = () => {
   const {
@@ -18,19 +21,29 @@ const NewSessionPage: React.FC = () => {
     difficultySets,
     selectedSet,
     setSelectedSet,
-    handleCountChange,
     addSession,
+    errors,
   } = useClimbingSessionForm();
 
+  const onSubmit = async (data: FieldValues) => {
+    await addSession(data);
+    reset();
+  };
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
   return (
-    <div className="hero-banner d-flex align-items-center justify-content-center">
+    <div className="hero-banner d-flex align-items-center justify-content-center my-3">
       <div
         className="newSession container py-5 py-md-0"
         id="session-tab-pane"
         role="tabpanel"
         aria-labelledby="session-tab"
       >
-        <form onSubmit={handleSubmit(addSession)}>
+        {/* Add session ands reset form on submit */}
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row mb-3">
             <DateInput register={register} />
             <GymLocationSelect options={gymOptions} setValue={setValue} />
@@ -45,9 +58,9 @@ const NewSessionPage: React.FC = () => {
           <DifficultyList
             fields={fields}
             register={register}
-            handleCountChange={handleCountChange}
             selectedSet={selectedSet}
           />
+          <HeightInput register={register} />
           <CommentInput register={register} />
           <button type="submit" disabled={isSubmitting} className="btn">
             Enregistrer la session

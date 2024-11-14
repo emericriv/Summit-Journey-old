@@ -1,12 +1,11 @@
 import { ClimbingGymLocation } from './ClimbingGymLocation';
-import { Difficulty } from './ClimbingSession';
-import { UseFormRegister } from "react-hook-form";
+import { Difficulty, DifficultyCompletion, DifficultySet } from './ClimbingSession';
+import { FieldArrayWithId, UseFormRegister, UseFormReset, UseFormSetValue } from "react-hook-form";
 
 export interface DifficultyInputProps {
   difficulty: Difficulty;
   register: UseFormRegister<FormSessionProps>;
-  name: `difficulties.${number}.label`;
-  onCountChange: (difficulty: Difficulty, count: number) => void;
+  name: `difficulties[${number}].count`;
 }
 
 export interface NavButtonProps {
@@ -23,7 +22,43 @@ export interface MarkerWithInfoWindowProps {
   gym: ClimbingGymLocation;
 }
 
-// Used in NewSessionPage.tsx for the select element
+// Used for component in the new session form
+export interface ClimbTypeSelectProps {
+  register: UseFormRegister<FormSessionProps>;
+}
+
+export interface CommentInputProps {
+  register: UseFormRegister<FormSessionProps>;
+}
+
+export interface DateInputProps {
+  register: UseFormRegister<FormSessionProps>;
+}
+
+export interface DifficultyListProps {
+  fields: FieldArrayWithId<FormSessionProps, "difficulties", "id">[];
+  register: UseFormRegister<FormSessionProps>;
+  selectedSet: DifficultySet | undefined;
+}
+
+export interface DifficultySetSelectProps {
+  options: DifficultySet[];
+  setSelectedSet: (
+    set: React.SetStateAction<DifficultySet | undefined>
+  ) => void;
+  reset: UseFormReset<FormSessionProps>;
+  register: UseFormRegister<FormSessionProps>;
+}
+
+export interface HeightInputProps {
+  register: UseFormRegister<FormSessionProps>;
+}
+
+export interface GymLocationSelectProps {
+  options: { label: string; value: string }[];
+  setValue: UseFormSetValue<FormSessionProps>;
+}
+
 export interface GymOption {
   label: string;
   value: string;
@@ -36,6 +71,6 @@ export interface FormSessionProps {
   height: number;
   comments: string;
   difficultySet: string;
-  difficulties: Difficulty[];
+  difficulties: DifficultyCompletion[];
 }
   
