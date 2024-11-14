@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm, useFieldArray, FieldValues } from "react-hook-form";
-import { createClimbingSession, getClimbingGyms, getDifficultySets } from "../services/apiServices";
+import { createClimbingSession } from "../services/apiServices";
 import { ClimbingSession, DifficultySet, DifficultyCompletion, DifficultyCompletionWithId } from "../models/ClimbingSession";
-import { FormSessionProps, GymOption } from "../models/PropsInterface";
-import { ClimbingGymLocation } from "../models/ClimbingGymLocation";
+import { FormSessionProps,  } from "../models/PropsInterface";
 
 export const useClimbingSessionForm = () => {
   const {
@@ -25,33 +24,7 @@ export const useClimbingSessionForm = () => {
     },
   });
   const { fields, append } = useFieldArray({ control, name: "difficulties" });
-  const [allGyms, setAllGyms] = useState<ClimbingGymLocation[]>([]);
-  const [gymOptions, setGymOptions] = useState<GymOption[]>([]);
-  const [difficultySets, setDifficultySets] = useState<DifficultySet[]>([]);
   const [selectedSet, setSelectedSet] = useState<DifficultySet>();
-
-  // Chargement des données initiales
-  useEffect(() => {
-    console.log("Chargement des salles d'escalade et des sets de difficulté...");
-    const getGyms = async () => {
-      const allGyms = await getClimbingGyms();
-      setAllGyms(allGyms);
-      const options: GymOption[] = allGyms.map((gym: { gymName: string }) => ({
-        label: gym.gymName,
-        value: gym.gymName,
-      }));
-      setGymOptions(options);
-    };
-    const getAllDifficultySets = async () => {
-      const DifficultySets = await getDifficultySets();
-      setDifficultySets(DifficultySets);
-      setSelectedSet(DifficultySets[0]);
-    };
-    getAllDifficultySets();
-    getGyms().then(() => {
-      reset();
-    });
-  }, [reset]);
 
   useEffect(() => {
     if (fields.length === 0 && selectedSet) {
@@ -64,17 +37,6 @@ export const useClimbingSessionForm = () => {
   
   // Post de la nouvelle session
   const addSession = async (data: FieldValues) => {
-    // Récupérer la salle d'escalade sélectionnée
-    const selectedGym: ClimbingGymLocation | undefined = allGyms.find((gym) => {
-      return gym.gymName === data.location;
-    });
-
-    if (!selectedGym?.id) {
-      console.log(data.location);
-      console.error("Aucune salle d'escalade trouvée pour ce nom.");
-      return; // Arrête la fonction si aucune salle n'est trouvée
-    }
-
     //Remplacer les difficultées par leur id
     const difficultyCountsWithID: DifficultyCompletionWithId[] =
       data.difficulties.map((difficulty: DifficultyCompletion) => {
@@ -87,7 +49,7 @@ export const useClimbingSessionForm = () => {
     // Créer l'objet ClimbingSession à envoyer à l'API
     const newSession: ClimbingSession = {
       date: data.date,
-      location: selectedGym.id,
+      location: data.location,
       climbType: data.climbType,
       height: data.height,
       comments: data.comments,
@@ -114,8 +76,6 @@ export const useClimbingSessionForm = () => {
     isSubmitting,
     reset,
     fields,
-    gymOptions,
-    difficultySets,
     selectedSet,
     setSelectedSet,
     addSession,

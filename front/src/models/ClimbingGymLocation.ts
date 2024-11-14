@@ -1,5 +1,5 @@
 export interface ClimbingGymLocation {
-  id?: number;
+  id: number;
   gymName: string;
   long: number;
   lat: number;

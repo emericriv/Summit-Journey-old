@@ -17,8 +17,6 @@ const NewSessionPage: React.FC = () => {
     isSubmitting,
     reset,
     fields,
-    gymOptions,
-    difficultySets,
     selectedSet,
     setSelectedSet,
     addSession,
@@ -31,7 +29,7 @@ const NewSessionPage: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(errors);
+    console.log("errors", errors);
   }, [errors]);
 
   return (
@@ -46,11 +44,10 @@ const NewSessionPage: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row mb-3">
             <DateInput register={register} />
-            <GymLocationSelect options={gymOptions} setValue={setValue} />
+            <GymLocationSelect setValue={setValue} />
           </div>
           <ClimbTypeSelect register={register} />
           <DifficultySetSelect
-            options={difficultySets}
             setSelectedSet={setSelectedSet}
             reset={reset}
             register={register}

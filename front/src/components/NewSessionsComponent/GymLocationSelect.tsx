@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Select, { StylesConfig } from "react-select";
-import { GymLocationSelectProps } from "../../models/PropsInterface";
+import { GymLocationSelectProps, GymOption } from "../../models/PropsInterface";
+import { getClimbingGyms } from "../../services/apiServices";
+import { ClimbingGymLocation } from "../../models/ClimbingGymLocation";
 
 const selectStyles: StylesConfig<{ label: string; value: string }, false> = {
   control: (provided) => ({
@@ -20,10 +22,28 @@ const selectStyles: StylesConfig<{ label: string; value: string }, false> = {
   }),
 };
 
-const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
-  options,
-  setValue,
-}) => {
+const GymLocationSelect: React.FC<GymLocationSelectProps> = ({ setValue }) => {
+  const [options, setOptions] = useState<GymOption[]>();
+
+  useEffect(() => {
+    console.log(
+      "Chargement des salles d'escalade et des sets de difficulté..."
+    );
+    const getGyms = async () => {
+      const allGyms = await getClimbingGyms();
+      const options: GymOption[] = allGyms.map((gym: ClimbingGymLocation) => ({
+        label: gym.gymName,
+        value: gym.id.toString(),
+      }));
+      setOptions(options);
+    };
+    getGyms();
+  }, []);
+
+  if (!options) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="col-md-6">
       <p className="form-label">Lieu</p>

@@ -42,7 +42,6 @@ export interface DifficultyListProps {
 }
 
 export interface DifficultySetSelectProps {
-  options: DifficultySet[];
   setSelectedSet: (
     set: React.SetStateAction<DifficultySet | undefined>
   ) => void;
@@ -55,7 +54,6 @@ export interface HeightInputProps {
 }
 
 export interface GymLocationSelectProps {
-  options: { label: string; value: string }[];
   setValue: UseFormSetValue<FormSessionProps>;
 }
 
