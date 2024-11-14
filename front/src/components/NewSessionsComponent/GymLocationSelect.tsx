@@ -32,6 +32,7 @@ const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
         onChange={(selectedOption) => {
           setValue("location", selectedOption?.value || "");
         }}
+        isClearable
         styles={selectStyles}
         placeholder="Lieu de la grimpe"
         // Remove the default dropdown indicator and separator
