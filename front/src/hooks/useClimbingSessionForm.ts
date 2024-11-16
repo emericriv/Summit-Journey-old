@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, useFieldArray, FieldValues } from "react-hook-form";
 import { createClimbingSession } from "../services/apiServices";
-import { ClimbingSession, DifficultySet, DifficultyCompletion, DifficultyCompletionWithId } from "../models/ClimbingSession";
+import { PostClimbingSession, DifficultySet, DifficultyCompletion, DifficultyCompletionWithId } from "../models/ClimbingSession";
 import { FormSessionProps,  } from "../models/PropsInterface";
 
 export const useClimbingSessionForm = () => {
@@ -43,11 +43,11 @@ export const useClimbingSessionForm = () => {
         const difficultyId = selectedSet?.difficulties.find(
           (d) => d.difficulty.label === difficulty.difficulty.label
         )?.difficulty.id;
-        return { difficulty: difficultyId || 1, count: difficulty.count };
+        return { difficulty: Number(difficultyId) || 1, count: Number(difficulty.count) };
       });
 
-    // Créer l'objet ClimbingSession à envoyer à l'API
-    const newSession: ClimbingSession = {
+    // Créer l'objet PostClimbingSession à envoyer à l'API
+    const newSession: PostClimbingSession = {
       date: data.date,
       location: data.location,
       climbType: data.climbType,

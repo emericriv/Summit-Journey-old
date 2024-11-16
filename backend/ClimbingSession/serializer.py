@@ -1,9 +1,21 @@
 from rest_framework import serializers
 from .models import ClimbingSession, ClimbingGymLocations, Difficulty, DifficultyCompletion, DifficultySet, DifficultyOrder
 from ClimbingGymLocations.serializer import ClimbingGymLocationsSerializer
-
+    
+class DifficultySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Difficulty
+        fields = '__all__'
+        
 # Serializer pour afficher les difficultés avec leur nombre de complétion
-class DifficultyCompletionSerializer(serializers.ModelSerializer):
+class DifficultyCompletionRetrieveSerializer(serializers.ModelSerializer):
+    difficulty = DifficultySerializer()
+    class Meta:
+        model = DifficultyCompletion
+        fields = ['difficulty', 'count']
+        
+class DifficultyCompletionCreateUpdateSerializer(serializers.ModelSerializer):
+    difficulty = serializers.PrimaryKeyRelatedField(queryset=Difficulty.objects.all())
     class Meta:
         model = DifficultyCompletion
         fields = ['difficulty', 'count']
@@ -11,7 +23,7 @@ class DifficultyCompletionSerializer(serializers.ModelSerializer):
 # Serializer pour les requêtes GET - inclut la liste des difficultés complétées
 class ClimbingSessionRetrieveSerializer(serializers.ModelSerializer):
     location = ClimbingGymLocationsSerializer()
-    difficulty_completions = DifficultyCompletionSerializer(many=True, read_only=True)
+    difficulty_completions = DifficultyCompletionRetrieveSerializer(many=True, read_only=True)
 
     class Meta:
         model = ClimbingSession
@@ -20,7 +32,7 @@ class ClimbingSessionRetrieveSerializer(serializers.ModelSerializer):
 # Serializer pour les requêtes POST et PUT - accepte les IDs des difficultés et leur nombre
 class ClimbingSessionCreateUpdateSerializer(serializers.ModelSerializer):
     location = serializers.PrimaryKeyRelatedField(queryset=ClimbingGymLocations.objects.all())
-    difficulty_completions = DifficultyCompletionSerializer(many=True)
+    difficulty_completions = DifficultyCompletionCreateUpdateSerializer(many=True)
 
     class Meta:
         model = ClimbingSession
@@ -55,11 +67,6 @@ class ClimbingSessionCreateUpdateSerializer(serializers.ModelSerializer):
             DifficultyCompletion.objects.create(session=instance, **completion_data)
         
         return instance
-    
-class DifficultySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Difficulty
-        fields = '__all__'
         
 class DifficultyOrderSerializer(serializers.ModelSerializer):
     difficulty = DifficultySerializer()

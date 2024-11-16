@@ -72,3 +72,6 @@ export interface FormSessionProps {
   difficulties: DifficultyCompletion[];
 }
   
+export interface SessionHistoryProps {
+  numberOfSessions: number;
+}

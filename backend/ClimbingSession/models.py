@@ -62,6 +62,7 @@ class ClimbingSession(models.Model):
     
     class Meta:
         verbose_name = 'Session'
+        ordering = ['-date']
 
 class DifficultyCompletion(models.Model):
     session = models.ForeignKey(ClimbingSession, on_delete=models.CASCADE, related_name="difficulty_completions")

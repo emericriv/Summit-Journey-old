@@ -1,9 +1,18 @@
 from rest_framework import viewsets
-from .models import ClimbingSession, DifficultyOrder, DifficultySet
+from .models import ClimbingSession, DifficultyOrder, DifficultySet, DifficultyCompletion
 from .serializer import ClimbingSessionCreateUpdateSerializer, ClimbingSessionRetrieveSerializer, DifficultyOrderSerializer, DifficultySetSerializer
 
 class ClimbingSessionViewSet(viewsets.ModelViewSet):
     queryset = ClimbingSession.objects.all()
+    
+    def get_serializer_class(self):
+        # Voir le fichier serializer.py pour plus d'informations
+        if self.request.method == 'GET':
+            return ClimbingSessionRetrieveSerializer
+        return ClimbingSessionCreateUpdateSerializer
+    
+class DifficultyCompletionViewSet(viewsets.ModelViewSet):
+    queryset = DifficultyCompletion.objects.all()
     
     def get_serializer_class(self):
         # Voir le fichier serializer.py pour plus d'informations

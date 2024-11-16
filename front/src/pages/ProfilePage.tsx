@@ -1,62 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { getClimbingSessions } from "../services/apiServices";
-import { ClimbingSession } from "../models/ClimbingSession";
+import React from "react";
+import SessionHistory from "../components/SessionHistory";
+import PersonnalInformations from "../components/PersonnalInformations";
 
 const ProfilePage: React.FC = () => {
-  const [sessions, setSessions] = useState<ClimbingSession[]>([]);
-
-  useEffect(() => {
-    // Récupère les sessions lors du chargement de la page
-    const fetchSessions = async () => {
-      try {
-        const fetchedSessions = await getClimbingSessions();
-        setSessions(fetchedSessions);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des sessions :", error);
-      }
-    };
-
-    fetchSessions();
-  }, []);
-
   return (
-    <div className="hero-banner d-flex align-items-center justify-content-center">
-      <div className="container mt-5">
-        <h1 className="text-center mb-4">Mes Sessions d'Entraînement</h1>
-
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="table-dark">
-              <tr>
-                <th>Date</th>
-                <th>Location</th>
-                <th>Type d'escalade</th>
-                <th>Hauteur</th>
-                <th>Commentaires</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessions.map((session) => (
-                // <Link to={'/sessions/'+session.id}></Link>
-                <tr key={session.id}>
-                  {/* Utilise une clé unique */}
-                  <td>{session.date}</td>
-                  <td>
-                    {
-                      typeof session.location === "object" && session.location
-                        ? session.location.gymName // Afficher le gymName si c'est un objet
-                        : "N/A" // Afficher N/A si c'est un nombre (ID)
-                    }
-                  </td>
-                  <td>
-                    {session.climbType === "IN" ? "Intérieur" : "Extérieur"}
-                  </td>
-                  <td>{session.height} m</td>
-                  <td>{session.comments}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="hero-banner d-flex justify-content-center align-items-center">
+      <div className="row">
+        <div className="col-md-6 mb-3">
+          <PersonnalInformations />
+        </div>
+        <div className="col-md-6">
+          <div className="session-history card mb-3">
+            <div className="card-body">
+              <h3>Historique des sessions</h3>
+              <SessionHistory numberOfSessions={2} />
+            </div>
+          </div>
+          <div className="equipments card mb-3">
+            <div className="card-body">
+              <h3>Matériel et modèle</h3>
+              <ul>
+                <li>Chaussons d'escalade : La Sportiva Solution</li>
+                <li>Harnais : Petzl Corax</li>
+                <li>Casque : Petzl Meteor</li>
+                <li>Corde : Beal Joker</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

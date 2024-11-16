@@ -1,4 +1,4 @@
-import { ClimbingSession, DifficultyOrder, DifficultySet } from '../models/ClimbingSession';
+import { PostClimbingSession, GetClimbingSession, DifficultyOrder, DifficultySet } from '../models/ClimbingSession';
 import { ClimbingGymLocation } from '../models/ClimbingGymLocation';
 import axios from "axios";
 import {AxiosError} from 'axios';
@@ -12,16 +12,16 @@ const apiClient = axios.create({
   }
 })
 
-export const createClimbingSession = async (session: ClimbingSession): Promise<ClimbingSession> => {
-  const response = await apiClient.post<ClimbingSession>(
+export const createClimbingSession = async (session: PostClimbingSession): Promise<PostClimbingSession> => {
+  const response = await apiClient.post<PostClimbingSession>(
     "sessions/",
     session
   );
   return response.data;
 };
 
-export const getClimbingSessions = async (): Promise<ClimbingSession[]> => {
-  const response = await apiClient.get<ClimbingSession[]>("sessions/");
+export const getClimbingSessions = async (): Promise<GetClimbingSession[]> => {
+  const response = await apiClient.get<GetClimbingSession[]>("sessions/");
   return response.data;
 };
 

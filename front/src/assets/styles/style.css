@@ -179,9 +179,14 @@ ul {
   vertical-align: middle;
 }
 
+.difficulty-border {
+  border: 1px solid #1e1e1f;
+}
+
 .newSession input,
 .newSession select,
-.newSession textarea {
+.newSession textarea,
+.newSession .custom-select {
   opacity: 0.8;
 }
 
