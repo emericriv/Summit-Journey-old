@@ -47,6 +47,7 @@ export interface DifficultySetSelectProps {
   ) => void;
   reset: UseFormReset<FormSessionProps>;
   register: UseFormRegister<FormSessionProps>;
+  initSetId?: number;
 }
 
 export interface HeightInputProps {

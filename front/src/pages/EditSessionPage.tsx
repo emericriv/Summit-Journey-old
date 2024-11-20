@@ -98,6 +98,7 @@ const EditSessionPage: React.FC = () => {
             updateSelectedSet={updateSelectedSet}
             reset={reset}
             register={register}
+            initSetId={session?.difficultySet}
           />
           <DifficultyList
             fields={fields}

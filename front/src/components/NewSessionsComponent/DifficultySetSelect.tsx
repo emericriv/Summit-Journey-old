@@ -6,6 +6,7 @@ import { DifficultySet } from "../../models/ClimbingSession";
 const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
   updateSelectedSet,
   reset,
+  initSetId,
 }) => {
   const [difficultySets, setDifficultySets] = useState<DifficultySet[]>([]);
   const [selectedSetId, setSelectedSetId] = useState<number | null>(null);
@@ -18,14 +19,21 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
 
       // Ne réinitialise que si aucun set n'est déjà sélectionné
       if (sets.length > 0 && selectedSetId === null) {
-        updateSelectedSet(sets[0]);
-        if (sets[0].id !== undefined) {
-          setSelectedSetId(sets[0].id);
+        if (initSetId) {
+          const set = sets.find((set) => set.id === initSetId);
+          if (set) {
+            setSelectedSetId(initSetId);
+          }
+        } else {
+          updateSelectedSet(sets[0]);
+          if (sets[0].id !== undefined) {
+            setSelectedSetId(sets[0].id);
+          }
         }
       }
     };
     fetchDifficultySets();
-  }, [updateSelectedSet, selectedSetId]);
+  }, [updateSelectedSet, selectedSetId, initSetId]);
 
   const handleSelect = (set: DifficultySet) => {
     updateSelectedSet(set);
