@@ -1,11 +1,11 @@
 import { ClimbingGymLocation } from './ClimbingGymLocation';
 import { Difficulty, DifficultyCompletion, DifficultySet } from './ClimbingSession';
-import { FieldArrayWithId, UseFormRegister, UseFormReset, UseFormSetValue } from "react-hook-form";
+import { Control, FieldArrayWithId, UseFormRegister, UseFormReset } from "react-hook-form";
 
 export interface DifficultyInputProps {
   difficulty: Difficulty;
   register: UseFormRegister<FormSessionProps>;
-  name: `difficulties[${number}].count`;
+  name: `difficulties.${number}.count`;
 }
 
 export interface NavButtonProps {
@@ -42,8 +42,8 @@ export interface DifficultyListProps {
 }
 
 export interface DifficultySetSelectProps {
-  setSelectedSet: (
-    set: React.SetStateAction<DifficultySet | undefined>
+  updateSelectedSet: (
+    set: DifficultySet
   ) => void;
   reset: UseFormReset<FormSessionProps>;
   register: UseFormRegister<FormSessionProps>;
@@ -54,7 +54,8 @@ export interface HeightInputProps {
 }
 
 export interface GymLocationSelectProps {
-  setValue: UseFormSetValue<FormSessionProps>;
+  control: Control<FormSessionProps>;
+  initGymId?: number;
 }
 
 export interface GymOption {
@@ -64,11 +65,11 @@ export interface GymOption {
 
 export interface FormSessionProps { 
   date: string;
-  location: string;
+  location: number;
   climbType: string;
   height: number;
   comments: string;
-  difficultySet: string;
+  difficultySet: number;
   difficulties: DifficultyCompletion[];
 }
   

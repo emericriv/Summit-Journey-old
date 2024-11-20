@@ -4,7 +4,7 @@ import { getDifficultySets } from "../../services/apiServices";
 import { DifficultySet } from "../../models/ClimbingSession";
 
 const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
-  setSelectedSet,
+  updateSelectedSet,
   reset,
 }) => {
   const [difficultySets, setDifficultySets] = useState<DifficultySet[]>([]);
@@ -15,61 +15,64 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
     const fetchDifficultySets = async () => {
       const sets = await getDifficultySets();
       setDifficultySets(sets);
-      if (sets.length > 0) {
-        setSelectedSet(sets[0]);
+
+      // Ne réinitialise que si aucun set n'est déjà sélectionné
+      if (sets.length > 0 && selectedSetId === null) {
+        updateSelectedSet(sets[0]);
         if (sets[0].id !== undefined) {
           setSelectedSetId(sets[0].id);
         }
       }
     };
     fetchDifficultySets();
-  }, [setSelectedSet]);
+  }, [updateSelectedSet, selectedSetId]);
 
   const handleSelect = (set: DifficultySet) => {
-    setSelectedSet(set);
+    updateSelectedSet(set);
     if (set.id !== undefined) {
       setSelectedSetId(set.id);
     }
-    reset({ difficulties: [] }); // Réinitialise les difficultés associées
+    reset((formValues) => ({
+      ...formValues,
+      difficulties: [],
+    })); // Réinitialise les difficultés associées
     setIsOpen(false); // Ferme le menu après sélection
   };
 
   return (
     <div className="mb-3 position-relative">
-      <label htmlFor="difficultySet" className="form-label">
+      <label className="form-label">
         Set de difficulté
+        <div
+          className="custom-select form-select"
+          onClick={() => setIsOpen(!isOpen)}
+          style={{
+            border: "1px solid #ccc",
+            padding: "10px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            position: "relative",
+            width: "30vw",
+          }}
+        >
+          {/* Affiche l'option sélectionnée */}
+          {difficultySets
+            .find((set) => set.id === selectedSetId)
+            ?.difficulties.map((difficulty, index) => (
+              <span
+                key={index}
+                className="difficulty-circle difficulty-border mx-1"
+                style={{
+                  backgroundColor: difficulty.difficulty.color
+                    ? difficulty.difficulty.hexColor
+                    : "transparent",
+                }}
+              >
+                {difficulty.difficulty.color ? "" : difficulty.difficulty.label}
+              </span>
+            ))}
+        </div>
       </label>
-      <div
-        id="difficultySet"
-        aria-label="Set de difficulté"
-        aria-labelledby="difficultySet"
-        className="custom-select form-select"
-        onClick={() => setIsOpen(!isOpen)}
-        style={{
-          border: "1px solid #ccc",
-          padding: "10px",
-          borderRadius: "5px",
-          cursor: "pointer",
-          position: "relative",
-        }}
-      >
-        {/* Affiche l'option sélectionnée */}
-        {difficultySets
-          .find((set) => set.id === selectedSetId)
-          ?.difficulties.map((difficulty, index) => (
-            <span
-              key={index}
-              className="difficulty-circle difficulty-border mx-1"
-              style={{
-                backgroundColor: difficulty.difficulty.color
-                  ? difficulty.difficulty.hexColor
-                  : "transparent",
-              }}
-            >
-              {difficulty.difficulty.color ? "" : difficulty.difficulty.label}
-            </span>
-          ))}
-      </div>
 
       {/* Menu déroulant des options */}
       {isOpen && (
@@ -80,7 +83,7 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
             margin: 0,
             padding: 0,
             position: "absolute",
-            width: "100%",
+            width: "30vw",
             border: "1px solid #ccc",
             borderRadius: "5px",
             background: "#eee",

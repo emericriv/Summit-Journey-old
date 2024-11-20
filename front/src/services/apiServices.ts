@@ -20,10 +20,23 @@ export const createClimbingSession = async (session: PostClimbingSession): Promi
   return response.data;
 };
 
+export const updateClimbingSession = async (session: PostClimbingSession): Promise<PostClimbingSession> => {
+  const response = await apiClient.put<PostClimbingSession>(
+    `sessions/${session.id}/`,
+    session
+  );
+  return response.data;
+}
+
 export const getClimbingSessions = async (): Promise<GetClimbingSession[]> => {
   const response = await apiClient.get<GetClimbingSession[]>("sessions/");
   return response.data;
 };
+
+export const GetClimbingSessionById = async (id: number): Promise<GetClimbingSession> => {
+  const response = await apiClient.get<GetClimbingSession>(`sessions/${id}/`);
+  return response.data;
+}
 
 export const getDifficultySets = async (): Promise<DifficultySet[]> => {
   const response = await apiClient.get<DifficultySet[]>("difficulty-sets/");

@@ -5,7 +5,7 @@ import SessionHistory from "../components/SessionHistory";
 const HomePage: React.FC = () => {
   return (
     <div className="hero-banner d-flex justify-content-center align-items-center">
-      <div className="row mx-5 py-5 py-md-0">
+      <div className="row mx-5 py-5 py-md-3">
         <div className="welcome">
           <h1>Bienvenue sur Summit Journey</h1>
           <p>Votre compagnon pour suivre vos aventures de grimpe !</p>

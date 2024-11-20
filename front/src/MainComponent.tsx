@@ -6,6 +6,7 @@ import LocationsPage from "./pages/LocationsPage";
 import ProfilePage from "./pages/ProfilePage";
 import Footer from "./components/footer";
 import Navbar from "./components/Navbar";
+import EditSessionPage from "./pages/EditSessionPage";
 
 const MainComponent: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const MainComponent: React.FC = () => {
         {/* <Route path="/session/:id" element={<SessionPage />} /> */}
         <Route path="/locations" element={<LocationsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/edit-session/:id" element={<EditSessionPage />} />
       </Routes>
       <Footer />
     </>

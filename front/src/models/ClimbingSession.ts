@@ -1,7 +1,7 @@
 import { ClimbingGymLocation } from "./ClimbingGymLocation";
 
 export interface GetClimbingSession {
-  id?: number;
+  id: number;
   date: string;
   location: ClimbingGymLocation;
   climbType: string;
@@ -14,6 +14,7 @@ export interface GetClimbingSession {
 }
 
 export interface PostClimbingSession {
+  id ?: number;
   date: string;
   location: number;
   climbType: string;

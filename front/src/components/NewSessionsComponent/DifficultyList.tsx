@@ -16,7 +16,7 @@ const DifficultyList: React.FC<DifficultyListProps> = ({
             key={index}
             difficulty={field.difficulty}
             register={register}
-            name={`difficulties[${index}].count`}
+            name={`difficulties.${index}.count`}
           />
         ))}
     </div>

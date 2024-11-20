@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getClimbingSessions } from "../services/apiServices";
 import { GetClimbingSession } from "../models/ClimbingSession";
 import { SessionHistoryProps } from "../models/PropsInterface";
+import { Link } from "react-router-dom";
 
 const SessionHistory: React.FC<SessionHistoryProps> = ({
   numberOfSessions,
@@ -100,7 +101,12 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                       ? getHighestDifficultiesCompleted(session, 2)
                       : `autre`}
                   </td>
-                  <td>{session.comments}</td>
+                  {/* <td>{session.comments}</td> */}
+                  <td>
+                    <Link to={`/edit-session/${session.id}`} className="btn">
+                      Edit
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>
