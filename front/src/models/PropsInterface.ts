@@ -1,5 +1,5 @@
 import { ClimbingGymLocation } from './ClimbingGymLocation';
-import { Difficulty, DifficultyCompletion, DifficultySet } from './ClimbingSession';
+import { ClimbingSession, Difficulty, DifficultyCompletion, DifficultySet } from './ClimbingSession';
 import { Control, FieldArrayWithId, UseFormRegister, UseFormReset } from "react-hook-form";
 
 export interface DifficultyInputProps {
@@ -76,4 +76,8 @@ export interface FormSessionProps {
   
 export interface SessionHistoryProps {
   numberOfSessions: number;
+}
+
+export interface SessionFormComponentProps {
+  session?: ClimbingSession;
 }

@@ -1,4 +1,4 @@
-import { PostClimbingSession, GetClimbingSession, DifficultyOrder, DifficultySet } from '../models/ClimbingSession';
+import { ClimbingSession, ClimbingSession, DifficultyOrder, DifficultySet } from '../models/ClimbingSession';
 import { ClimbingGymLocation } from '../models/ClimbingGymLocation';
 import axios from "axios";
 import {AxiosError} from 'axios';
@@ -12,29 +12,29 @@ const apiClient = axios.create({
   }
 })
 
-export const createClimbingSession = async (session: PostClimbingSession): Promise<PostClimbingSession> => {
-  const response = await apiClient.post<PostClimbingSession>(
+export const createClimbingSession = async (session: ClimbingSession): Promise<ClimbingSession> => {
+  const response = await apiClient.post<ClimbingSession>(
     "sessions/",
     session
   );
   return response.data;
 };
 
-export const updateClimbingSession = async (session: PostClimbingSession): Promise<PostClimbingSession> => {
-  const response = await apiClient.put<PostClimbingSession>(
+export const updateClimbingSession = async (session: ClimbingSession): Promise<ClimbingSession> => {
+  const response = await apiClient.put<ClimbingSession>(
     `sessions/${session.id}/`,
     session
   );
   return response.data;
 }
 
-export const getClimbingSessions = async (): Promise<GetClimbingSession[]> => {
-  const response = await apiClient.get<GetClimbingSession[]>("sessions/");
+export const getClimbingSessions = async (): Promise<ClimbingSession[]> => {
+  const response = await apiClient.get<ClimbingSession[]>("sessions/");
   return response.data;
 };
 
-export const GetClimbingSessionById = async (id: number): Promise<GetClimbingSession> => {
-  const response = await apiClient.get<GetClimbingSession>(`sessions/${id}/`);
+export const GetClimbingSessionById = async (id: number): Promise<ClimbingSession> => {
+  const response = await apiClient.get<ClimbingSession>(`sessions/${id}/`);
   return response.data;
 }
 

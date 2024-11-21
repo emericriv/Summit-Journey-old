@@ -8,32 +8,35 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
   reset,
   initSetId,
 }) => {
-  const [difficultySets, setDifficultySets] = useState<DifficultySet[]>([]);
+  const [difficultySets, setDifficultySets] = useState<DifficultySet[]>();
   const [selectedSetId, setSelectedSetId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false); // Gère l'ouverture du menu déroulant
 
   useEffect(() => {
-    const fetchDifficultySets = async () => {
-      const sets = await getDifficultySets();
-      setDifficultySets(sets);
+    if (!difficultySets) fetchDifficultySets();
+  }, []);
 
-      // Ne réinitialise que si aucun set n'est déjà sélectionné
-      if (sets.length > 0 && selectedSetId === null) {
-        if (initSetId) {
-          const set = sets.find((set) => set.id === initSetId);
-          if (set) {
-            setSelectedSetId(initSetId);
-          }
-        } else {
-          updateSelectedSet(sets[0]);
-          if (sets[0].id !== undefined) {
-            setSelectedSetId(sets[0].id);
-          }
+  const fetchDifficultySets = async () => {
+    const sets = await getDifficultySets();
+    setDifficultySets(sets);
+
+    // Ne réinitialise que si aucun set n'est déjà sélectionné
+    if (sets.length > 0 && !selectedSetId) {
+      if (initSetId) {
+        const set = sets.find((set) => set.id === initSetId);
+        if (set) {
+          updateSelectedSet(set);
+          setSelectedSetId(initSetId);
+        }
+      } else {
+        updateSelectedSet(sets[0]);
+        if (sets[0].id !== undefined) {
+          setSelectedSetId(sets[0].id);
         }
       }
-    };
-    fetchDifficultySets();
-  }, [updateSelectedSet, selectedSetId, initSetId]);
+      console.log("initSetId", initSetId);
+    }
+  };
 
   const handleSelect = (set: DifficultySet) => {
     updateSelectedSet(set);
@@ -64,21 +67,24 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
           }}
         >
           {/* Affiche l'option sélectionnée */}
-          {difficultySets
-            .find((set) => set.id === selectedSetId)
-            ?.difficulties.map((difficulty, index) => (
-              <span
-                key={index}
-                className="difficulty-circle difficulty-border mx-1"
-                style={{
-                  backgroundColor: difficulty.difficulty.color
-                    ? difficulty.difficulty.hexColor
-                    : "transparent",
-                }}
-              >
-                {difficulty.difficulty.color ? "" : difficulty.difficulty.label}
-              </span>
-            ))}
+          {difficultySets &&
+            difficultySets
+              .find((set) => set.id === selectedSetId)
+              ?.difficulties.map((difficulty, index) => (
+                <span
+                  key={index}
+                  className="difficulty-circle difficulty-border mx-1"
+                  style={{
+                    backgroundColor: difficulty.difficulty.color
+                      ? difficulty.difficulty.hexColor
+                      : "transparent",
+                  }}
+                >
+                  {difficulty.difficulty.color
+                    ? ""
+                    : difficulty.difficulty.label}
+                </span>
+              ))}
         </div>
       </label>
 
@@ -100,39 +106,40 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
             overflowY: "auto",
           }}
         >
-          {difficultySets.map((set) => (
-            <li
-              key={set.id}
-              onClick={() => handleSelect(set)}
-              style={{
-                padding: "10px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-              className="option-item"
-            >
-              {/* Contenu de chaque option */}
-              <div>
-                {set.difficulties.map((difficulty, index) => (
-                  <span
-                    key={index}
-                    className="difficulty-circle difficulty-border mx-1"
-                    style={{
-                      backgroundColor: difficulty.difficulty.color
-                        ? difficulty.difficulty.hexColor
-                        : "transparent",
-                    }}
-                  >
-                    {difficulty.difficulty.color
-                      ? ""
-                      : difficulty.difficulty.label}
-                  </span>
-                ))}
-              </div>
-            </li>
-          ))}
+          {difficultySets &&
+            difficultySets.map((set) => (
+              <li
+                key={set.id}
+                onClick={() => handleSelect(set)}
+                style={{
+                  padding: "10px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+                className="option-item"
+              >
+                {/* Contenu de chaque option */}
+                <div>
+                  {set.difficulties.map((difficulty, index) => (
+                    <span
+                      key={index}
+                      className="difficulty-circle difficulty-border mx-1"
+                      style={{
+                        backgroundColor: difficulty.difficulty.color
+                          ? difficulty.difficulty.hexColor
+                          : "transparent",
+                      }}
+                    >
+                      {difficulty.difficulty.color
+                        ? ""
+                        : difficulty.difficulty.label}
+                    </span>
+                  ))}
+                </div>
+              </li>
+            ))}
         </ul>
       )}
     </div>

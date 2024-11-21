@@ -1,7 +1,7 @@
 import { ClimbingGymLocation } from "./ClimbingGymLocation";
 
-export interface GetClimbingSession {
-  id: number;
+export interface ClimbingSession {
+  id?: number;
   date: string;
   location: ClimbingGymLocation;
   climbType: string;
@@ -13,23 +13,11 @@ export interface GetClimbingSession {
   // media?: string;        // URL vers l'image, si ce champ est ajouté plus tard
 }
 
-export interface PostClimbingSession {
-  id ?: number;
-  date: string;
-  location: number;
-  climbType: string;
-  height: number;
-  difficultySet: number;
-  comments: string;
-  difficultyCompletions: DifficultyCompletionWithId[];
-  climber: number;
-}
-
 export interface Difficulty {
   id : number;
-  label: string;
-  color: boolean;
-  hexColor: string;
+  label?: string;
+  color?: boolean;
+  hexColor?: string;
 }
 
 export interface DifficultyOrder{

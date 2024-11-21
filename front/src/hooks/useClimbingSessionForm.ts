@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, useFieldArray, FieldValues } from "react-hook-form";
 import { createClimbingSession, updateClimbingSession } from "../services/apiServices";
-import { PostClimbingSession, DifficultySet, DifficultyCompletion, DifficultyCompletionWithId } from "../models/ClimbingSession";
+import { ClimbingSession, DifficultySet, DifficultyCompletion, DifficultyCompletionWithId } from "../models/ClimbingSession";
 import { FormSessionProps,  } from "../models/PropsInterface";
 
 export const useClimbingSessionForm = () => {
@@ -41,10 +41,13 @@ export const useClimbingSessionForm = () => {
   }, [append, selectedSet, fields.length]);
   
   // Post de la nouvelle session
+  // Changer pour Prepare data pour la requete API
   const addUpdateSession = async ({ data, sessionId }: { data: FieldValues, sessionId?: number }) => {
+    // Partie Préparation de données à garder dans le hook
+
     //Remplacer les difficultées par leur id
     console.log("Données du formulaire:", data);
-    const difficultyCountsWithID: DifficultyCompletionWithId[] =
+    const difficultyCountsWithID: DifficultyCompletion[] =
       data.difficulties.map((difficulty: DifficultyCompletion) => {
         const difficultyId = selectedSet?.difficulties.find(
           (d) => d.difficulty.label === difficulty.difficulty.label
@@ -52,8 +55,8 @@ export const useClimbingSessionForm = () => {
         return { difficulty: Number(difficultyId) || 1, count: Number(difficulty.count) };
       });
 
-    // Créer l'objet PostClimbingSession à envoyer à l'API
-    const newSession: PostClimbingSession = {
+    // Créer l'objet ClimbingSession à envoyer à l'API
+    const newSession: ClimbingSession = {
       date: data.date,
       location: data.location,
       climbType: data.climbType,
@@ -65,10 +68,14 @@ export const useClimbingSessionForm = () => {
       };
     console.log("Nouvelle session:", newSession);
 
+    // Return newSession
+
+    // Bouger la logique dans la page associée
+
     // Appel à l'API pour ajouter la session
     if (sessionId) {
       // Update the session
-      const updatedSession : PostClimbingSession = { ...newSession, id: sessionId };
+      const updatedSession : ClimbingSession = { ...newSession, id: sessionId };
       updateClimbingSession(updatedSession)
         .then((data) => {
           console.log("Session mise à jour avec succès:", data);

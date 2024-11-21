@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getClimbingSessions } from "../services/apiServices";
-import { GetClimbingSession } from "../models/ClimbingSession";
+import { ClimbingSession } from "../models/ClimbingSession";
 import { SessionHistoryProps } from "../models/PropsInterface";
 import { Link } from "react-router-dom";
 
 const SessionHistory: React.FC<SessionHistoryProps> = ({
   numberOfSessions,
 }) => {
-  const [sessions, setSessions] = useState<GetClimbingSession[]>();
+  const [sessions, setSessions] = useState<ClimbingSession[]>();
 
   useEffect(() => {
     // Récupère les sessions lors du chargement de la page
@@ -27,7 +27,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
   }, [numberOfSessions]);
 
   const getHighestDifficultiesCompleted = (
-    session: GetClimbingSession,
+    session: ClimbingSession,
     number: number
   ) => {
     // reverse used set to start from the highest difficulty
