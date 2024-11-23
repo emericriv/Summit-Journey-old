@@ -39,7 +39,7 @@ const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
         const allGyms = await getClimbingGyms();
         const options: GymOption[] = allGyms.map(
           (gym: ClimbingGymLocation) => ({
-            label: gym.gymName,
+            label: gym.gymName || "Unknown Gym",
             value: gym.id.toString(),
           })
         );

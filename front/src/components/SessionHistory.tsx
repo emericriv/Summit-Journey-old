@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getClimbingSessions } from "../services/apiServices";
 import { ClimbingSession } from "../models/ClimbingSession";
 import { SessionHistoryProps } from "../models/PropsInterface";
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import HighestDifficultiesCompletedComponent from "./HighestDifficultiesCompletedComponent";
 
 const SessionHistory: React.FC<SessionHistoryProps> = ({
   numberOfSessions,
@@ -26,39 +27,13 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
     fetchSessions();
   }, [numberOfSessions]);
 
-  const getHighestDifficultiesCompleted = (
-    session: ClimbingSession,
-    number: number
-  ) => {
-    // reverse used set to start from the highest difficulty
-    const reversedDifficultyCompletions = [
-      ...(session.difficultyCompletions || []),
-    ].reverse();
-    const topDifficulties = reversedDifficultyCompletions
-      .filter((completion) => completion.count > 0) // Exclure les counts nuls
-      .slice(0, number); // Récupérer les 2 premiers éléments
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    // setHighestDifficulties(topDifficulties);
-    return (
-      <div>
-        {topDifficulties &&
-          topDifficulties.map((difficulty, index) => (
-            <span key={index}>
-              {difficulty.count}{" "}
-              <span
-                className={`difficulty-circle mx-1`}
-                style={{
-                  backgroundColor: difficulty.difficulty.color
-                    ? difficulty.difficulty.hexColor
-                    : "transparent",
-                }}
-              >
-                {difficulty.difficulty.color ? "" : difficulty.difficulty.label}
-              </span>
-            </span>
-          ))}
-      </div>
-    );
+  const goToEditSessionPage = (sessionId: number) => {
+    navigate(`/edit-session/${sessionId}`, {
+      state: { from: location.pathname },
+    });
   };
 
   if (sessions?.length === 0) {
@@ -67,7 +42,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
 
   return (
     <>
-      {sessions && (
+      {sessions ? (
         <div className="table-responsive">
           <table className="table table-striped table-hover">
             <thead className="table-dark">
@@ -97,20 +72,36 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                   </td>
                   <td>
                     {Array.isArray(session.difficultyCompletions) &&
-                    session.difficultyCompletions
-                      ? getHighestDifficultiesCompleted(session, 2)
-                      : `autre`}
+                    session.difficultyCompletions ? (
+                      <HighestDifficultiesCompletedComponent
+                        session={session}
+                        number={2}
+                      />
+                    ) : (
+                      `autre`
+                    )}
                   </td>
                   {/* <td>{session.comments}</td> */}
                   <td>
-                    <Link to={`/edit-session/${session.id}`} className="btn">
+                    <button
+                      onClick={() => {
+                        if (session.id) goToEditSessionPage(session.id);
+                      }}
+                      className="btn"
+                    >
                       Edit
-                    </Link>
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      ) : (
+        <div className="table-responsive mb-2">
+          <div className="placeholder" style={{ height: 163, width: "100%" }}>
+            <div className="animated-background"></div>
+          </div>
         </div>
       )}
     </>

@@ -81,3 +81,8 @@ export interface SessionHistoryProps {
 export interface SessionFormComponentProps {
   session?: ClimbingSession;
 }
+
+export interface HighestDifficultiesCompletedProps {
+  session: ClimbingSession;
+  number: number;
+}

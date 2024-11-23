@@ -1,15 +1,21 @@
 // Page of redirection when a props.session need to be edeted
 import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useClimbingSessionForm } from "../hooks/useClimbingSessionForm";
-import DateInput from "./NewSessionsComponent/DateInput";
-import GymLocationSelect from "./NewSessionsComponent/GymLocationSelect";
-import ClimbTypeSelect from "./NewSessionsComponent/ClimbTypeSelect";
-import DifficultySetSelect from "./NewSessionsComponent/DifficultySetSelect";
-import DifficultyList from "./NewSessionsComponent/DifficultyList";
-import HeightInput from "./NewSessionsComponent/HeightInput";
-import CommentInput from "./NewSessionsComponent/CommentInput";
+import DateInput from "./SessionFormComponents/DateInput";
+import GymLocationSelect from "./SessionFormComponents/GymLocationSelect";
+import ClimbTypeSelect from "./SessionFormComponents/ClimbTypeSelect";
+import DifficultySetSelect from "./SessionFormComponents/DifficultySetSelect";
+import DifficultyList from "./SessionFormComponents/DifficultyList";
+import HeightInput from "./SessionFormComponents/HeightInput";
+import CommentInput from "./SessionFormComponents/CommentInput";
 import { FieldValues } from "react-hook-form";
 import { SessionFormComponentProps } from "../models/PropsInterface";
+import { ClimbingSession } from "../models/ClimbingSession";
+import {
+  createClimbingSession,
+  updateClimbingSession,
+} from "../services/apiServices";
 
 const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   props: SessionFormComponentProps
@@ -23,22 +29,46 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
     fields,
     selectedSet,
     updateSelectedSet,
-    addUpdateSession,
+    PrepareDataForRequest,
     errors,
     control,
   } = useClimbingSessionForm();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const previousRoute = location.state?.from || "/"; // Par défaut, retourne à "/"
 
   useEffect(() => {
     if (props.session) setValue("location", props.session.location.id);
   }, [props.session, setValue]);
 
   const onSubmit = async (data: FieldValues) => {
+    const sessionRequest = PrepareDataForRequest({ data: data });
     if (props.session) {
-      await addUpdateSession({ data: data, sessionId: props.session.id });
+      const updatedSession: ClimbingSession = {
+        ...sessionRequest,
+        id: props.session.id,
+      };
+      updateClimbingSession(updatedSession)
+        .then((data) => {
+          console.log("Session mise à jour avec succès:", data);
+          navigate(previousRoute); // Redirige vers la route précédente
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la mise à jour de la session:", error);
+        });
     } else {
-      await addUpdateSession({ data: data });
+      createClimbingSession(sessionRequest)
+        .then((data) => {
+          console.log("Session ajoutée avec succès:", data);
+          // on ne fait le reset que lorsque la session est ajoutée
+          reset();
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'ajout de la session:", error);
+        });
     }
-    reset();
   };
 
   useEffect(() => {
@@ -92,7 +122,9 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
           <HeightInput register={register} />
           <CommentInput register={register} />
           <button type="submit" disabled={isSubmitting} className="btn">
-            Mettre à jour la props.session
+            {props.session
+              ? "Mettre à jour la session"
+              : "Enregistrer la session"}
           </button>
         </form>
       </div>

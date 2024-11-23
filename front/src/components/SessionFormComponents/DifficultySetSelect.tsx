@@ -34,7 +34,6 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
           setSelectedSetId(sets[0].id);
         }
       }
-      console.log("initSetId", initSetId);
     }
   };
 

@@ -42,7 +42,7 @@ export const useClimbingSessionForm = () => {
   
   // Post de la nouvelle session
   // Changer pour Prepare data pour la requete API
-  const addUpdateSession = async ({ data, sessionId }: { data: FieldValues, sessionId?: number }) => {
+  const PrepareDataForRequest = ({ data }: { data: FieldValues }) => {
     // Partie Préparation de données à garder dans le hook
 
     //Remplacer les difficultées par leur id
@@ -68,30 +68,7 @@ export const useClimbingSessionForm = () => {
       };
     console.log("Nouvelle session:", newSession);
 
-    // Return newSession
-
-    // Bouger la logique dans la page associée
-
-    // Appel à l'API pour ajouter la session
-    if (sessionId) {
-      // Update the session
-      const updatedSession : ClimbingSession = { ...newSession, id: sessionId };
-      updateClimbingSession(updatedSession)
-        .then((data) => {
-          console.log("Session mise à jour avec succès:", data);
-        })
-        .catch((error) => {
-          console.error("Erreur lors de la mise à jour de la session:", error);
-        });
-    } else {
-    createClimbingSession(newSession)
-      .then((data) => {
-        console.log("Session ajoutée avec succès:", data);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de l'ajout de la session:", error);
-      });
-    };
+    return newSession;
   }
 
   return {
@@ -103,7 +80,7 @@ export const useClimbingSessionForm = () => {
     fields,
     selectedSet,
     updateSelectedSet,
-    addUpdateSession,
+    PrepareDataForRequest,
     errors,
     control,
   };
