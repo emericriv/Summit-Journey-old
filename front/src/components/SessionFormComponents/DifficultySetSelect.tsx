@@ -66,7 +66,7 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
           }}
         >
           {/* Affiche l'option sélectionnée */}
-          {difficultySets &&
+          {difficultySets ? (
             difficultySets
               .find((set) => set.id === selectedSetId)
               ?.difficulties.map((difficulty, index) => (
@@ -83,7 +83,10 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
                     ? ""
                     : difficulty.difficulty.label}
                 </span>
-              ))}
+              ))
+          ) : (
+            <span>Chargement...</span>
+          )}
         </div>
       </label>
 

@@ -20,7 +20,8 @@ from django.urls import path, include
 # URL patterns for the backend project
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('ClimbingSession.urls')),
+    path('api/', include('Locations.urls')),
     path('api/', include('ClimbingGymLocations.urls')),
+    path('api/', include('ClimbingSession.urls')),
     path('api/', include('SearchPlaces.urls')),
 ]

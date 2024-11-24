@@ -86,3 +86,7 @@ export interface HighestDifficultiesCompletedProps {
   session: ClimbingSession;
   number: number;
 }
+
+export interface CityAutocompleteProps {
+  setCityId: (id: number) => void;
+};

@@ -1,4 +1,4 @@
-import { ClimbingSession, ClimbingSession, DifficultyOrder, DifficultySet } from '../models/ClimbingSession';
+import { ClimbingSession, DifficultyOrder, DifficultySet } from '../models/ClimbingSession';
 import { ClimbingGymLocation } from '../models/ClimbingGymLocation';
 import axios from "axios";
 import {AxiosError} from 'axios';
@@ -53,10 +53,15 @@ export const getClimbingGyms = async (): Promise<ClimbingGymLocation[]> => {
   return response.data;
 }
 
-export const getGymsByCity = async ({ city }: { city: string }) => {
+export const getCities = async (query: string) => {
+  const response = await apiClient.get<[]>(`cities/search/?q=${query}`);
+  return response.data;
+}
+
+export const getGymsByCityId = async ({ cityId }: { cityId: number }) => {
     try {
       const response = await apiClient.get<ClimbingGymLocation[]>(
-        `gyms/search/${city}/`
+        `gyms/search/${cityId}/`
       );
       return response.data;
     } catch (error) {

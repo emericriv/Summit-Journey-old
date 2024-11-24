@@ -5,4 +5,4 @@ from .models import ClimbingGymLocations
 # list display stand for the columns that will be displayed in the admin panel
 @admin.register(ClimbingGymLocations)
 class ClimbingGymLocationsAdmin(admin.ModelAdmin):
-  list_display = ("gym_name", "long", "lat")
+  list_display = ["gym_name"]

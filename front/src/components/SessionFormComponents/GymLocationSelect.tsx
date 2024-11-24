@@ -56,7 +56,7 @@ const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
   }, [initGymId, options]);
 
   if (!options) {
-    return <div>Loading...</div>;
+    return <div className="col-md-6">Loading...</div>;
   }
 
   return (
