@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   AdvancedMarker,
   InfoWindow,
@@ -6,8 +5,11 @@ import {
 } from "@vis.gl/react-google-maps";
 import { MarkerWithInfoWindowProps } from "../models/PropsInterface";
 
-const MarkerWithInfoWindow: React.FC<MarkerWithInfoWindowProps> = ({ gym }) => {
-  const [infowindowOpen, setInfowindowOpen] = useState(false);
+const MarkerWithInfoWindow: React.FC<MarkerWithInfoWindowProps> = ({
+  gym,
+  openInfoWindowId,
+  setOpenInfoWindowId,
+}) => {
   const [markerRef, marker] = useAdvancedMarkerRef();
 
   const parseLocation = (location: string | undefined) => {
@@ -24,22 +26,29 @@ const MarkerWithInfoWindow: React.FC<MarkerWithInfoWindowProps> = ({ gym }) => {
   const lat = location ? location.lat : 0;
   const long = location ? location.lng : 0;
 
+  const isOpen = openInfoWindowId === gym.id; // Détermine si l'info-bulle est ouverte pour ce marqueur
+
   return (
     <>
       <AdvancedMarker
         ref={markerRef}
-        onClick={() => setInfowindowOpen(true)}
+        onClick={() => setOpenInfoWindowId(gym.id)} // Ouvrir l'info-bulle pour ce marqueur
         position={{ lat: lat, lng: long }}
         title={gym.gymName}
       />
-      {infowindowOpen && (
+      {isOpen && (
         <InfoWindow
           anchor={marker}
-          maxWidth={200}
-          onCloseClick={() => setInfowindowOpen(false)}
+          maxWidth={250}
+          onCloseClick={() => setOpenInfoWindowId(null)} // Fermer l'info-bulle
+          disableAutoPan={true} // Évite le recentrage automatique sur le marqueur
           style={{ color: "black" }}
         >
-          {gym.gymName}
+          <div
+            style={{ padding: "5px", fontSize: "14px", textAlign: "center" }}
+          >
+            <strong>{gym.gymName}</strong>
+          </div>
         </InfoWindow>
       )}
     </>

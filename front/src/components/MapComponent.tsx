@@ -1,9 +1,12 @@
+import React, { useState } from "react";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { MapComponentProps } from "../models/PropsInterface";
 import MarkerWithInfoWindow from "./MarkerWithInfoWindow";
 import MapHandler from "./MapHandler";
 
 const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
+  const [openInfoWindowId, setOpenInfoWindowId] = useState<number | null>(null);
+
   return (
     <div>
       <APIProvider
@@ -18,7 +21,12 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
           disableDefaultUI
         >
           {gyms.map((gym, index) => (
-            <MarkerWithInfoWindow key={index} gym={gym} />
+            <MarkerWithInfoWindow
+              key={index}
+              gym={gym}
+              openInfoWindowId={openInfoWindowId}
+              setOpenInfoWindowId={setOpenInfoWindowId}
+            />
           ))}
         </Map>
         <MapHandler gyms={gyms} />

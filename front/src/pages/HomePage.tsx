@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
           <h1>Bienvenue sur Summit Journey</h1>
           <p>Votre compagnon pour suivre vos aventures de grimpe !</p>
         </div>
-        <div className="dashboard mt-5">
+        <div className="dashboard mt-3">
           <h1>Tableau de bord</h1>
           <div className="row">
             <div className="col-12 col-md-4 my-2">
@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
                 <div className="card-body">
                   <h3>Historique des sessions</h3>
                   <SessionHistory numberOfSessions={2} />
-                  <Link to="/session" className="btn">
+                  <Link to="/session" className="btn mt-2">
                     Nouvelle session
                   </Link>
                 </div>

@@ -19,7 +19,9 @@ export interface MapComponentProps {
 }
 
 export interface MarkerWithInfoWindowProps {
-  gym: ClimbingGymLocation;
+  gym: ClimbingGymLocation; // Données du gymnase
+  openInfoWindowId: number | null; // ID de l'info-bulle ouverte ou null si aucune n'est ouverte
+  setOpenInfoWindowId: (id: number | null) => void; // Fonction pour ouvrir/fermer l'info-bulle
 }
 
 // Used for component in the new session form

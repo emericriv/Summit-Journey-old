@@ -8,18 +8,17 @@ import HighestDifficultiesCompletedComponent from "./HighestDifficultiesComplete
 const SessionHistory: React.FC<SessionHistoryProps> = ({
   numberOfSessions,
 }) => {
-  const [sessions, setSessions] = useState<ClimbingSession[]>();
+  const [sessions, setSessions] = useState<ClimbingSession[]>([]);
 
   useEffect(() => {
-    // Récupère les sessions lors du chargement de la page
     const fetchSessions = async () => {
       try {
         const fetchedSessions = await getClimbingSessions();
-        if (numberOfSessions > fetchedSessions.length) {
-          setSessions(fetchedSessions);
-        } else {
-          setSessions(fetchedSessions.slice(0, numberOfSessions));
-        }
+        setSessions(
+          numberOfSessions > fetchedSessions.length
+            ? fetchedSessions
+            : fetchedSessions.slice(0, numberOfSessions)
+        );
       } catch (error) {
         console.error("Erreur lors de la récupération des sessions :", error);
       }
@@ -36,66 +35,47 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
     });
   };
 
-  if (sessions?.length === 0) {
-    return <p>Vous n'avez pas encore de session enregistrée</p>;
-  }
-
   return (
     <>
       {sessions ? (
-        <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead className="table-dark">
-              <tr>
-                <th>Date</th>
-                <th>Location</th>
-                <th>Type d'escalade</th>
-                <th>Plus hautes difficultés</th>
-                <th>Commentaires</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessions.map((session) => (
-                // <Link to={'/sessions/'+session.id}></Link>
-                <tr key={session.id}>
-                  {/* Utilise une clé unique */}
-                  <td>{session.date}</td>
-                  <td>
-                    {
-                      typeof session.location === "object" && session.location
-                        ? session.location.gymName // Afficher le gymName si c'est un objet
-                        : "N/A" // Afficher N/A si c'est un nombre (ID)
-                    }
-                  </td>
-                  <td>
-                    {session.climbType === "IN" ? "Intérieur" : "Extérieur"}
-                  </td>
-                  <td>
-                    {Array.isArray(session.difficultyCompletions) &&
-                    session.difficultyCompletions ? (
-                      <HighestDifficultiesCompletedComponent
-                        session={session}
-                        number={2}
-                      />
-                    ) : (
-                      `autre`
-                    )}
-                  </td>
-                  {/* <td>{session.comments}</td> */}
-                  <td>
-                    <button
-                      onClick={() => {
-                        if (session.id) goToEditSessionPage(session.id);
-                      }}
-                      className="btn"
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid-table">
+          {/* En-tête */}
+          <div className="grid-header">Date</div>
+          <div className="grid-header">Location</div>
+          <div className="grid-header">Plus hautes difficultés</div>
+          <div></div> {/*Just an empty column for spacing*/}
+          {/* Colonne vide pour espacement */}
+          {/* Corps du tableau */}
+          {sessions.map((session) => (
+            <React.Fragment key={session.id}>
+              <div className="grid-cell">{session.date}</div>
+              <div className="grid-cell">
+                {typeof session.location === "object" && session.location
+                  ? session.location.gymName
+                  : "N/A"}
+              </div>
+              <div className="grid-cell">
+                {Array.isArray(session.difficultyCompletions) &&
+                session.difficultyCompletions ? (
+                  <HighestDifficultiesCompletedComponent
+                    session={session}
+                    number={3}
+                  />
+                ) : (
+                  "autre"
+                )}
+              </div>
+              <div className="edit-button">
+                <button
+                  onClick={() => session.id && goToEditSessionPage(session.id)}
+                  className="btn-icon"
+                  aria-label="Modifier"
+                >
+                  <i className="bi bi-pencil-fill"></i>
+                </button>
+              </div>
+            </React.Fragment>
+          ))}
         </div>
       ) : (
         <div className="table-responsive mb-2">
