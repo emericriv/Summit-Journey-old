@@ -39,7 +39,7 @@ const SessionHistory: React.FC = () => {
               placeholder="Mot de passe"
             />
           </div>
-          <button type="submit" className="btn">
+          <button type="submit" className="custom-btn btn">
             Enregistrer les modifications
           </button>
         </form>

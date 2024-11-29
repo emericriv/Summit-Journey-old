@@ -30,7 +30,8 @@ ul {
   color: white;
 }
 
-.welcome {
+.welcome,
+.location-search {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 20px;
@@ -142,23 +143,28 @@ ul {
   z-index: 30;
 }
 
-.btn {
-  background-color: #e08a12;
-  border-radius: 10px;
+.z-index-max{
+  z-index: 1030;
+}
+
+.custom-btn {
+  color: #e08a12;
+  border-radius: 5px;
+  border: 1px solid #e08a12;
   padding: 5px 10px;
 }
 
-.btn:hover {
+.custom-btn:hover {
   background-color: #e08a12;
   text-decoration: none;
 }
 
-.btn.active {
+.custom-btn.active {
   background-color: #d47910;
   color: #ffffff;
 }
 
-.btn:focus {
+.custom-btn:focus {
   outline: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -250,7 +256,7 @@ h3 {
 }
 
 /* Boutons d'édition */
-.edit-button {
+.div-button {
   display: flex;
   justify-content: flex-end;
   /* Aligne le bouton à droite */
@@ -260,14 +266,34 @@ h3 {
 .btn-icon {
   background: none;
   border: none;
-  color: #e08a12;
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.3s ease;
+  margin: 0 5px;
+  border-radius: 4px;
 }
 
-.btn-icon:hover {
-  color: #cf6d0d;
+.btn-icon-edit {
+  color: #e08a12;
+  border: 1px solid #e08a12;
+}
+
+.btn-icon-edit:hover {
+  color: #d47910;
+}
+
+.btn-icon-delete {
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.btn-icon-delete:hover {
+  color: #c82333;
+}
+
+.btn-icon-list {
+  color: #fff;
+  border: 1px solid #fff;
 }
 
 .btn-icon:focus {
@@ -279,4 +305,63 @@ h3 {
   .grid-table {
     font-size: 0.85rem;
   }
+}
+
+/* Modal style */
+/* Contenu principal de la modal */
+.custom-modal-content {
+  background-color: #f8f9fa;
+  /* Fond gris clair */
+  border: 1px solid #dee2e6;
+  /* Bordure douce */
+  border-radius: 0.5rem;
+  /* Coins arrondis */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  /* Ombre élégante */
+}
+
+/* En-tête */
+.custom-modal-header {
+  background-color: #343a40;
+  /* Fond sombre */
+  color: #ffffff;
+  /* Texte blanc */
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.custom-modal-title {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+/* Corps de la modal */
+.custom-modal-body {
+  color: #212529;
+  /* Texte noir */
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 1.5rem;
+}
+
+/* Pied de page */
+.custom-modal-footer {
+  padding: 1rem;
+  background-color: #e9ecef;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Boutons */
+.btn-outline-danger:hover {
+  color: #fff !important;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
 }

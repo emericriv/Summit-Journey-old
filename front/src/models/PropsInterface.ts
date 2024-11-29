@@ -1,6 +1,6 @@
 import { ClimbingGymLocation } from './ClimbingGymLocation';
 import { ClimbingSession, Difficulty, DifficultyCompletion, DifficultySet } from './ClimbingSession';
-import { Control, FieldArrayWithId, UseFormRegister, UseFormReset } from "react-hook-form";
+import { Control, FieldArrayWithId, UseFormRegister, UseFormReset, UseFormWatch } from "react-hook-form";
 
 export interface DifficultyInputProps {
   difficulty: Difficulty;
@@ -58,6 +58,7 @@ export interface HeightInputProps {
 
 export interface GymLocationSelectProps {
   control: Control<FormSessionProps>;
+  watch: UseFormWatch<FormSessionProps>;
   initGymId?: number;
 }
 
@@ -77,7 +78,7 @@ export interface FormSessionProps {
 }
   
 export interface SessionHistoryProps {
-  numberOfSessions: number;
+  numberOfSessions: number|"all";
 }
 
 export interface SessionFormComponentProps {

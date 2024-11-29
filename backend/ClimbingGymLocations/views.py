@@ -15,7 +15,7 @@ class ClimbingGymLocationsViewSet(viewsets.ModelViewSet):
 # APIView pour la recherche par ville
 class ClimbingGymLocationSearch(APIView):
     def get(self, request, city_id):
-        radius = 10000  # 20 km en mètres
+        radius = 10000  # 10 km en mètres
 
         try:
             # Récupère la ville et ses coordonnées

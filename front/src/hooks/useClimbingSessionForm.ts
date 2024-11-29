@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm, useFieldArray, FieldValues } from "react-hook-form";
-import { createClimbingSession, updateClimbingSession } from "../services/apiServices";
-import { ClimbingSession, DifficultySet, DifficultyCompletion, DifficultyCompletionWithId } from "../models/ClimbingSession";
+import { ClimbingSession, DifficultySet, DifficultyCompletion } from "../models/ClimbingSession";
 import { FormSessionProps,  } from "../models/PropsInterface";
 
 export const useClimbingSessionForm = () => {
@@ -10,6 +9,7 @@ export const useClimbingSessionForm = () => {
     handleSubmit,
     setValue,
     control,
+    watch,
     formState: { isSubmitting, errors },
     reset,
   } = useForm<FormSessionProps>({
@@ -83,5 +83,6 @@ export const useClimbingSessionForm = () => {
     PrepareDataForRequest,
     errors,
     control,
+    watch,
   };
 };

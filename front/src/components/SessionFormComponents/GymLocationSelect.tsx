@@ -26,9 +26,17 @@ const selectStyles: StylesConfig<{ label: string; value: string }, false> = {
 const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
   control,
   initGymId,
+  watch,
 }) => {
   const [options, setOptions] = useState<GymOption[]>();
   const [gymValue, setGymValue] = useState<GymOption | null>(null);
+
+  const locationValue = watch("location");
+  useEffect(() => {
+    if (locationValue === undefined) {
+      setGymValue(null);
+    }
+  }, [locationValue]);
 
   useEffect(() => {
     console.log(
@@ -72,8 +80,10 @@ const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
                 value={gymValue}
                 options={options}
                 onChange={(selectedOption) => {
-                  onChange(Number(selectedOption?.value));
-                  setGymValue(selectedOption as GymOption | null);
+                  onChange(
+                    selectedOption ? Number(selectedOption.value) : null
+                  ); // Met à jour le champ contrôlé
+                  setGymValue(selectedOption as GymOption | null); // Met à jour l'état local
                 }}
                 isClearable
                 ref={ref}

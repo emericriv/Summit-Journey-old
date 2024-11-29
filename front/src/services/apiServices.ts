@@ -28,6 +28,13 @@ export const updateClimbingSession = async (session: ClimbingSession): Promise<C
   return response.data;
 }
 
+export const deleteClimbingSession = async (id: number): Promise<void> => {
+  // Possibilité de rajouter un paramètre isDeleted dans la table session pour ne pas supprimer définitivement
+  // Et filtrer avec ce paramètre pour ne pas afficher les sessions supprimées et garder la data
+  const response = await apiClient.delete(`sessions/${id}/`);
+  return response.data;
+}
+
 export const getClimbingSessions = async (): Promise<ClimbingSession[]> => {
   const response = await apiClient.get<ClimbingSession[]>("sessions/");
   return response.data;

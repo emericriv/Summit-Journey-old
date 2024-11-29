@@ -32,6 +32,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
     PrepareDataForRequest,
     errors,
     control,
+    watch,
   } = useClimbingSessionForm();
 
   const location = useLocation();
@@ -104,6 +105,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
             <DateInput register={register} />
             <GymLocationSelect
               control={control}
+              watch={watch}
               initGymId={props.session?.location.id}
             />
           </div>
