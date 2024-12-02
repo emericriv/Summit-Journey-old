@@ -4,6 +4,8 @@
   min-width: 100px;
   background-color: #eee;
   border-radius: 10px;
+  flex-grow: 1;
+  width: 100%;
 }
 
 @keyframes placeHolderShimmer {
@@ -27,5 +29,4 @@
   background-size: 800px 104px;
   height: 100%;
   border-radius: 10px;
-  position: relative;
 }

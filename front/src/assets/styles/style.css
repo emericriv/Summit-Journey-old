@@ -238,8 +238,18 @@ h3 {
 }
 
 /* SessionHistory Component */
+/* PlaceHolder */
+.flex-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+  height: auto;
+}
+
 /* Conteneur principal */
 .grid-table {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr auto;
   gap: 0.5rem;
@@ -252,7 +262,7 @@ h3 {
   text-justify: auto;
   padding: 10px 5px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 0.5rem;
   color: #333;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -271,7 +281,7 @@ h3 {
 .grid-cell {
   padding: 10px 5px;
   color: black;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.75);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 0.5rem;
@@ -334,36 +344,6 @@ h3 {
 
 .btn-icon:focus {
   outline: none;
-}
-
-/* PlaceHolder */
-.placeholder {
-  height: 100%;
-  width:100%;
-  background-color: #eee;
-}
-
-@keyframes placeHolderShimmer {
-  0% {
-    background-position: -468px 0
-  }
-
-  100% {
-    background-position: 468px 0
-  }
-}
-
-.animated-background {
-  animation-duration: 1.25s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeHolderShimmer;
-  animation-timing-function: linear;
-  background: darkgray;
-  background: linear-gradient(to right, #eeeeee 10%, #dddddd 18%, #eeeeee 33%);
-  background-size: 800px 104px;
-  height: 100px;
-  position: relative;
 }
 
 /* Modal style */

@@ -19,7 +19,11 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
     const fetchSessions = async () => {
       try {
         const fetchedSessions = await getClimbingSessions();
-        setSessions(fetchedSessions);
+        // long loading simulation
+        setTimeout(() => {
+          setSessions(fetchedSessions);
+        }, 1000);
+        // setSessions(fetchedSessions);
       } catch (error) {
         console.error("Erreur lors de la récupération des sessions :", error);
       }
@@ -142,10 +146,8 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
           <div className="alert alert-info">Aucune session enregistrée</div>
         )
       ) : (
-        <div className="table-responsive mb-2">
-          <div className="placeholder" style={{ height: 163, width: "100%" }}>
-            <div className="animated-background"></div>
-          </div>
+        <div className="placeholder" style={{ minHeight: 163 }}>
+          <div className="animated-background"></div>
         </div>
       )}
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SessionHistory: React.FC = () => {
+const PersonnalInformations: React.FC = () => {
   return (
     <>
       <h3>Informations personnelles</h3>
@@ -46,4 +46,4 @@ const SessionHistory: React.FC = () => {
   );
 };
 
-export default SessionHistory;
+export default PersonnalInformations;

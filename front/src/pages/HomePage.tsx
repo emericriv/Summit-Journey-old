@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
             </div>
             <div className="col-12 col-md-8 my-2">
               <div className="card global-appearance">
-                <div className="card-body">
+                <div className="card-body flex-card">
                   <h3>Historique des sessions</h3>
                   <SessionHistory numberOfSessions={2} />
                   <Link to="/session" className="custom-btn btn mt-2">

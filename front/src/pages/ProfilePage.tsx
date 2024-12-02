@@ -8,7 +8,7 @@ const ProfilePage: React.FC = () => {
       <div className="personnal-informations profile-card global-appearance">
         <PersonnalInformations />
       </div>
-      <div className="session-history profile-card global-appearance">
+      <div className="session-history profile-card flex-card global-appearance">
         <h3>Historique des sessions</h3>
         <SessionHistory numberOfSessions={2} />
       </div>
