@@ -34,7 +34,7 @@ const SearchClimbingGyms: React.FC = () => {
           Indique moi les salles dans cette ville
         </button>
       </div>
-      <div className="map col-md-5 card p-3">
+      <div className="map col-md-5 card global-appearance p-3">
         <div className="ratio ratio-1x1">
           <MapComponent gyms={gyms} />
         </div>

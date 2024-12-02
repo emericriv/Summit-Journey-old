@@ -1,8 +1,18 @@
+/* Global style of the site */
+:root {
+  --primary-color: #e08a12;
+  --primary-color-transparent: rgba(224, 138, 18, 0.3);
+  --accent-primary-color: #d47910;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --background-color: rgba(24, 22, 22, 0.5);
+  --text-color: white;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   overflow-x: hidden;
-  /* Empêche le scroll horizontal */
+  /* Prevent horizontal scroll */
   background-image: url("/src/assets/img/site-background.jpg");
   background-attachment: fixed;
   background-position: center;
@@ -12,7 +22,7 @@ body {
 
 a {
   text-decoration: none;
-  color: white;
+  color: var(--text-color);
 }
 
 ul {
@@ -21,28 +31,57 @@ ul {
   padding: 0;
 }
 
-.welcome,
-.card,
-.newSession form,
-.navbar,
-.footer {
-  background-color: rgba(24, 22, 22, 0.5);
-  color: white;
+h2,
+h3 {
+  color: var(--text-color);
 }
 
-.welcome,
-.location-search {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 20px;
+.global-appearance {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-.newSession form {
-  padding: 20px;
-  border-radius: 10px;
+.custom-btn {
+  color: var(--text-color);
+  border: 1px solid var(--accent-primary-color);
+  background-color: var(--primary-color-transparent);
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.3s ease-in-out;
+  transition: transform 0.2s ease;
 }
 
-/* Personnalisation de la navbar */
+.custom-btn:hover {
+  background-color: var(--primary-color);
+  text-decoration: none;
+  transform: scale(1.02);
+}
+
+.custom-btn.active {
+  background-color: var(--accent-primary-color);
+  color: var(--text-color);
+}
+
+.custom-btn:focus {
+  outline: none;
+  box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.custom-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.hero-banner {
+  min-height: 80vh;
+  width: 100%;
+}
+
+/* Navbar and footer */
 .nav-bar,
 .footer {
   background-image: url("/src/assets/img/site-background.jpg");
@@ -56,7 +95,6 @@ ul {
 .navbar-div,
 .footer-div {
   height: 10vh;
-  background-color: rgba(24, 22, 22, 0.5);
 }
 
 .brand {
@@ -75,35 +113,39 @@ ul {
   cursor: pointer;
 }
 
-.nav-button,
-.btn {
+.nav-button{
   position: relative;
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-color);
   text-align: center;
   text-transform: uppercase;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.btn:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
+.footer {
+  text-align: center;
+  font-size: 0.9rem;
+  height: 10vh;
+}
+
+.sticky-bottom {
+  z-index: 1000; /*Reduced from 1020 to 1000 to avoid overlapping with the navbar*/
 }
 
 .nav-button a:hover,
 .nav-button.active a {
-  color :#e08a12;
+  color: var(--primary-color);
   text-decoration: none;
   cursor: pointer;
 }
 
-.nav-button a::after{
+.nav-button a::after {
   transition: 0.3s ease-in-out;
   content: "";
   width: 0%;
   height: 2px;
-  background-color: #e08a12;
+  background-color: var(--primary-color);
   position: absolute;
   bottom: -4px;
   left: 0px;
@@ -117,7 +159,7 @@ ul {
   content: "";
   width: 100%;
   height: 2px;
-  background-color: #e08a12;
+  background-color: var(--primary-color);
   position: absolute;
   bottom: -4px;
   left: 0px;
@@ -127,12 +169,13 @@ ul {
   display: none;
 }
 
-.mobile i{
+.mobile i {
   color: #fff;
   align-items: center;
   font-size: 1.5rem;
 }
 
+/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -143,40 +186,33 @@ ul {
   z-index: 30;
 }
 
-.z-index-max{
-  z-index: 1030;
+.z-index-max {
+  z-index: 1030; /* When overlay need to go over navbar and footer */
 }
 
-.custom-btn {
-  color: #e08a12;
-  border-radius: 5px;
-  border: 1px solid #e08a12;
-  padding: 5px 10px;
+/* Home Page */
+.welcome {
+  box-shadow: 0 0 10px var(--shadow-color);
+  border-radius: 10px;
+  padding: 20px;
 }
 
-.custom-btn:hover {
-  background-color: #e08a12;
-  text-decoration: none;
+/* Home Page -> Dashboard */
+.dashboard h1 {
+  color: var(--text-color);
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
-.custom-btn.active {
-  background-color: #d47910;
-  color: #ffffff;
+/* Form Session (Edit or create) */
+.sessionForm form {
+  padding: 20px;
+  border-radius: 10px;
 }
 
-.custom-btn:focus {
-  outline: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.hero-banner {
-  min-height: 80vh;
-  width: 100%;
-}
-
-/* New session */
-
-/* Style pour les ronds de difficulté */
 .difficulty-circle {
   display: inline-block;
   width: 20px;
@@ -187,79 +223,62 @@ ul {
 }
 
 .difficulty-border {
-  border: 1px solid #1e1e1f;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.newSession input,
-.newSession select,
-.newSession textarea,
-.newSession .custom-select {
+.sessionForm input,
+.sessionForm select,
+.sessionForm textarea,
+.sessionForm .custom-select {
   opacity: 0.8;
 }
 
-/* Footer */
-.footer {
-  text-align: center;
-  font-size: 0.9rem;
-  height: 10vh;
-}
-
-.sticky-bottom {
-  z-index: 1000; /*Reduced from 1020 to 1000 to avoid overlapping with the navbar*/
-}
-
-.newSession form {
-  border-radius: 10px;
-}
-
-h2,
-h3 {
-  color: #e9ecef;
-}
-
-/* Dashboard */
-
-.dashboard h1 {
-  color: #e9ecef;
-  font-weight: bold;
-  text-shadow: -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-}
-
-/* Composant sessionHistory */
+/* SessionHistory Component */
 /* Conteneur principal */
 .grid-table {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr auto;
-  /* Ajuste les proportions */
-  gap: 10px 5px;
-  align-items: center;
+  gap: 0.5rem;
 }
 
 /* En-tête */
 .grid-header {
   font-weight: bold;
   text-align: left;
+  text-justify: auto;
   padding: 10px 5px;
-  color: white;
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5rem;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-cell {
+  padding: 10px 5px;
+  align-self: center;
 }
 
 /* Cellules */
 .grid-cell {
   padding: 10px 5px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: black;
+  background-color: rgba(255, 255, 255, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+}
+
+.grid-cell:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Boutons d'édition */
 .div-button {
   display: flex;
   justify-content: flex-end;
-  /* Aligne le bouton à droite */
   padding-right: 5px;
 }
 
@@ -269,26 +288,33 @@ h3 {
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.3s ease;
-  margin: 0 5px;
   border-radius: 4px;
+  margin: 0 2px;
+  transition: transform 0.2s ease;
+}
+
+.btn-icon:hover {
+  transform: scale(1.1);
 }
 
 .btn-icon-edit {
-  color: #e08a12;
-  border: 1px solid #e08a12;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
 .btn-icon-edit:hover {
-  color: #d47910;
+  color: white;
+  background-color: var(--primary-color);
 }
 
 .btn-icon-delete {
-  color: #dc3545;
   border: 1px solid #dc3545;
+  color: #dc3545;
 }
 
 .btn-icon-delete:hover {
-  color: #c82333;
+  color: white;
+  background-color: #dc3545;
 }
 
 .btn-icon-list {
@@ -300,11 +326,34 @@ h3 {
   outline: none;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .grid-table {
-    font-size: 0.85rem;
+/* PlaceHolder */
+.placeholder {
+  height: 100%;
+  width:100%;
+  background-color: #eee;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0
   }
+
+  100% {
+    background-position: 468px 0
+  }
+}
+
+.animated-background {
+  animation-duration: 1.25s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: darkgray;
+  background: linear-gradient(to right, #eeeeee 10%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 100px;
+  position: relative;
 }
 
 /* Modal style */
@@ -364,4 +413,21 @@ h3 {
 .btn-secondary:hover {
   background-color: #5a6268;
   border-color: #545b62;
+}
+
+/* Profile Page */
+.profile-grid {
+  display: grid;
+  gap: 1rem;
+  padding: 2.25rem;
+}
+
+.profile-card {
+  padding: 1rem;
+  min-block-size: 7rem;
+  border-radius: 0.5rem;
+}
+
+.personnal-informations {
+  background-image: linear-gradient(62deg, #fbab7e, #f7ce68);
 }

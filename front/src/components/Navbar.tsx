@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
         <div className="overlay" onClick={() => setClicked(false)}></div>
       )}
       <nav className="sticky-top nav-bar" ref={navRef}>
-        <div className="container-fluid p-2 navbar-div d-flex align-items-center justify-content-between">
+        <div className="container-fluid p-2 navbar-div global-appearance d-flex align-items-center justify-content-between">
           <Link to="/" className="brand d-flex align-items-end">
             <svg
               width="140"

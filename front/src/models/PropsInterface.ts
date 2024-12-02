@@ -87,7 +87,7 @@ export interface SessionFormComponentProps {
 
 export interface HighestDifficultiesCompletedProps {
   session: ClimbingSession;
-  number: number;
+  numberOfDifficulties: number | "all";
 }
 
 export interface CityAutocompleteProps {

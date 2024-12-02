@@ -94,7 +94,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   return (
     <div className="hero-banner d-flex align-items-center justify-content-center my-3">
       <div
-        className="newSession container py-5 py-md-0"
+        className="sessionForm global-appearance container py-5 py-md-0"
         id="props.session-tab-pane"
         role="tabpanel"
         aria-labelledby="props.session-tab"
@@ -123,7 +123,11 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
           />
           <HeightInput register={register} />
           <CommentInput register={register} />
-          <button type="submit" disabled={isSubmitting} className="btn">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="btn custom-btn"
+          >
             {props.session
               ? "Mettre à jour la session"
               : "Enregistrer la session"}

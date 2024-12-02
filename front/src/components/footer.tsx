@@ -3,7 +3,7 @@
 const Footer: React.FC = () => {
   return (
     <footer className="footer text-center text-lg-start sticky-bottom">
-      <div className="footer-div container-fluid">
+      <div className="footer-div global-appearance container-fluid">
         <div className="container p-2">
           <p className="m-0">
             &copy; 2024 Summit Journey. Tous droits réservés.

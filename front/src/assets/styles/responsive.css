@@ -1,4 +1,4 @@
-@media screen and (max-width:769px) {
+@media screen and (max-width:768px) {
   nav ul {
     position: fixed;
     top: 10vh;
@@ -28,4 +28,25 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+  /* SessionHistory Component */
+  .grid-table {
+    font-size: 0.85rem;
+  }
 }
+
+@media screen and (min-width : 768px) {
+  /* Profile Page */
+  .profile-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .personnal-informations {
+    grid-area: 1/1/4/1;
+  }
+
+  .session-history {
+    grid-area: 1/2/3/4;
+  }
+}
+
