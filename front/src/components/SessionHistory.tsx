@@ -64,10 +64,11 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
             </div>
             {numberOfSessions !== "all" ? (
               <div className="button-cell">
-                <Link
-                  to="/all-sessions"
-                  className="bi bi-list-task btn-icon btn-icon-list py-1 px-2"
-                />
+                <Link to="/all-sessions">
+                  <button className="btn-icon btn-icon-list">
+                    <i className="bi bi-list-task"></i>
+                  </button>
+                </Link>
               </div>
             ) : (
               <div></div>

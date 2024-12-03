@@ -26,6 +26,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
     setValue,
     isSubmitting,
     reset,
+    defaultValues,
     fields,
     selectedSet,
     updateSelectedSet,
@@ -64,7 +65,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
         .then((data) => {
           console.log("Session ajoutée avec succès:", data);
           // on ne fait le reset que lorsque la session est ajoutée
-          reset();
+          reset(defaultValues);
         })
         .catch((error) => {
           console.error("Erreur lors de l'ajout de la session:", error);

@@ -33,6 +33,7 @@ const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
 
   const locationValue = watch("location");
   useEffect(() => {
+    console.log("Location value changed:", locationValue);
     if (locationValue === undefined) {
       setGymValue(null);
     }

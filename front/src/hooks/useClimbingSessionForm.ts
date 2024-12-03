@@ -4,6 +4,16 @@ import { ClimbingSession, DifficultySet, DifficultyCompletion } from "../models/
 import { FormSessionProps,  } from "../models/PropsInterface";
 
 export const useClimbingSessionForm = () => {
+  const defaultValues = {
+    date: new Date().toISOString().split("T")[0],
+    location: undefined,
+    climbType: "IN",
+    height: 5,
+    comments: undefined,
+    difficultySet: undefined,
+    difficulties: [],
+  }
+
   const {
     register,
     handleSubmit,
@@ -13,15 +23,7 @@ export const useClimbingSessionForm = () => {
     formState: { isSubmitting, errors },
     reset,
   } = useForm<FormSessionProps>({
-    defaultValues: {
-      date: new Date().toISOString().split("T")[0],
-      location: undefined,
-      climbType: "IN",
-      height: 5,
-      comments: undefined,
-      difficultySet: undefined,
-      difficulties: [],
-    },
+    defaultValues: defaultValues,
   });
   const { fields, append } = useFieldArray({ control, name: "difficulties" });
   const [selectedSet, setSelectedSet] = useState<DifficultySet>();
@@ -77,6 +79,7 @@ export const useClimbingSessionForm = () => {
     setValue,
     isSubmitting,
     reset,
+    defaultValues,
     fields,
     selectedSet,
     updateSelectedSet,

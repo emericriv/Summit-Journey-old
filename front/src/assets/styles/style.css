@@ -273,7 +273,6 @@ h3 {
 }
 
 .button-cell {
-  padding: 10px 5px;
   align-self: center;
 }
 
@@ -293,6 +292,11 @@ h3 {
 .grid-cell:hover {
   transform: scale(1.02);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.grid-cell,
+.grid-header {
+  cursor: default;
 }
 
 /* Boutons d'édition */
@@ -337,9 +341,14 @@ h3 {
   background-color: #dc3545;
 }
 
-.btn-icon-list {
+.btn-icon-list{
   color: #fff;
   border: 1px solid #fff;
+}
+
+.btn-icon-list:hover {
+  color: black;
+  background-color: white;
 }
 
 .btn-icon:focus {
