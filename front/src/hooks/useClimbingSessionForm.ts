@@ -9,7 +9,7 @@ export const useClimbingSessionForm = () => {
     location: undefined,
     climbType: "IN",
     height: 5,
-    comments: undefined,
+    comments: "",
     difficultySet: undefined,
     difficulties: [],
   }

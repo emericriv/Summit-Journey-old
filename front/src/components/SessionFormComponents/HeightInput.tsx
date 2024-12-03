@@ -3,7 +3,9 @@ import { HeightInputProps } from "../../models/PropsInterface";
 
 const HeightInput: React.FC<HeightInputProps> = ({ register }) => (
   <div className="mb-3">
-    <p>Hauteur</p>
+    <label htmlFor="height" className="form-label">
+      Hauteur
+    </label>
     <input
       {...register("height", { required: true })}
       type="number"
