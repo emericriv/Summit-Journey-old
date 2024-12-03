@@ -127,7 +127,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn custom-btn"
+            className="btn custom-btn primary-transparent-bg"
           >
             {props.session
               ? "Mettre à jour la session"

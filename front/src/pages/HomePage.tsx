@@ -18,7 +18,10 @@ const HomePage: React.FC = () => {
                 <div className="card-body">
                   <h3>Prochaines sessions</h3>
                   <p>Vous n'avez pas de session prévue pour le moment.</p>
-                  <Link to="/session" className="custom-btn btn">
+                  <Link
+                    to="/session"
+                    className="custom-btn btn primary-transparent-bg"
+                  >
                     Nouvelle session
                   </Link>
                 </div>
@@ -29,7 +32,10 @@ const HomePage: React.FC = () => {
                 <div className="card-body flex-card">
                   <h3>Historique des sessions</h3>
                   <SessionHistory numberOfSessions={2} />
-                  <Link to="/session" className="custom-btn btn mt-2">
+                  <Link
+                    to="/session"
+                    className="custom-btn btn primary-transparent-bg mt-2"
+                  >
                     Nouvelle session
                   </Link>
                 </div>

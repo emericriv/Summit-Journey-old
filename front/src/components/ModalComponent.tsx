@@ -32,7 +32,7 @@ const ModalComponent: React.FC<ModalComponentProps> = (
 
   return (
     <>
-      <div className="overlay"></div>
+      <div className="overlay z-index-max"></div>
       <div className="modal fade show d-block" tabIndex={-1}>
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content custom-modal-content">
@@ -57,7 +57,7 @@ const ModalComponent: React.FC<ModalComponentProps> = (
             <div className="modal-footer custom-modal-footer">
               <button
                 type="button"
-                className="btn custom-btn"
+                className="btn custom-btn custom-btn-primary"
                 onClick={() =>
                   props.setCurrentSessionId && props.setCurrentSessionId(null)
                 }
@@ -67,7 +67,7 @@ const ModalComponent: React.FC<ModalComponentProps> = (
               </button>
               <button
                 type="button"
-                className={`btn ${isCallingApi ? "disabled" : ""} ${
+                className={`btn custom-btn ${isCallingApi ? "disabled" : ""} ${
                   props.buttonClassName
                 }`}
                 style={props.buttonStyle}

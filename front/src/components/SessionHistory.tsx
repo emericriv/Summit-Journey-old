@@ -112,7 +112,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                       onClick={() =>
                         session.id && goToEditSessionPage(session.id)
                       }
-                      className="btn-icon btn-icon-edit"
+                      className="btn-icon custom-btn-primary"
                       aria-label="Modifier"
                     >
                       <i className="bi bi-pencil-fill"></i>
@@ -121,7 +121,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                       onClick={() =>
                         session.id && setCurrentSessionId(session.id)
                       }
-                      className="btn-icon btn-icon-delete"
+                      className="btn-icon cusom-btn-danger"
                       aria-label="Supprimer"
                     >
                       <i className="bi bi-trash-fill"></i>
@@ -137,8 +137,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                 actionDescription="Supprimer"
                 callApi={deleteClimbingSession}
                 objectId={currentSessionId}
-                buttonClassName="btn-outline-danger"
-                buttonStyle={{ color: "red" }}
+                buttonClassName="cusom-btn-danger"
                 handleResponse={handleResponse}
               />
             )}

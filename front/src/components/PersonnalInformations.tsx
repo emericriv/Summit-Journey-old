@@ -38,7 +38,7 @@ const PersonnalInformations: React.FC = () => {
             placeholder="Mot de passe"
           />
         </div>
-        <button type="submit" className="custom-btn btn">
+        <button type="submit" className="custom-btn btn primary-transparent-bg">
           Enregistrer les modifications
         </button>
       </form>

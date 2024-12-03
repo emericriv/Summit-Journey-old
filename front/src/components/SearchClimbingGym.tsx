@@ -28,7 +28,7 @@ const SearchClimbingGyms: React.FC = () => {
         <CityAutocomplete setCityId={setCityId} />
         <button
           id="searchGyms"
-          className="custom-btn btn"
+          className="custom-btn btn primary-transparent-bg"
           onClick={fetchDataAndSetGyms}
         >
           Indique moi les salles dans cette ville

@@ -22,7 +22,7 @@ const HighestDifficultiesCompletedComponent: React.FC<
     <div>
       {topDifficulties &&
         topDifficulties.map((difficulty, index) => (
-          <span key={index} className="mx-1">
+          <span key={index} className="mx-1 d-inline-flex align-items-center">
             {difficulty.count}
             <span
               className="difficulty-circle difficulty-border mx-1"
