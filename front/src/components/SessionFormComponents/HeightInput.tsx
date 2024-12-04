@@ -2,7 +2,7 @@ import React from "react";
 import { HeightInputProps } from "../../models/PropsInterface";
 
 const HeightInput: React.FC<HeightInputProps> = ({ register }) => (
-  <div className="mb-3">
+  <div className="height-input">
     <label htmlFor="height" className="form-label">
       Hauteur
     </label>

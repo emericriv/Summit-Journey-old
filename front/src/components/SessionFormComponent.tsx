@@ -93,24 +93,23 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   }, [props.session, reset]);
 
   return (
-    <div className="hero-banner d-flex align-items-center justify-content-center my-3">
+    <div className="hero-banner d-flex align-items-center justify-content-center">
       <div
         className="sessionForm global-appearance container py-5 py-md-0"
         id="props.session-tab-pane"
         role="tabpanel"
-        aria-labelledby="props.session-tab"
+        aria-labelledby="session-tab"
       >
         {/* Add props.session ands reset form on submit */}
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="row mb-3">
-            <DateInput register={register} />
-            <GymLocationSelect
-              control={control}
-              watch={watch}
-              initGymId={props.session?.location.id}
-            />
-          </div>
+        <form onSubmit={handleSubmit(onSubmit)} className=" session-form-grid">
+          <DateInput register={register} />
+          <GymLocationSelect
+            control={control}
+            watch={watch}
+            initGymId={props.session?.location.id}
+          />
           <ClimbTypeSelect register={register} />
+          <HeightInput register={register} />
           <DifficultySetSelect
             updateSelectedSet={updateSelectedSet}
             reset={reset}
@@ -122,12 +121,11 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
             register={register}
             selectedSet={selectedSet}
           />
-          <HeightInput register={register} />
           <CommentInput register={register} />
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn custom-btn primary-transparent-bg"
+            className="btn custom-btn primary-transparent-bg submit-btn mt-2"
           >
             {props.session
               ? "Mettre à jour la session"

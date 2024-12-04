@@ -69,38 +69,41 @@ const GymLocationSelect: React.FC<GymLocationSelectProps> = ({
   }
 
   return (
-    <div className="col-md-6">
-      <p className="form-label">Lieu</p>
-      {
-        <Controller
-          name="location"
-          control={control}
-          render={({ field: { onChange, onBlur, ref } }) => {
-            return (
-              <Select
-                value={gymValue}
-                options={options}
-                onChange={(selectedOption) => {
-                  onChange(
-                    selectedOption ? Number(selectedOption.value) : null
-                  ); // Met à jour le champ contrôlé
-                  setGymValue(selectedOption as GymOption | null); // Met à jour l'état local
-                }}
-                isClearable
-                ref={ref}
-                onBlur={onBlur}
-                styles={selectStyles}
-                placeholder="Lieu de la grimpe"
-                components={{
-                  DropdownIndicator: () => null,
-                  IndicatorSeparator: () => null,
-                }}
-              />
-            );
-          }}
-          rules={{ required: true }}
-        />
-      }
+    <div className="gym-location-select">
+      <label className="form-label mb-0" style={{ width: "100%" }}>
+        Lieu
+        {
+          <Controller
+            name="location"
+            control={control}
+            render={({ field: { onChange, onBlur, ref } }) => {
+              return (
+                <Select
+                  value={gymValue}
+                  options={options}
+                  onChange={(selectedOption) => {
+                    onChange(
+                      selectedOption ? Number(selectedOption.value) : null
+                    ); // Met à jour le champ contrôlé
+                    setGymValue(selectedOption as GymOption | null); // Met à jour l'état local
+                  }}
+                  isClearable
+                  ref={ref}
+                  onBlur={onBlur}
+                  className="mt-2"
+                  styles={selectStyles}
+                  placeholder="Lieu de la grimpe"
+                  components={{
+                    DropdownIndicator: () => null,
+                    IndicatorSeparator: () => null,
+                  }}
+                />
+              );
+            }}
+            rules={{ required: true }}
+          />
+        }
+      </label>
     </div>
   );
 };

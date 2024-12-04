@@ -22,22 +22,10 @@ const SearchClimbingGyms: React.FC = () => {
   }, [cityId]);
 
   return (
-    <div className="row justify-content-around">
-      <div className="city-selection col-md-4">
-        <h3>Où veux tu grimper ?</h3>
-        <CityAutocomplete setCityId={setCityId} />
-        <button
-          id="searchGyms"
-          className="custom-btn btn primary-transparent-bg"
-          onClick={fetchDataAndSetGyms}
-        >
-          Indique moi les salles dans cette ville
-        </button>
-      </div>
-      <div className="map col-md-5 card global-appearance p-3">
-        <div className="ratio ratio-1x1">
-          <MapComponent gyms={gyms} />
-        </div>
+    <div className="row card global-appearance py-3">
+      <CityAutocomplete setCityId={setCityId} />
+      <div className="map">
+        <MapComponent gyms={gyms} />
       </div>
     </div>
   );

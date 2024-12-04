@@ -35,8 +35,8 @@ const MapHandler: React.FC<MapHandlerProps> = ({ gyms }) => {
 
       // Dézoomer légèrement
       const zoom = map.getZoom(); // Obtenir le zoom actuel
-      if (zoom && zoom > 2) {
-        map.setZoom(zoom - 1); // Dézoomer d'un niveau
+      if (zoom) {
+        map.setZoom(zoom); // Dézoomer d'un niveau
       }
     }
   }, [gyms, map]);

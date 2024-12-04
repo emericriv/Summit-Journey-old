@@ -240,6 +240,13 @@ h3 {
   opacity: 0.8;
 }
 
+/* Conteneur principal */
+.session-form-grid {
+  width: 100%;
+  display: grid;
+  gap: 0.5rem;
+}
+
 /* SessionHistory Component */
 /* PlaceHolder */
 .flex-card {
@@ -422,4 +429,10 @@ h3 {
 
 .personnal-informations {
   background-image: linear-gradient(62deg, #fbab7e, #f7ce68);
+}
+
+/* MAP */
+.map {
+  height: 60vh;
+  width: 100%;
 }

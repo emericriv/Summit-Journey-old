@@ -8,7 +8,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
   const [openInfoWindowId, setOpenInfoWindowId] = useState<number | null>(null);
 
   return (
-    <div>
+    <div style={{ width: "100%", height: "100%" }}>
       <APIProvider
         apiKey="AIzaSyDTB_f2a413NJzJQio0gWhpLe1wyTGPuIo"
         libraries={["marker"]}

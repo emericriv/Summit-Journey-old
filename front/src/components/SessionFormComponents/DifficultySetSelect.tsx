@@ -50,19 +50,17 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
   };
 
   return (
-    <div className="mb-3 position-relative">
-      <label className="form-label">
+    <div className="difficulty-set-select" style={{ position: "relative" }}>
+      <label className="form-label mb-0" style={{ width: "100%" }}>
         Set de difficulté
         <div
-          className="custom-select form-select"
+          className="custom-select form-select mt-2"
           onClick={() => setIsOpen(!isOpen)}
           style={{
             border: "1px solid #ccc",
             padding: "10px",
             borderRadius: "5px",
             cursor: "pointer",
-            position: "relative",
-            width: "30vw",
           }}
         >
           {/* Affiche l'option sélectionnée */}
@@ -88,62 +86,61 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
             <span>Chargement...</span>
           )}
         </div>
+        {/* Menu déroulant des options */}
+        {isOpen && (
+          <ul
+            className="custom-options"
+            style={{
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+              position: "absolute",
+              width: "100%",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              background: "#eee",
+              zIndex: 10,
+              maxHeight: "200px",
+              overflowY: "auto",
+            }}
+          >
+            {difficultySets &&
+              difficultySets.map((set) => (
+                <li
+                  key={set.id}
+                  onClick={() => handleSelect(set)}
+                  style={{
+                    padding: "10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                  className="option-item"
+                >
+                  {/* Contenu de chaque option */}
+                  <div>
+                    {set.difficulties.map((difficulty, index) => (
+                      <span
+                        key={index}
+                        className="difficulty-circle difficulty-border mx-1"
+                        style={{
+                          backgroundColor: difficulty.difficulty.color
+                            ? difficulty.difficulty.hexColor
+                            : "transparent",
+                        }}
+                      >
+                        {difficulty.difficulty.color
+                          ? ""
+                          : difficulty.difficulty.label}
+                      </span>
+                    ))}
+                  </div>
+                </li>
+              ))}
+          </ul>
+        )}
       </label>
-
-      {/* Menu déroulant des options */}
-      {isOpen && (
-        <ul
-          className="custom-options"
-          style={{
-            listStyle: "none",
-            margin: 0,
-            padding: 0,
-            position: "absolute",
-            width: "30vw",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            background: "#eee",
-            zIndex: 10,
-            maxHeight: "200px",
-            overflowY: "auto",
-          }}
-        >
-          {difficultySets &&
-            difficultySets.map((set) => (
-              <li
-                key={set.id}
-                onClick={() => handleSelect(set)}
-                style={{
-                  padding: "10px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-                className="option-item"
-              >
-                {/* Contenu de chaque option */}
-                <div>
-                  {set.difficulties.map((difficulty, index) => (
-                    <span
-                      key={index}
-                      className="difficulty-circle difficulty-border mx-1"
-                      style={{
-                        backgroundColor: difficulty.difficulty.color
-                          ? difficulty.difficulty.hexColor
-                          : "transparent",
-                      }}
-                    >
-                      {difficulty.difficulty.color
-                        ? ""
-                        : difficulty.difficulty.label}
-                    </span>
-                  ))}
-                </div>
-              </li>
-            ))}
-        </ul>
-      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { CommentInputProps } from "../../models/PropsInterface";
 
 const CommentInput: React.FC<CommentInputProps> = ({ register }) => (
-  <div className="mb-3">
+  <div className="comment-input">
     <label htmlFor="comments" className="form-label">
       Commentaires
     </label>
