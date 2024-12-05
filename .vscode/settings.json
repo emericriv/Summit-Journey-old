@@ -1,4 +1,15 @@
 {
   "terminal.integrated.cwd": "${workspaceFolder}",
-  "liveServer.settings.port": 5501
+  "liveServer.settings.port": 5501,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.formatOnSave": true
+  },
+  "editor.rulers": [150],
+  "editor.wordWrapColumn": 150,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true
 }

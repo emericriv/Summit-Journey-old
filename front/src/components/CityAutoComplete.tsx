@@ -31,7 +31,6 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ setCityId }) => {
     setLoading(true);
     try {
       const response = await getCities(query);
-      console.log("Cities fetched:", response);
       const cities = response.map((city: City) => ({
         value: city.id,
         label: `${city.label} - ${city.zipCode} - ${city.departmentName}`,
@@ -53,27 +52,31 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ setCityId }) => {
   }, [inputValue]);
 
   return (
-    <Select
-      value={selectedCity} // Assigner l'état de la ville sélectionnée à `value`
-      onInputChange={(newInputValue) => setInputValue(newInputValue)}
-      options={options}
-      isLoading={loading}
-      // getOptionLabel={(option: any) => option.label} // Spécifie l'affichage du label dans l'option
-      onChange={(selectedOption) => {
-        setSelectedCity(selectedOption); // Mettre à jour la ville sélectionnée
-        setCityId(selectedOption.value); // Mettre à jour l'ID de la ville sélectionnée
-        console.log("Selected city:", selectedOption);
-      }}
-      className="mb-2"
-      isClearable
-      styles={selectStyles}
-      components={{
-        DropdownIndicator: () => null,
-        IndicatorSeparator: () => null,
-      }}
-      placeholder="Indiquez une ville ici ..."
-      noOptionsMessage={() => (loading ? "Loading..." : "No cities found")}
-    />
+    <div>
+      {" "}
+      {/*Besoin d'une div pour que la liste ne s'étende pas selon la width du container parent*/}
+      <Select
+        value={selectedCity} // Assigner l'état de la ville sélectionnée à `value`
+        onInputChange={(newInputValue) => setInputValue(newInputValue)}
+        options={options}
+        isLoading={loading}
+        // getOptionLabel={(option: any) => option.label} // Spécifie l'affichage du label dans l'option
+        onChange={(selectedOption) => {
+          setSelectedCity(selectedOption); // Mettre à jour la ville sélectionnée
+          setCityId(selectedOption.value); // Mettre à jour l'ID de la ville sélectionnée
+          console.log("Selected city:", selectedOption);
+        }}
+        className="mb-2"
+        isClearable
+        styles={selectStyles}
+        components={{
+          DropdownIndicator: () => null,
+          IndicatorSeparator: () => null,
+        }}
+        placeholder="Indiquez une ville ici ..."
+        noOptionsMessage={() => (loading ? "Loading..." : "No cities found")}
+      />
+    </div>
   );
 };
 

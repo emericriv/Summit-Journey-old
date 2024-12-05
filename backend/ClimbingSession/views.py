@@ -1,32 +1,52 @@
 from rest_framework import viewsets
-from .models import ClimbingSession, DifficultyOrder, DifficultySet, DifficultyCompletion
-from .serializer import ClimbingSessionCreateUpdateSerializer, ClimbingSessionRetrieveSerializer, DifficultyOrderSerializer, DifficultySetSerializer
+from rest_framework.permissions import AllowAny
+
+from .models import (
+    ClimbingSession,
+    DifficultyCompletion,
+    DifficultyOrder,
+    DifficultySet,
+)
+from .serializer import (
+    ClimbingSessionCreateUpdateSerializer,
+    ClimbingSessionRetrieveSerializer,
+    DifficultyOrderSerializer,
+    DifficultySetSerializer,
+)
+
 
 class ClimbingSessionViewSet(viewsets.ModelViewSet):
     queryset = ClimbingSession.objects.all()
-    
+
     def get_serializer_class(self):
         # Voir le fichier serializer.py pour plus d'informations
-        if self.request.method == 'GET':
+        if self.request.method == "GET":
             return ClimbingSessionRetrieveSerializer
         return ClimbingSessionCreateUpdateSerializer
-    
+
+    def get_queryset(self):
+        return ClimbingSession.objects.filter(climber=self.request.user)
+
+
 class DifficultyCompletionViewSet(viewsets.ModelViewSet):
     queryset = DifficultyCompletion.objects.all()
-    
-    def get_serializer_class(self):
-        # Voir le fichier serializer.py pour plus d'informations
-        if self.request.method == 'GET':
-            return ClimbingSessionRetrieveSerializer
-        return ClimbingSessionCreateUpdateSerializer
-    
+
+    # def get_serializer_class(self):
+    #     # Voir le fichier serializer.py pour plus d'informations
+    #     if self.request.method == "GET":
+    #         return ClimbingSessionRetrieveSerializer
+    #     return ClimbingSessionCreateUpdateSerializer
+
+
 class DifficultySetViewSet(viewsets.ModelViewSet):
     queryset = DifficultySet.objects.all()
     serializer_class = DifficultySetSerializer
-    
+
+
 class DifficultyOrderViewSet(viewsets.ModelViewSet):
     queryset = DifficultyOrder.objects.all()
     serializer_class = DifficultyOrderSerializer
+
 
 # Ce qui suit n'est que le vestige de comment pouvais marcher l'API avant l'utilisation de viewsets
 # Je le garde pour référence et pouvoir comprendre si nécessaire
@@ -61,5 +81,5 @@ class DifficultyOrderViewSet(viewsets.ModelViewSet):
 #         serializer = ClimbingSessionSerializer(session, data=data)
 #         if serializer.is_valid():
 #             serializer.save()
-#             return Response(serializer.data)    
+#             return Response(serializer.data)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

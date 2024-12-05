@@ -11,7 +11,10 @@ const SearchClimbingGyms: React.FC = () => {
   const [gyms, setGyms] = useState<ClimbingGymLocation[]>([]);
   const [cityId, setCityId] = useState<number>(0);
 
+  const [searched, setSearched] = useState(false);
+
   const fetchDataAndSetGyms = async () => {
+    setSearched(true);
     const gyms = await getGymsByCityId({ cityId });
     setGyms(gyms);
   };
@@ -25,7 +28,13 @@ const SearchClimbingGyms: React.FC = () => {
     <div className="row card global-appearance py-3">
       <CityAutocomplete setCityId={setCityId} />
       <div className="map">
-        <MapComponent gyms={gyms} />
+        {gyms.length === 0 && searched ? (
+          <p className="text-center">No gyms found in this city</p>
+        ) : searched ? (
+          (console.log(gyms), (<MapComponent gyms={gyms} />))
+        ) : (
+          <MapComponent gyms={gyms} />
+        )}
       </div>
     </div>
   );

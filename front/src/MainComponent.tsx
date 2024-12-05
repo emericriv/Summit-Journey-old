@@ -8,6 +8,7 @@ import Footer from "./components/footer";
 import Navbar from "./components/Navbar";
 import EditSessionPage from "./pages/EditSessionPage";
 import AllSessionPage from "./pages/AllSessionsPage";
+import LoginPage from "./pages/LoginPage";
 
 const MainComponent: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const MainComponent: React.FC = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-session/:id" element={<EditSessionPage />} />
         <Route path="/all-sessions" element={<AllSessionPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
       <Footer />
     </>

@@ -12,6 +12,87 @@ const apiClient = axios.create({
   }
 })
 
+// Interceptor pour ajouter automatiquement le token à toutes les requêtes
+apiClient.interceptors.request.use(
+  async (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error : AxiosError) => {
+    displayErrors(error);
+    return Promise.reject(error);
+  }
+);
+
+// Interceptor pour gérer les réponses
+apiClient.interceptors.response.use(
+  response => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Si le statut est 401 et que ce n'est pas une tentative de refresh, on tente de rafraîchir le token
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        // Appelle ton endpoint de refresh token
+        const refreshToken = localStorage.getItem('refreshToken');
+        const response = await apiClient.post('/token/refresh/', { refresh: refreshToken });
+
+        if (response.status === 200) {
+          const newAccessToken = response.data.access;
+          const newRefreshToken = response.data.refresh;
+
+          // Stocke le nouveau token
+          localStorage.setItem('accessToken', newAccessToken);
+          localStorage.setItem('refreshToken', newRefreshToken);
+
+          // Modifie le header Authorization et réessaye la requête initiale
+          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+          return apiClient(originalRequest);
+        }
+      } catch (refreshError: any) {
+        if (error) {
+          console.error('API Error:', refreshError.response || refreshError.message);
+        }
+        // Si la tentative de refresh échoue, déconnecte l'utilisateur ou gère l'erreur
+
+        return Promise.reject(refreshError);
+      }
+    }
+
+    // Si c'est une autre erreur ou si le refresh échoue, rejette l'erreur
+    return Promise.reject(error);
+  }
+);
+
+export const connectUser = async (username: string, password: string) => {
+  try {
+    const response = await apiClient.post('/token/', {
+      username,
+      password,
+    });
+    const accessToken = response.data.access;
+    const refreshToken = response.data.refresh;
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    return accessToken;
+  } catch (error : any) {
+    displayErrors(error as AxiosError);
+  }
+};
+
+export const disconnectUser = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+};
+
 export const createClimbingSession = async (session: ClimbingSession): Promise<ClimbingSession> => {
   const response = await apiClient.post<ClimbingSession>(
     "sessions/",
@@ -83,7 +164,7 @@ export const getGymsByCityId = async ({ cityId }: { cityId: number }) => {
     }
   };
 
-  
+
 const displayErrors = (error: AxiosError) => {
   if (error.response) {
     // Le serveur a répondu avec un statut différent de 2xx

@@ -41,7 +41,7 @@ export const useClimbingSessionForm = () => {
       });
     }
   }, [append, selectedSet, fields.length]);
-  
+
   // Post de la nouvelle session
   // Changer pour Prepare data pour la requete API
   const PrepareDataForRequest = ({ data }: { data: FieldValues }) => {
@@ -64,7 +64,6 @@ export const useClimbingSessionForm = () => {
       climbType: data.climbType,
       height: data.height,
       comments: data.comments,
-      climber: 1,
       difficultySet: selectedSet?.id || 1,
       difficultyCompletions: difficultyCountsWithID,
       };

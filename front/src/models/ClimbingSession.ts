@@ -9,7 +9,6 @@ export interface ClimbingSession {
   difficultySet: number;
   comments: string;
   difficultyCompletions: DifficultyCompletion[];
-  climber: number; // Change to Climber when the model is created
   // media?: string;        // URL vers l'image, si ce champ est ajouté plus tard
 }
 

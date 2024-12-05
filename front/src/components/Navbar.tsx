@@ -96,6 +96,9 @@ const Navbar: React.FC = () => {
             >
               Profil
             </NavButton>
+            <NavButton to="/login" isActive={location.pathname === "/login"}>
+              Login
+            </NavButton>
           </ul>
           <div className="mobile" onClick={handleClick}>
             <i
