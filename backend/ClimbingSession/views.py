@@ -10,6 +10,8 @@ from .models import (
 from .serializer import (
     ClimbingSessionCreateUpdateSerializer,
     ClimbingSessionRetrieveSerializer,
+    DifficultyCompletionCreateUpdateSerializer,
+    DifficultyCompletionRetrieveSerializer,
     DifficultyOrderSerializer,
     DifficultySetSerializer,
 )
@@ -31,11 +33,11 @@ class ClimbingSessionViewSet(viewsets.ModelViewSet):
 class DifficultyCompletionViewSet(viewsets.ModelViewSet):
     queryset = DifficultyCompletion.objects.all()
 
-    # def get_serializer_class(self):
-    #     # Voir le fichier serializer.py pour plus d'informations
-    #     if self.request.method == "GET":
-    #         return ClimbingSessionRetrieveSerializer
-    #     return ClimbingSessionCreateUpdateSerializer
+    def get_serializer_class(self):
+        # Voir le fichier serializer.py pour plus d'informations
+        if self.request.method == "GET":
+            return DifficultyCompletionRetrieveSerializer
+        return DifficultyCompletionCreateUpdateSerializer
 
 
 class DifficultySetViewSet(viewsets.ModelViewSet):

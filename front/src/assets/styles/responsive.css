@@ -36,6 +36,19 @@
 }
 
 @media screen and (min-width : 768px) {
+  /* Home Dashboard */
+  .Dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .home-next-session {
+    grid-column: 1/2;
+  }
+
+  .home-session-history {
+    grid-column: 2/5;
+  }
+
   /* Profile Page */
   .profile-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -49,6 +62,7 @@
     grid-area: 1/2/3/4;
   }
 
+  /* Session Form */
   .session-form-grid {
     grid-template-columns: repeat(4, 1fr);
     column-gap: 2rem;

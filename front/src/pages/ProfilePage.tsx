@@ -5,14 +5,14 @@ import PersonnalInformations from "../components/PersonnalInformations";
 const ProfilePage: React.FC = () => {
   return (
     <div className="hero-banner profile-grid">
-      <div className="personnal-informations profile-card global-appearance">
+      <div className="personnal-informations grid-card global-appearance">
         <PersonnalInformations />
       </div>
-      <div className="session-history profile-card flex-card global-appearance">
+      <div className="session-history grid-card flex-card global-appearance">
         <h3>Historique des sessions</h3>
         <SessionHistory numberOfSessions={2} />
       </div>
-      <div className="equipments profile-card global-appearance">
+      <div className="equipments grid-card global-appearance">
         <h3>Matériel et modèle</h3>
         <ul>
           <li>Chaussons d'escalade : La Sportiva Solution</li>
@@ -21,7 +21,7 @@ const ProfilePage: React.FC = () => {
           <li>Corde : Beal Joker</li>
         </ul>
       </div>
-      <div className="profile-card global-appearance">
+      <div className="grid-card global-appearance">
         <h3>Potentiel nouvel élément</h3>
         <p>A venir</p>
       </div>

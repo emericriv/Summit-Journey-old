@@ -95,13 +95,13 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   return (
     <div className="hero-banner d-flex align-items-center justify-content-center">
       <div
-        className="sessionForm global-appearance container py-5 py-md-0"
+        className="form-style global-appearance container py-5 py-md-0"
         id="props.session-tab-pane"
         role="tabpanel"
         aria-labelledby="session-tab"
       >
         {/* Add props.session ands reset form on submit */}
-        <form onSubmit={handleSubmit(onSubmit)} className=" session-form-grid">
+        <form onSubmit={handleSubmit(onSubmit)} className="session-form-grid">
           <DateInput register={register} />
           <GymLocationSelect
             control={control}

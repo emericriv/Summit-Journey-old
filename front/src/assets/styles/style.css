@@ -84,6 +84,12 @@ h3 {
   width: 100%;
 }
 
+.grid-card {
+  padding: 1rem;
+  min-block-size: 7rem;
+  border-radius: 0.5rem;
+}
+
 /* Navbar and footer */
 .nav-bar,
 .footer {
@@ -210,12 +216,17 @@ h3 {
     1px 1px 0 #000;
 }
 
+.Dashboard-grid {
+  display: grid;
+  gap: 1rem;
+}
+
 /* Form Session (Edit or create) */
-.sessionForm {
+.form-style {
   border-radius: 0.5rem;
 }
 
-.sessionForm form {
+.form-style form {
   padding: 20px;
 }
 
@@ -233,10 +244,10 @@ h3 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.sessionForm input,
-.sessionForm select,
-.sessionForm textarea,
-.sessionForm .custom-select {
+.form-style input,
+.form-style select,
+.form-style textarea,
+.form-style .custom-select {
   opacity: 0.8;
 }
 
@@ -341,12 +352,12 @@ h3 {
   background-color: var(--primary-color);
 }
 
-.cusom-btn-danger {
+.custom-btn-danger {
   border: 1px solid #dc3545;
   color: #dc3545;
 }
 
-.cusom-btn-danger:hover {
+.custom-btn-danger:hover {
   color: white;
   background-color: #dc3545;
 }
@@ -421,12 +432,6 @@ h3 {
   padding: 2.25rem;
 }
 
-.profile-card {
-  padding: 1rem;
-  min-block-size: 7rem;
-  border-radius: 0.5rem;
-}
-
 .personnal-informations {
   background-image: linear-gradient(62deg, #fbab7e, #f7ce68);
 }
@@ -435,4 +440,24 @@ h3 {
 .map {
   height: 60vh;
   width: 100%;
+}
+
+/* Login */
+.login-form {
+  width: 30%;
+}
+
+.login-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.error-message {
+  border: 1px solid #f72a3e;
+  color: white;
+  padding: 10px;
+  border-radius: 0.5rem;
+  background-color: rgba(247, 42, 62, 0.1);
+  font-size: 0.9rem;
+  margin-top: 8px;
 }

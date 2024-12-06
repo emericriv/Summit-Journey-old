@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import SessionHistory from "../components/SessionHistory";
+import { useAuth } from "../context/AuthContext";
 // import axios from "axios";
 
 const HomePage: React.FC = () => {
+  const { isAuthenticated, logout } = useAuth();
+
   return (
     <div className="hero-banner d-flex justify-content-center align-items-center">
       <div className="row mx-5 py-5 py-md-3">
@@ -12,34 +15,56 @@ const HomePage: React.FC = () => {
         </div>
         <div className="dashboard mt-3">
           <h1>Tableau de bord</h1>
-          <div className="row">
-            <div className="col-12 col-md-4 my-2">
-              <div className="card global-appearance">
-                <div className="card-body">
-                  <h3>Prochaines sessions</h3>
-                  <p>Vous n'avez pas de session prévue pour le moment.</p>
-                  <Link
-                    to="/session"
-                    className="custom-btn btn primary-transparent-bg"
-                  >
-                    Nouvelle session
-                  </Link>
-                </div>
+          <div className="Dashboard-grid">
+            <div className="home-next-session grid-card global-appearance d-flex flex-column justify-content-between">
+              <div>
+                <h3>Prochaines sessions</h3>
+                {isAuthenticated ? (
+                  <p>Vous n'avez pas de session de prévue pour le moment.</p>
+                ) : (
+                  <p>Connectez-vous pour pouvoir programmer une session.</p>
+                )}
               </div>
+              {isAuthenticated ? (
+                <Link
+                  to="/session"
+                  className="custom-btn btn primary-transparent-bg mt-2 align-self-start"
+                >
+                  Nouvelle session
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="custom-btn btn primary-transparent-bg mt-2 align-self-start"
+                >
+                  Se connecter
+                </Link>
+              )}
             </div>
-            <div className="col-12 col-md-8 my-2">
-              <div className="card global-appearance">
-                <div className="card-body flex-card">
-                  <h3>Historique des sessions</h3>
+            <div className="home-session-history grid-card global-appearance d-flex flex-column justify-content-between">
+              <div>
+                <h3>Historique des sessions</h3>
+                {isAuthenticated ? (
                   <SessionHistory numberOfSessions={2} />
-                  <Link
-                    to="/session"
-                    className="custom-btn btn primary-transparent-bg mt-2"
-                  >
-                    Nouvelle session
-                  </Link>
-                </div>
+                ) : (
+                  <p>Connectez-vous pour voir votre historique de sessions.</p>
+                )}
               </div>
+              {isAuthenticated ? (
+                <Link
+                  to="/session"
+                  className="custom-btn btn primary-transparent-bg mt-2 align-self-start"
+                >
+                  Nouvelle session
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="custom-btn btn primary-transparent-bg mt-2 align-self-start"
+                >
+                  Se connecter
+                </Link>
+              )}
             </div>
           </div>
         </div>

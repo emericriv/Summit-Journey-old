@@ -121,7 +121,7 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                       onClick={() =>
                         session.id && setCurrentSessionId(session.id)
                       }
-                      className="btn-icon cusom-btn-danger"
+                      className="btn-icon custom-btn-danger"
                       aria-label="Supprimer"
                     >
                       <i className="bi bi-trash-fill"></i>
@@ -131,13 +131,13 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
               ))}
             {currentSessionId && (
               <ModalComponent
-                setCurrentSessionId={setCurrentSessionId}
+                setDependantVariable={setCurrentSessionId}
                 description="Voulez-vous supprimer cette session ?"
                 title="Supprimer session"
                 actionDescription="Supprimer"
                 callApi={deleteClimbingSession}
                 objectId={currentSessionId}
-                buttonClassName="cusom-btn-danger"
+                buttonClassName="custom-btn-danger"
                 handleResponse={handleResponse}
               />
             )}

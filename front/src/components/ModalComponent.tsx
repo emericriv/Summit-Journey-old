@@ -1,7 +1,9 @@
 import React from "react";
 
 interface ModalComponentProps {
-  setCurrentSessionId?: React.Dispatch<React.SetStateAction<number | null>>;
+  setDependantVariable:
+    | React.Dispatch<React.SetStateAction<number | null>>
+    | React.Dispatch<React.SetStateAction<boolean | null>>;
   callApi?: (id: number) => Promise<unknown>;
   description: string;
   title: string;
@@ -45,9 +47,7 @@ const ModalComponent: React.FC<ModalComponentProps> = (
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                onClick={() =>
-                  props.setCurrentSessionId && props.setCurrentSessionId(null)
-                }
+                onClick={() => props.setDependantVariable(null)}
                 aria-label="Close"
               ></button>
             </div>
@@ -58,9 +58,7 @@ const ModalComponent: React.FC<ModalComponentProps> = (
               <button
                 type="button"
                 className="btn custom-btn custom-btn-primary"
-                onClick={() =>
-                  props.setCurrentSessionId && props.setCurrentSessionId(null)
-                }
+                onClick={() => props.setDependantVariable(null)}
                 data-bs-dismiss="modal"
               >
                 Fermer

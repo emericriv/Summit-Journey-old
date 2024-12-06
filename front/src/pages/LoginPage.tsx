@@ -1,126 +1,104 @@
 import React, { useState } from "react";
 import { connectUser } from "../services/apiServices";
+import { FieldValues, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+interface LoginProps {
+  username: string;
+  password: string;
+}
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+    reset,
+  } = useForm<LoginProps>();
 
-  const handleSubmit = (event: React.FormEvent) => {
-    if (!email || !password) {
-      setError("Veuillez remplir tous les champs.");
-      return;
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  // État pour gérer le message d'erreur
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleChange = () => {
+    // Réinitialiser le message d'erreur lors d'une saisie
+    if (errorMessage) {
+      setErrorMessage(null);
     }
+  };
 
-    setError(null);
-
-    connectUser(email, password)
-      .then((accessToken) => {
-        console.log("Token d'accès:", accessToken);
-        // Rediriger l'utilisateur vers une autre page
-      })
-      .catch((error) => {
-        setError(`Erreur lors de la connexion : ${error.message}`);
-      });
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      const accessToken = await connectUser(data.username, data.password);
+      if (accessToken) {
+        login(); // Mettez à jour l'état d'authentification
+        navigate("/profile"); // Redirigez après connexion
+      }
+    } catch (error) {
+      console.error("Erreur lors de la connexion :", error);
+      setErrorMessage(
+        "Vérifiez votre nom d'utilisateur et mot de passe, il semblerait qu'il y ait une erreur."
+      );
+      // vider le champ mot de passe mais pas le nom d'utilisateur
+      reset({ username: data.username, password: "" });
+    }
   };
 
   return (
-    <div style={styles.container}>
-      {/* <form style={styles.form}> */}
-      <h2 style={styles.title}>Connexion</h2>
-      {error && <p style={styles.error}>{error}</p>}
-      <div style={styles.inputGroup}>
-        <label htmlFor="email" style={styles.label}>
-          Email
-        </label>
-        <input
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={styles.input}
-          required
-        />
+    <div className="hero-banner d-flex align-items-center justify-content-center">
+      <div className="form-style global-appearance login-form">
+        <form onSubmit={handleSubmit(onSubmit)} className="login-grid">
+          <h2>Connexion</h2>
+          <div>
+            <label htmlFor="username" className="form-label">
+              Nom d'utilisateur
+            </label>
+            <input
+              id="username"
+              className="form-control"
+              {...register("username", {
+                required: "Le nom d'utilisateur est obligatoire",
+              })}
+              onChange={handleChange}
+            />
+            {errors.username && (
+              <p className="error-message">{errors.username.message}</p>
+            )}
+          </div>
+          <div>
+            <label htmlFor="password" className="form-label">
+              Mot de passe
+            </label>
+            <input
+              id="password"
+              className="form-control"
+              type="password"
+              {...register("password", {
+                required: "Le mot de passe est obligatoire",
+              })}
+              onChange={handleChange}
+            />
+            {errors.password && (
+              <p className="error-message">{errors.password.message}</p>
+            )}
+          </div>
+          <div>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn custom-btn primary-transparent-bg submit-btn mt-2"
+            >
+              Se connecter
+            </button>
+          </div>
+        </form>
       </div>
-      <div style={styles.inputGroup}>
-        <label htmlFor="password" style={styles.label}>
-          Mot de passe
-        </label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={styles.input}
-          required
-        />
-      </div>
-      <button onClick={handleSubmit} style={styles.button}>
-        Se connecter
-      </button>
-      {/* </form> */}
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    backgroundColor: "#f5f5f5",
-  },
-  form: {
-    width: "100%",
-    maxWidth: "400px",
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  },
-  title: {
-    marginBottom: "20px",
-    fontSize: "24px",
-    textAlign: "center",
-    color: "#333",
-  },
-  inputGroup: {
-    marginBottom: "15px",
-  },
-  label: {
-    display: "block",
-    marginBottom: "5px",
-    fontSize: "14px",
-    color: "#555",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    fontSize: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    outline: "none",
-    boxSizing: "border-box",
-  },
-  button: {
-    width: "100%",
-    padding: "10px",
-    fontSize: "16px",
-    color: "#fff",
-    backgroundColor: "#007bff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  },
-  buttonHover: {
-    backgroundColor: "#0056b3",
-  },
-  error: {
-    color: "red",
-    marginBottom: "15px",
-    textAlign: "center",
-  },
 };
 
 export default LoginPage;
