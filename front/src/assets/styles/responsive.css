@@ -100,5 +100,54 @@
     grid-area: 5/1/6/2;
   }
 
+  /* Signup form */
+  .separator {
+    width: 4px;
+    border-radius: 2px;
+    background-color: #858585;
+    height: 60vh;
+  }
+
+  .signup-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+  }
+
+  .signup-grid h2 {
+    grid-area: 1/1/2/3;
+  }
+
+  .username-input {
+    grid-area: 2/1/3/3;
+  }
+
+  .first-name-input {
+    grid-area: 3/1/4/2;
+  }
+
+  .last-name-input {
+    grid-area: 3/2/4/3;
+  }
+
+  .email-input {
+    grid-area: 4/1/5/3;
+  }
+
+  .zip-code-input {
+    grid-area: 5/1/6/2;
+  }
+
+  .city-input {
+    grid-area: 5/2/6/3;
+  }
+
+  .password-input {
+    grid-area: 6/1/7/3;
+  }
+
+  .password-confirmation-input {
+    grid-area: 7/1/8/3;
+  }
+
 }
 

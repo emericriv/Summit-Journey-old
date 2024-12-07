@@ -93,6 +93,15 @@ export const disconnectUser = () => {
   localStorage.removeItem('refreshToken');
 };
 
+export const createUser = async (user: any) => {
+  try {
+    const response = await apiClient.post('/users/', user);
+    return response.data;
+  } catch (error : any) {
+    displayErrors(error as AxiosError);
+  }
+}
+
 export const createClimbingSession = async (session: ClimbingSession): Promise<ClimbingSession> => {
   const response = await apiClient.post<ClimbingSession>(
     "sessions/",

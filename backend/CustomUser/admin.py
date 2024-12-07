@@ -8,13 +8,13 @@ from .models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ("username", "first_name", "last_name", "email")
+        fields = ("username", "first_name", "last_name", "email", "zip_code", "city")
 
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ("username", "first_name", "last_name", "email")
+        fields = ("username", "first_name", "last_name", "email", "zip_code", "city")
 
 
 class CustomUserAdmin(UserAdmin):
@@ -23,7 +23,15 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
     # Configuration des champs à afficher dans l'admin
-    list_display = ("username", "email", "first_name", "last_name", "is_staff")
+    list_display = (
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "is_staff",
+        "zip_code",
+        "city",
+    )
     list_filter = ("is_staff", "is_superuser", "is_active")
     fieldsets = (
         (None, {"fields": ("username", "password")}),
@@ -52,6 +60,8 @@ class CustomUserAdmin(UserAdmin):
                     "first_name",
                     "last_name",
                     "email",
+                    "zip_code",
+                    "city",
                     "password1",
                     "password2",
                 ),

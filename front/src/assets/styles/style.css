@@ -442,14 +442,20 @@ h3 {
   width: 100%;
 }
 
-/* Login */
+/* Login et Signup */
+
 .login-form {
   width: 30%;
 }
 
-.login-grid {
+.signup-form {
+  width: 40%;
+}
+
+.login-grid,
+.signup-grid {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 .error-message {
