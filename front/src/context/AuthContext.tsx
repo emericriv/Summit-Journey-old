@@ -1,7 +1,10 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { CustomUser } from "../models/CustomUser";
+import { fetchCurrentUser } from "../services/apiServices";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
+  user: CustomUser | null;
   login: () => void;
   logout: () => void;
 }
@@ -20,25 +23,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<CustomUser | null>(null);
 
   useEffect(() => {
-    // Vérifiez si un token JWT existe dans le localStorage
     const token = localStorage.getItem("accessToken");
-    setIsAuthenticated(!!token);
+    if (token) {
+      setIsAuthenticated(true);
+      // Récupérer les données de l'utilisateur
+      fetchCurrentUser()
+        .then((userData) => {
+          console.log("Utilisateur récupéré :", userData);
+          setUser(userData);
+        })
+        .catch((error) => {
+          console.error(
+            "Erreur lors de la récupération de l'utilisateur :",
+            error
+          );
+          setIsAuthenticated(false);
+        });
+    }
   }, []);
 
   const login = () => {
     setIsAuthenticated(true);
+    // Récupérer les données après connexion
+    fetchCurrentUser().then(setUser).catch(console.error);
   };
 
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     setIsAuthenticated(false);
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

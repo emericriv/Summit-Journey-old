@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { connectUser } from "../services/apiServices";
+import { connectUser, createUser } from "../services/apiServices";
 import { FieldValues, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { CustomUser } from "../models/CustomUser";
 
 interface SignUpProps {
   username: string;
@@ -20,6 +21,7 @@ const SignUpComponent: React.FC = () => {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
+    getValues,
     reset,
   } = useForm<SignUpProps>();
 
@@ -38,11 +40,24 @@ const SignUpComponent: React.FC = () => {
 
   const onSubmit = async (data: FieldValues) => {
     try {
-      const accessToken = await connectUser(data.username, data.password);
-      if (accessToken) {
-        login(); // Mettez à jour l'état d'authentification
-        navigate("/profile"); // Redirigez après connexion
-      }
+      console.log(data);
+      const newUser: CustomUser = {
+        username: data.username,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        zipCode: data.zipCode,
+        city: data.city,
+        password: data.password,
+      };
+      createUser(newUser).then(async (response) => {
+        console.log(response);
+        const accessToken = await connectUser(data.username, data.password);
+        if (accessToken) {
+          login(); // Mettez à jour l'état d'authentification
+          navigate("/profile"); // Redirigez après connexion
+        }
+      });
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       setErrorMessage(
@@ -67,9 +82,9 @@ const SignUpComponent: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="signup-grid">
         <h2>Inscription</h2>
         <div className="username-input">
-          <label htmlFor="username">Nom d'utilisateur</label>
+          <label htmlFor="register-username">Nom d'utilisateur</label>
           <input
-            id="username"
+            id="register-username"
             className="form-control"
             {...register("username", {
               required: "Renseignez votre nom d'utilisateur",
@@ -81,9 +96,9 @@ const SignUpComponent: React.FC = () => {
           )}
         </div>
         <div className="first-name-input">
-          <label htmlFor="first-name">Prénom</label>
+          <label htmlFor="register-first-name">Prénom</label>
           <input
-            id="first-name"
+            id="register-first-name"
             className="form-control"
             {...register("firstName", {
               required: "Renseignez votre prénom",
@@ -95,9 +110,9 @@ const SignUpComponent: React.FC = () => {
           )}
         </div>
         <div className="last-name-input">
-          <label htmlFor="last-name">Nom de famille</label>
+          <label htmlFor="register-last-name">Nom de famille</label>
           <input
-            id="last-name"
+            id="register-last-name"
             className="form-control"
             {...register("lastName", {
               required: "Renseignez votre nom",
@@ -109,9 +124,9 @@ const SignUpComponent: React.FC = () => {
           )}
         </div>
         <div className="email-input">
-          <label htmlFor="email">e-mail</label>
+          <label htmlFor="register-email">e-mail</label>
           <input
-            id="email"
+            id="register-email"
             className="form-control"
             {...register("email", {
               required: "Le nom d'utilisateur est obligatoire",
@@ -123,9 +138,9 @@ const SignUpComponent: React.FC = () => {
           )}
         </div>
         <div className="zip-code-input">
-          <label htmlFor="zip-code">Code ZIP</label>
+          <label htmlFor="register-zip-code">Code ZIP</label>
           <input
-            id="zip-code"
+            id="register-zip-code"
             className="form-control"
             {...register("zipCode", {
               required: "Renseignez votre code ZIP",
@@ -145,9 +160,9 @@ const SignUpComponent: React.FC = () => {
           )}
         </div>
         <div className="city-input">
-          <label htmlFor="city">Ville</label>
+          <label htmlFor="register-city">Ville</label>
           <input
-            id="city"
+            id="register-city"
             className="form-control"
             {...register("city", {
               required: "Le nom d'utilisateur est obligatoire",
@@ -159,9 +174,9 @@ const SignUpComponent: React.FC = () => {
           )}
         </div>
         <div className="password-input">
-          <label htmlFor="password">Mot de passe</label>
+          <label htmlFor="register-password">Mot de passe</label>
           <input
-            id="password"
+            id="register-password"
             className="form-control"
             type="password"
             {...register("password", {
@@ -174,15 +189,18 @@ const SignUpComponent: React.FC = () => {
           )}
         </div>
         <div className="password-confirmation-input">
-          <label htmlFor="password-confirmation">
+          <label htmlFor="register-password-confirmation">
             Confirmation du mot de passe
           </label>
           <input
-            id="password-confirmation"
+            id="register-password-confirmation"
             className="form-control"
             type="password"
             {...register("passwordConfirmation", {
               required: "Confirmez votre mot de passe",
+              validate: (value) =>
+                value === getValues("password") ||
+                "Les mots de passe ne correspondent pas",
             })}
             onChange={handleChange}
           />

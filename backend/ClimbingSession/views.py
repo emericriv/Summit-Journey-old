@@ -19,6 +19,7 @@ from .serializer import (
 
 class ClimbingSessionViewSet(viewsets.ModelViewSet):
     queryset = ClimbingSession.objects.all()
+    permission_classes = [AllowAny]
 
     def get_serializer_class(self):
         # Voir le fichier serializer.py pour plus d'informations

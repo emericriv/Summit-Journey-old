@@ -2,6 +2,7 @@ import { ClimbingSession, DifficultyOrder, DifficultySet } from '../models/Climb
 import { ClimbingGymLocation } from '../models/ClimbingGymLocation';
 import axios from "axios";
 import {AxiosError} from 'axios';
+import { CustomUser } from '../models/CustomUser';
 
 
 const apiClient = axios.create({
@@ -93,14 +94,20 @@ export const disconnectUser = () => {
   localStorage.removeItem('refreshToken');
 };
 
-export const createUser = async (user: any) => {
-  try {
-    const response = await apiClient.post('/users/', user);
-    return response.data;
-  } catch (error : any) {
-    displayErrors(error as AxiosError);
-  }
-}
+export const createUser = async (user: CustomUser): Promise<CustomUser> => {
+  console.log("user:", user);
+  const response = await apiClient.post<CustomUser>(
+    "users/",
+    user
+  );
+  return response.data;
+};
+
+export const fetchCurrentUser = async (): Promise<CustomUser> => {
+  const response = await apiClient.get<CustomUser>("users/me/");
+  return response.data;
+};
+
 
 export const createClimbingSession = async (session: ClimbingSession): Promise<ClimbingSession> => {
   const response = await apiClient.post<ClimbingSession>(

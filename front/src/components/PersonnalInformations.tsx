@@ -1,47 +1,28 @@
 import React from "react";
+import { useAuth } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 const PersonnalInformations: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!user) {
+    return <p>Chargement...</p>;
+  }
+
   return (
     <>
       <h3>Informations personnelles</h3>
-      <form>
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">
-            Nom d'utilisateur
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
-            placeholder="Nom d'utilisateur"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Adresse email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            placeholder="Adresse email"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Mot de passe
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            placeholder="Mot de passe"
-          />
-        </div>
-        <button type="submit" className="custom-btn btn primary-transparent-bg">
-          Enregistrer les modifications
-        </button>
-      </form>
+      <div>
+        <h1>
+          Profil de {user.firstName} {user.lastName}
+        </h1>
+        <p>Email : {user.email}</p>
+        <p>Ville : {user.city}</p>
+      </div>
     </>
   );
 };

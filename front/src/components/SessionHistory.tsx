@@ -20,10 +20,10 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
       try {
         const fetchedSessions = await getClimbingSessions();
         // long loading simulation
-        setTimeout(() => {
-          setSessions(fetchedSessions);
-        }, 1000);
-        // setSessions(fetchedSessions);
+        // setTimeout(() => {
+        //   setSessions(fetchedSessions);
+        // }, 1000);
+        setSessions(fetchedSessions);
       } catch (error) {
         console.error("Erreur lors de la récupération des sessions :", error);
       }
