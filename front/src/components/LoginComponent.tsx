@@ -23,13 +23,6 @@ const LoginComponent: React.FC = () => {
   // État pour gérer le message d'erreur
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleChange = () => {
-    // Réinitialiser le message d'erreur lors d'une saisie
-    if (errorMessage) {
-      setErrorMessage(null);
-    }
-  };
-
   const onSubmit = async (data: FieldValues) => {
     try {
       const accessToken = await connectUser(data.username, data.password);
@@ -37,13 +30,20 @@ const LoginComponent: React.FC = () => {
         login(); // Mettez à jour l'état d'authentification
         navigate("/profile"); // Redirigez après connexion
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erreur lors de la connexion :", error);
-      setErrorMessage(
-        "Vérifiez votre nom d'utilisateur et mot de passe, il semblerait qu'il y ait une erreur."
-      );
-      // vider le champ mot de passe mais pas le nom d'utilisateur
+      if (
+        error.response &&
+        (error.response.status === 401 || error.response.status === 400)
+      ) {
+        setErrorMessage("Nom d'utilisateur ou mot de passe incorrect.");
+      } else {
+        setErrorMessage(
+          "Une erreur inattendue s'est produite. Veuillez réessayer plus tard."
+        );
+      }
       reset({ username: data.username, password: "" });
+      setTimeout(() => setErrorMessage(null), 5000); // Masque l'erreur après 5 secondes
     }
   };
 
@@ -61,7 +61,6 @@ const LoginComponent: React.FC = () => {
             {...register("username", {
               required: "Le nom d'utilisateur est obligatoire",
             })}
-            onChange={handleChange}
           />
           {errors.username && (
             <p className="error-message">{errors.username.message}</p>
@@ -78,7 +77,6 @@ const LoginComponent: React.FC = () => {
             {...register("password", {
               required: "Le mot de passe est obligatoire",
             })}
-            onChange={handleChange}
           />
           {errors.password && (
             <p className="error-message">{errors.password.message}</p>

@@ -31,13 +31,6 @@ const SignUpComponent: React.FC = () => {
   // État pour gérer le message d'erreur
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleChange = () => {
-    // Réinitialiser le message d'erreur lors d'une saisie
-    if (errorMessage) {
-      setErrorMessage(null);
-    }
-  };
-
   const onSubmit = async (data: FieldValues) => {
     try {
       console.log(data);
@@ -61,7 +54,7 @@ const SignUpComponent: React.FC = () => {
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       setErrorMessage(
-        "Vérifiez votre nom d'utilisateur et mot de passe, il semblerait qu'il y ait une erreur."
+        "Erreur lors de la création du compte. Veuillez réessayer."
       );
       // vider le champ mot de passe et confirmation de mot de passe mais pas les autres champs
       reset({
@@ -74,6 +67,9 @@ const SignUpComponent: React.FC = () => {
         password: "",
         passwordConfirmation: "",
       });
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
     }
   };
 
@@ -89,7 +85,6 @@ const SignUpComponent: React.FC = () => {
             {...register("username", {
               required: "Renseignez votre nom d'utilisateur",
             })}
-            onChange={handleChange}
           />
           {errors.username && (
             <p className="error-message">{errors.username.message}</p>
@@ -103,7 +98,6 @@ const SignUpComponent: React.FC = () => {
             {...register("firstName", {
               required: "Renseignez votre prénom",
             })}
-            onChange={handleChange}
           />
           {errors.firstName && (
             <p className="error-message">{errors.firstName.message}</p>
@@ -117,7 +111,6 @@ const SignUpComponent: React.FC = () => {
             {...register("lastName", {
               required: "Renseignez votre nom",
             })}
-            onChange={handleChange}
           />
           {errors.lastName && (
             <p className="error-message">{errors.lastName.message}</p>
@@ -131,7 +124,6 @@ const SignUpComponent: React.FC = () => {
             {...register("email", {
               required: "Le nom d'utilisateur est obligatoire",
             })}
-            onChange={handleChange}
           />
           {errors.email && (
             <p className="error-message">{errors.email.message}</p>
@@ -153,7 +145,6 @@ const SignUpComponent: React.FC = () => {
                 message: "Le code ZIP doit contenir 5 caractères",
               },
             })}
-            onChange={handleChange}
           />
           {errors.zipCode && (
             <p className="error-message">{errors.zipCode.message}</p>
@@ -167,7 +158,6 @@ const SignUpComponent: React.FC = () => {
             {...register("city", {
               required: "Le nom d'utilisateur est obligatoire",
             })}
-            onChange={handleChange}
           />
           {errors.city && (
             <p className="error-message">{errors.city.message}</p>
@@ -182,7 +172,6 @@ const SignUpComponent: React.FC = () => {
             {...register("password", {
               required: "Le mot de passe est obligatoire",
             })}
-            onChange={handleChange}
           />
           {errors.password && (
             <p className="error-message">{errors.password.message}</p>
@@ -202,7 +191,6 @@ const SignUpComponent: React.FC = () => {
                 value === getValues("password") ||
                 "Les mots de passe ne correspondent pas",
             })}
-            onChange={handleChange}
           />
           {errors.passwordConfirmation && (
             <p className="error-message">
