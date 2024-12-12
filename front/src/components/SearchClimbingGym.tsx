@@ -15,9 +15,9 @@ const SearchClimbingGyms: React.FC = () => {
   const [searched, setSearched] = useState<boolean | null>(null);
 
   const fetchDataAndSetGyms = async () => {
-    setSearched(true);
     const gyms = await getGymsByCityId({ cityId });
     setGyms(gyms);
+    setSearched(true);
   };
 
   useEffect(() => {

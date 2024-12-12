@@ -38,6 +38,9 @@ const MapHandler: React.FC<MapHandlerProps> = ({ gyms }) => {
       if (zoom) {
         map.setZoom(zoom); // Dézoomer d'un niveau
       }
+    } else if (map) {
+      map.setCenter({ lat: 46.603354, lng: 1.888334 });
+      map.setZoom(5);
     }
   }, [gyms, map]);
 

@@ -41,6 +41,8 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
 
   const previousRoute = location.state?.from || "/"; // Par défaut, retourne à "/"
 
+  const [isSaved, setIsSaved] = React.useState(false);
+
   useEffect(() => {
     if (props.session) setValue("location", props.session.location.id);
   }, [props.session, setValue]);
@@ -66,6 +68,10 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
           console.log("Session ajoutée avec succès:", data);
           // on ne fait le reset que lorsque la session est ajoutée
           reset(defaultValues);
+          setIsSaved(true);
+          setTimeout(() => {
+            setIsSaved(false);
+          }, 3000);
         })
         .catch((error) => {
           console.error("Erreur lors de l'ajout de la session:", error);
@@ -131,6 +137,11 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
               ? "Mettre à jour la session"
               : "Enregistrer la session"}
           </button>
+          {isSaved ? (
+            <div className="alert alert-info mb-0 px-2 py-1 mt-2 d-flex align-items-center justify-content-center saved-info">
+              Session enregistrée !
+            </div>
+          ) : null}
         </form>
       </div>
     </div>

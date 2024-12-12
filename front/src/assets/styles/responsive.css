@@ -100,6 +100,10 @@
     grid-area: 5/1/6/2;
   }
 
+  .saved-info {
+    grid-area: 5/2/6/3;
+  }
+
   /* Signup form */
   .separator {
     width: 4px;
