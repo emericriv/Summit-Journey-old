@@ -1,3 +1,4 @@
+import { AdvancedMarkerProps } from '@vis.gl/react-google-maps';
 import { ClimbingGymLocation } from './ClimbingGymLocation';
 import { ClimbingSession, Difficulty, DifficultyCompletion, DifficultySet } from './ClimbingSession';
 import { Control, FieldArrayWithId, UseFormRegister, UseFormReset, UseFormWatch } from "react-hook-form";
@@ -22,7 +23,7 @@ export interface MarkerWithInfoWindowProps {
   gym: ClimbingGymLocation; // Données du gymnase
   openInfoWindowId: number | null; // ID de l'info-bulle ouverte ou null si aucune n'est ouverte
   setOpenInfoWindowId: (id: number | null) => void; // Fonction pour ouvrir/fermer l'info-bulle
-}
+  }
 
 // Used for component in the new session form
 export interface ClimbTypeSelectProps {
@@ -67,7 +68,7 @@ export interface GymOption {
   value: string;
 }
 
-export interface FormSessionProps { 
+export interface FormSessionProps {
   date: string;
   location: number;
   climbType: string;
@@ -76,7 +77,7 @@ export interface FormSessionProps {
   difficultySet: number;
   difficulties: DifficultyCompletion[];
 }
-  
+
 export interface SessionHistoryProps {
   numberOfSessions: number|"all";
 }
