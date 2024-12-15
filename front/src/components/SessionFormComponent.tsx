@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useClimbingSessionForm } from "../hooks/useClimbingSessionForm";
 import DateInput from "./SessionFormComponents/DateInput";
-import GymLocationSelect from "./SessionFormComponents/GymLocationSelect";
+import GymLocationSelectForm from "./SessionFormComponents/GymLocationSelectForm";
 import ClimbTypeSelect from "./SessionFormComponents/ClimbTypeSelect";
 import DifficultySetSelect from "./SessionFormComponents/DifficultySetSelect";
 import DifficultyList from "./SessionFormComponents/DifficultyList";
@@ -16,6 +16,7 @@ import {
   createClimbingSession,
   updateClimbingSession,
 } from "../services/apiServices";
+import { useAuth } from "../context/AuthContext";
 
 const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   props: SessionFormComponentProps
@@ -38,6 +39,8 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { user } = useAuth();
 
   const previousRoute = location.state?.from || "/"; // Par défaut, retourne à "/"
 
@@ -109,10 +112,12 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
         {/* Add props.session ands reset form on submit */}
         <form onSubmit={handleSubmit(onSubmit)} className="session-form-grid">
           <DateInput register={register} />
-          <GymLocationSelect
+          <GymLocationSelectForm
             control={control}
             watch={watch}
-            initGymId={props.session?.location.id}
+            initGymId={
+              props.session?.location.id || user?.favoriteClimbingGym?.id
+            }
           />
           <ClimbTypeSelect register={register} />
           <HeightInput register={register} />

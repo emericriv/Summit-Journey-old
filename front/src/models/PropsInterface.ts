@@ -57,7 +57,7 @@ export interface HeightInputProps {
   register: UseFormRegister<FormSessionProps>;
 }
 
-export interface GymLocationSelectProps {
+export interface GymLocationSelectFormProps {
   control: Control<FormSessionProps>;
   watch: UseFormWatch<FormSessionProps>;
   initGymId?: number;

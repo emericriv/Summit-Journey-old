@@ -7,6 +7,7 @@ interface AuthContextProps {
   user: CustomUser | null;
   login: () => void;
   logout: () => void;
+  refreshUser: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -58,8 +59,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(null);
   };
 
+  const refreshUser = async () => {
+    try {
+      const updatedUser = await fetchCurrentUser();
+      setUser(updatedUser);
+    } catch (error) {
+      console.error(
+        "Erreur lors du rafraîchissement des données utilisateur :",
+        error
+      );
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, login, logout, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

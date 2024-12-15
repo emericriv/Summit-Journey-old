@@ -132,14 +132,15 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
             {currentSessionId && (
               <ModalComponent
                 setDependantVariable={setCurrentSessionId}
-                description="Voulez-vous supprimer cette session ?"
                 title="Supprimer session"
                 actionDescription="Supprimer"
                 callApi={deleteClimbingSession}
                 objectId={currentSessionId}
                 buttonClassName="custom-btn-danger"
                 handleResponse={handleResponse}
-              />
+              >
+                <p>Êtes-vous sûr de vouloir supprimer cette session ?</p>
+              </ModalComponent>
             )}
           </div>
         ) : (

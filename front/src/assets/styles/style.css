@@ -36,6 +36,10 @@ h3 {
   color: var(--text-color);
 }
 
+p {
+  margin: 0;
+}
+
 .primary-transparent-bg {
   background-color: var(--primary-color-transparent);
 }
@@ -427,9 +431,9 @@ h3 {
   padding: 2.25rem;
 }
 
-.personnal-informations {
+/* .personnal-informations {
   background-image: linear-gradient(62deg, #fbab7e, #f7ce68);
-}
+} */
 
 /* MAP */
 .map {

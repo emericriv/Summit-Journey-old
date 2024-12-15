@@ -5,13 +5,13 @@ interface ModalComponentProps {
     | React.Dispatch<React.SetStateAction<number | null>>
     | React.Dispatch<React.SetStateAction<boolean | null>>;
   callApi?: (id: number) => Promise<unknown>;
-  description: string;
   title: string;
   actionDescription: string;
   objectId?: number;
   buttonStyle?: { [key: string]: string };
   buttonClassName?: string;
   handleResponse?: () => void;
+  children?: React.ReactNode; // Ajout de children dans les props
 }
 
 const ModalComponent: React.FC<ModalComponentProps> = (
@@ -39,7 +39,7 @@ const ModalComponent: React.FC<ModalComponentProps> = (
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content custom-modal-content">
             <div
-              className="modal-header custom-modal-header "
+              className="modal-header custom-modal-header"
               data-bs-theme="dark"
             >
               <h5 className="modal-title custom-modal-title">{props.title}</h5>
@@ -52,7 +52,7 @@ const ModalComponent: React.FC<ModalComponentProps> = (
               ></button>
             </div>
             <div className="modal-body custom-modal-body">
-              <p>{props.description}</p>
+              {props.children} {/* Affiche les children */}
             </div>
             <div className="modal-footer custom-modal-footer">
               <button

@@ -37,12 +37,16 @@ const SearchClimbingGyms: React.FC = () => {
         {searched && gyms.length === 0 && (
           <ModalComponent
             setDependantVariable={setSearched}
-            description="Aucune salle n'est référencée proche de cette ville"
             title="Aucune salle trouvée"
             actionDescription="Demander à ajouter une salle"
             buttonClassName="custom-btn-primary"
             handleResponse={handleResponse}
-          />
+          >
+            <p>
+              La ville sélectionnée ne contient pas de salle d'escalade. Vous
+              pouvez demander à ajouter une salle d'escalade dans cette ville.
+            </p>
+          </ModalComponent>
         )}
       </div>
     </div>

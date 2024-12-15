@@ -103,6 +103,14 @@ export const createUser = async (user: CustomUser): Promise<CustomUser> => {
   return response.data;
 };
 
+export const updateCurrentUser = async (
+  updatedData: Partial<CustomUser>
+): Promise<CustomUser> => {
+  console.log("updatedData:", updatedData);
+  const response = await apiClient.patch<CustomUser>("users/me/", updatedData);
+  return response.data;
+};
+
 export const fetchCurrentUser = async (): Promise<CustomUser> => {
   const response = await apiClient.get<CustomUser>("users/me/");
   return response.data;
