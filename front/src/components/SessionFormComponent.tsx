@@ -52,6 +52,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
 
   const onSubmit = async (data: FieldValues) => {
     const sessionRequest = PrepareDataForRequest({ data: data });
+    // Si une props.session est passée, on met à jour la session
     if (props.session) {
       const updatedSession: ClimbingSession = {
         ...sessionRequest,
@@ -66,6 +67,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
           console.error("Erreur lors de la mise à jour de la session:", error);
         });
     } else {
+      // Sinon, on crée une nouvelle session
       createClimbingSession(sessionRequest)
         .then((data) => {
           console.log("Session ajoutée avec succès:", data);

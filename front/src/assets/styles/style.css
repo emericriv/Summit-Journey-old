@@ -59,13 +59,13 @@ p {
   text-align: center;
   text-transform: uppercase;
   transition: 0.3s ease-in-out;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease background-color 0.2s ease;
 }
 
 .custom-btn:hover {
   background-color: var(--primary-color);
   text-decoration: none;
-  transform: scale(1.02);
+  /* transform: scale(1.02); */
 }
 
 .custom-btn.active {

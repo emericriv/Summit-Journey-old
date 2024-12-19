@@ -8,6 +8,6 @@ export interface CustomUser {
   password: string;
   zipCode: string;
   city: string;
-  favoriteClimbingGym: ClimbingGymLocation;
+  favoriteClimbingGym?: ClimbingGymLocation;
   favoriteClimbingGymId?: number;
 }

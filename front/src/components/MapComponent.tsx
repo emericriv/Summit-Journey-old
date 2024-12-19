@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   APIProvider,
   Map,
@@ -22,6 +22,8 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
 
   const onMouseEnter = useCallback((id: string | null) => setHoverId(id), []);
   const onMouseLeave = useCallback(() => setHoverId(null), []);
+
+  // Fonction pour gérer l'affichage de l'infobulle et empêcher d'afficher plusieurs infobulles en même temps
   const onMarkerClick = useCallback(
     (id: string | null, marker?: google.maps.marker.AdvancedMarkerElement) => {
       setSelectedGymId(id);
@@ -39,17 +41,19 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
     [selectedGymId]
   );
 
-  const onMapClick = useCallback(() => {
+  // Fonction pour fermer l'infobulle lorsqu'on clique sur la carte
+  const removeSelection = useCallback(() => {
     setSelectedGymId(null);
     setSelectedMarker(null);
     setInfoWindowShown(false);
   }, []);
 
-  const handleInfowindowCloseClick = useCallback(
-    () => setInfoWindowShown(false),
-    []
-  );
+  // Fermer l'infobulle lorsque la liste des salles change
+  useEffect(() => {
+    removeSelection();
+  }, [gyms, removeSelection]);
 
+  // Permet de parser la location pour récupérer la latitude et la longitude
   const parseLocation = (location: string | undefined) => {
     const match = location?.match(/POINT \(([^ ]+) ([^)]+)\)/);
     if (match) {
@@ -68,7 +72,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
           defaultZoom={5}
           defaultCenter={{ lat: 46.6034, lng: 1.8883 }}
           gestureHandling={"greedy"}
-          onClick={onMapClick}
+          onClick={removeSelection}
           clickableIcons={false}
           disableDefaultUI
         >
@@ -104,14 +108,33 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
             <InfoWindow
               anchor={selectedMarker}
               pixelOffset={[0, -2]}
-              onCloseClick={handleInfowindowCloseClick}
-              maxWidth={250}
-              // disableAutoPan={true} // Évite le recentrage automatique sur le marqueur
+              onCloseClick={removeSelection}
               style={{ color: "black" }}
+              headerContent={
+                <h5 style={{ color: "black", margin: 0 }}>
+                  {
+                    gyms.find((gym) => String(gym.id) === selectedGymId)
+                      ?.gymName
+                  }
+                </h5>
+              }
             >
-              <h5 style={{ color: "black" }}>
-                {gyms.find((gym) => String(gym.id) === selectedGymId)?.gymName}
-              </h5>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                  gyms.find((gym) => String(gym.id) === selectedGymId)
+                    ?.gymName || ""
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn custom-btn custom-btn-primary"
+                style={{
+                  fontSize: "0.75rem",
+                  marginTop: "10px",
+                  display: "inline-block",
+                }}
+              >
+                OUVRIR DANS GOOGLE MAPS
+              </a>
             </InfoWindow>
           )}
         </Map>

@@ -53,7 +53,6 @@ const CityAutocomplete: React.FC<CityAutocompleteProps> = ({ setCityId }) => {
 
   return (
     <div>
-      {" "}
       {/*Besoin d'une div pour que la liste ne s'étende pas selon la width du container parent*/}
       <Select
         value={selectedCity} // Assigner l'état de la ville sélectionnée à `value`

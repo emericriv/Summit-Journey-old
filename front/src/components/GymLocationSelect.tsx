@@ -53,7 +53,7 @@ const GymLocationSelect = forwardRef<HTMLDivElement, GymLocationSelectProps>(
             null
         );
       }
-    }, [initGymId, options]);
+    }, [options]);
 
     if (!options) {
       return <div className="col-md-6">Loading...</div>;

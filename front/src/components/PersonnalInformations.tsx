@@ -43,7 +43,6 @@ const PersonnalInformations: React.FC = () => {
 
   return (
     <>
-      <h3>Informations personnelles</h3>
       <div className="d-flex flex-column align-items-start justify-content-center">
         <h1>
           Profil de {user.firstName} {user.lastName}
