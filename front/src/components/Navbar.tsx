@@ -89,9 +89,7 @@ const Navbar: React.FC = () => {
           </ul>
           <div className="mobile" onClick={handleClick}>
             <i
-              className={`bar px-2 py-1 me-2 ${
-                clicked ? "bi bi-x" : "bi bi-list"
-              }`}
+              className={`px-2 py-1 me-2 ${clicked ? "bi bi-x" : "bi bi-list"}`}
             ></i>
           </div>
         </div>

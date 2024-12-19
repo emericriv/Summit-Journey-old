@@ -88,22 +88,7 @@ const DifficultySetSelect: React.FC<DifficultySetSelectProps> = ({
         </div>
         {/* Menu déroulant des options */}
         {isOpen && (
-          <ul
-            className="custom-options"
-            style={{
-              listStyle: "none",
-              margin: 0,
-              padding: 0,
-              position: "absolute",
-              width: "100%",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              background: "#eee",
-              zIndex: 10,
-              maxHeight: "200px",
-              overflowY: "auto",
-            }}
-          >
+          <ul className="custom-options">
             {difficultySets &&
               difficultySets.map((set) => (
                 <li

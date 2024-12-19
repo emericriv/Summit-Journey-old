@@ -8,6 +8,7 @@ const HighestDifficultiesCompletedComponent: React.FC<
   const reversedDifficultyCompletions = [
     ...(session.difficultyCompletions || []),
   ].reverse();
+
   let topDifficulties = reversedDifficultyCompletions.filter(
     (completion) => completion.count > 0
   ); // Exclure les counts nuls
@@ -16,8 +17,6 @@ const HighestDifficultiesCompletedComponent: React.FC<
     topDifficulties = topDifficulties.slice(0, numberOfDifficulties);
   }
 
-  // setHighestDifficulties(topDifficulties);
-  // Faire un composant dedié pour afficher les difficultés
   return (
     <div>
       {topDifficulties &&

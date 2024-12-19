@@ -29,12 +29,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) {
-      setIsAuthenticated(true);
       // Récupérer les données de l'utilisateur
       fetchCurrentUser()
         .then((userData) => {
           console.log("Utilisateur récupéré :", userData);
           setUser(userData);
+          setIsAuthenticated(true);
         })
         .catch((error) => {
           console.error(
@@ -47,9 +47,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const login = () => {
-    setIsAuthenticated(true);
-    // Récupérer les données après connexion
-    fetchCurrentUser().then(setUser).catch(console.error);
+    fetchCurrentUser()
+      .then((userData) => {
+        setUser(userData);
+        setIsAuthenticated(true);
+      })
+      .catch(console.error);
   };
 
   const logout = () => {
