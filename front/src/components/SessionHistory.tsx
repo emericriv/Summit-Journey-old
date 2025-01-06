@@ -148,7 +148,11 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                 ) : (
                   <React.Fragment key={index}>
                     <div className="grid-cell">
-                      {new Date(session.date).toLocaleDateString("fr-FR")}
+                      {new Date(session.date).toLocaleDateString("fr-FR", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
                     </div>
                     <div className="grid-cell">
                       {session.location?.gymName ?? "N/A"}
