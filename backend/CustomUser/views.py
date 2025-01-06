@@ -1,45 +1,39 @@
+from CustomUser.serializer import CustomUserSerializer
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.response import Response
-
-from .models import CustomUser
-from .serializer import CustomUserSerializer
+from rest_framework.views import APIView
 
 
-class CustomUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+class UserView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
-    # Allow only creation user without authentication
     def get_permissions(self):
-        if self.action == "create":
+        if self.request.method == "POST":
             return [permissions.AllowAny()]
-        return [permissions.IsAuthenticated()]
+        return super().get_permissions()
 
-    @action(
-        detail=False,
-        methods=["get", "put", "patch"],  # Accepte les trois méthodes
-        permission_classes=[permissions.IsAuthenticated],
-    )
-    def me(self, request):
-        """
-        Endpoint pour récupérer ou mettre à jour les informations de l'utilisateur connecté.
-        """
+    def post(self, request):
+        serializer = CustomUserSerializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception as e:
+            # TODO : gérer les erreurs pour pouvoir les afficher en front
+            return Response({"error": str(e)}, status=400)
+        serializer.save()
+        return Response(serializer.data)
+
+    def get(self, request):
         user = request.user
 
         # Méthode GET : renvoyer les informations de l'utilisateur
-        if request.method == "GET":
-            serializer = self.get_serializer(user)
-            return Response(serializer.data)
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
 
-        # Méthodes PUT et PATCH : mettre à jour l'utilisateur
-        elif request.method in ["PUT", "PATCH"]:
-            partial = request.method == "PATCH"
-            serializer = self.get_serializer(user, data=request.data, partial=partial)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-
-        # Si une autre méthode est utilisée, lever une erreur
-        raise MethodNotAllowed(request.method)
+    def patch(self, request):
+        user = request.user
+        serializer = CustomUserSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)

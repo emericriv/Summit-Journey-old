@@ -42,8 +42,28 @@ const Navbar: React.FC = () => {
       )}
       <nav className="sticky-top nav-bar" ref={navRef}>
         <div className="container-fluid p-2 navbar-div global-appearance d-flex align-items-center justify-content-between">
-          <Link to="/" className="brand d-flex align-items-end">
-            Summit Journey
+          <Link to="/" className="brand d-flex align-items-center">
+            <svg
+              width="140"
+              height="140"
+              viewBox="0 0 140 140"
+              xmlns="http://www.w3.org/2000/svg"
+              className="me-2 SummitJourney-logo"
+            >
+              <polygon
+                points="5,135 105,135 55,10"
+                strokeWidth="5"
+                fill="none"
+                stroke="currentColor"
+              />
+              <polyline
+                points="82,80 100,44 135,135 105,135"
+                strokeWidth="5"
+                fill="none"
+                stroke="currentColor"
+              />
+            </svg>
+            <h1 className="brand">Summit Journey</h1>
           </Link>
           <ul
             className={`d-flex flex-md-row flex-column justify-content-start align-items-start justify-content-md-center align-items-md-center pe-3 list-unstyled ${

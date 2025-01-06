@@ -31,7 +31,7 @@ const SearchClimbingGyms: React.FC = () => {
 
   return (
     <div className="row card global-appearance py-3">
-      <CityAutocomplete setCityId={setCityId} />
+      <CityAutocomplete setCityId={setCityId} extended={true} />
       <div className="map">
         <MapComponent gyms={gyms} />
         {searched && gyms.length === 0 && (

@@ -59,7 +59,6 @@ export interface HeightInputProps {
 
 export interface GymLocationSelectFormProps {
   control: Control<FormSessionProps>;
-  watch: UseFormWatch<FormSessionProps>;
   initGymId?: number;
 }
 
@@ -92,5 +91,9 @@ export interface HighestDifficultiesCompletedProps {
 }
 
 export interface CityAutocompleteProps {
-  setCityId: (id: number) => void;
+  setCityId?: (id: number) => void;
+  setCityLabel?: (label: string) => void;
+  onParentChange?: (selectedOption: { value: any }) => void;
+  extended?: boolean;
+  [key: string]: any;
 };

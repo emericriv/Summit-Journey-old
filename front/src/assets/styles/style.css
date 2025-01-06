@@ -112,8 +112,9 @@ p {
 
 .brand {
   font-weight: bold;
-  font-size: 24px;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
   color: #b1d0ee !important;
+  margin: 0;
 }
 
 .brand svg {
@@ -128,7 +129,7 @@ p {
 
 .nav-button{
   position: relative;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 1.6vw, 1.1rem);
   font-weight: 600;
   color: var(--text-color);
   text-align: start;
@@ -350,6 +351,11 @@ p {
   border-radius: 4px;
   margin: 0 2px;
   transition: transform 0.2s ease;
+}
+
+.btn-icon-profile {
+  font-size: 0.9rem;
+  padding: 0 0.2rem;
 }
 
 .btn-icon:hover {

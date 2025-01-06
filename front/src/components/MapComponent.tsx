@@ -133,7 +133,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
                   display: "inline-block",
                 }}
               >
-                OUVRIR DANS GOOGLE MAPS
+                S'Y RENDRE
               </a>
             </InfoWindow>
           )}

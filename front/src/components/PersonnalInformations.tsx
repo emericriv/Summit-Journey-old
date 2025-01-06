@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import ModalComponent from "./ModalComponent";
 import GymLocationSelect from "./GymLocationSelect";
-import { updateCurrentUser } from "../services/apiServices";
+import ChangeInfoComponent from "./ChangeInfoComponent";
 
 const PersonnalInformations: React.FC = () => {
   const { user, isAuthenticated, refreshUser } = useAuth();
-  const [isChangingClimbingGym, setIsChangingClimbingGym] = useState<
-    boolean | null
-  >(false);
-  const [selectedGymId, setSelectedGymId] = useState<number | null>(null); // Stocke l'ID de la salle sélectionnée
-  const [isRefreshing, setIsRefreshing] = useState(false);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
@@ -21,76 +15,79 @@ const PersonnalInformations: React.FC = () => {
     return <p>Chargement...</p>;
   }
 
-  // Fonction pour gérer la mise à jour de la salle
-  const handleResponse = async () => {
-    if (!selectedGymId) {
-      return;
-    }
-
-    setIsRefreshing(true);
-    try {
-      await updateCurrentUser({
-        favoriteClimbingGymId: selectedGymId,
-      });
-      await refreshUser();
-    } catch (error) {
-      console.error("Erreur:", error);
-    } finally {
-      setIsRefreshing(false);
-      setIsChangingClimbingGym(false);
-    }
-  };
-
   return (
     <>
-      <div className="d-flex flex-column align-items-start justify-content-center">
+      <div className="d-flex flex-column align-items-start justify-content-center row-gap-1">
         <h1>
           Profil de {user.firstName} {user.lastName}
         </h1>
         <p>Email : {user.email}</p>
-        <p>Ville : {user.city}</p>
-        <div className="d-flex align-items-center justify-content-between w-100">
-          {isRefreshing ? (
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          ) : (
-            <>
-              <p>
-                Salle d'escalade préférée : {user.favoriteClimbingGym.gymName}
-              </p>
-
-              <button
-                onClick={() => setIsChangingClimbingGym(true)}
-                className="btn-icon custom-btn-primary"
-                aria-label="Modifier"
-              >
-                <i className="bi bi-pencil-fill"></i>
-              </button>
-            </>
+        <ChangeInfoComponent
+          content="Nom"
+          itemKey="lastName"
+          itemValue={user.lastName} // Nom utilisé pour la mise à jour
+          onSave={refreshUser}
+        >
+          {(onChange, ref) => (
+            <input
+              type="text"
+              className="form-control"
+              defaultValue={user.lastName}
+              onChange={(e) => onChange(e.target.value)}
+              ref={ref}
+            />
           )}
-        </div>
-        {isChangingClimbingGym && (
-          <ModalComponent
-            setDependantVariable={setIsChangingClimbingGym}
-            title="Changer de salle favorite"
-            actionDescription="Valider"
-            buttonClassName="custom-btn-primary"
-            handleResponse={handleResponse} // Utilise la fonction handleResponse
-          >
-            <div>
-              <p>Changer de salle favorite</p>
-              <GymLocationSelect
-                initGymId={user.favoriteClimbingGym.id}
-                onParentChange={(selectedOption: { value: any }) => {
-                  setSelectedGymId(
-                    selectedOption ? Number(selectedOption.value) : null
-                  );
-                }} // Met à jour l'état dans le parent
-              />
-            </div>
-          </ModalComponent>
-        )}
+        </ChangeInfoComponent>
+        <ChangeInfoComponent
+          content="Prénom"
+          itemKey="firstName"
+          itemValue={user.firstName}
+          onSave={refreshUser}
+        >
+          {(onChange, ref) => (
+            <input
+              type="text"
+              className="form-control"
+              defaultValue={user.firstName}
+              onChange={(e) => onChange(e.target.value)}
+              ref={ref}
+            />
+          )}
+        </ChangeInfoComponent>
+        <ChangeInfoComponent
+          content="Ville"
+          itemKey="city"
+          itemValue={user.city} // Ville utilisée pour la mise à jour
+          onSave={refreshUser}
+        >
+          {(onChange, ref) => (
+            <input
+              type="text"
+              className="form-control"
+              defaultValue={user.city}
+              onChange={(e) => onChange(e.target.value)}
+              ref={ref}
+            />
+          )}
+        </ChangeInfoComponent>
+        <ChangeInfoComponent
+          content="Salle d'escalade préférée"
+          itemKey="favoriteClimbingGymId"
+          itemValue={user.favoriteClimbingGym?.id} // ID utilisé pour la mise à jour
+          displayValue={user.favoriteClimbingGym?.gymName} // Nom affiché
+          onSave={refreshUser}
+        >
+          {(onChange) => (
+            <GymLocationSelect
+              initGymId={user.favoriteClimbingGym?.id}
+              onParentChange={(selectedOption: { value: any }) =>
+                onChange(
+                  selectedOption ? Number(selectedOption.value) : undefined
+                )
+              }
+            />
+          )}
+        </ChangeInfoComponent>
       </div>
     </>
   );

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { connectUser, createUser } from "../services/apiServices";
-import { FieldValues, useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { CustomUser } from "../models/CustomUser";
+import CityAutoComplete from "./CityAutoComplete";
 
 interface SignUpProps {
   username: string;
@@ -23,6 +24,7 @@ const SignUpComponent: React.FC = () => {
     formState: { isSubmitting, errors },
     getValues,
     reset,
+    control,
   } = useForm<SignUpProps>();
 
   const { login } = useAuth();
@@ -152,12 +154,28 @@ const SignUpComponent: React.FC = () => {
         </div>
         <div className="city-input">
           <label htmlFor="register-city">Ville</label>
-          <input
+          {/* <input
             id="register-city"
             className="form-control"
             {...register("city", {
-              required: "Le nom d'utilisateur est obligatoire",
+              required: "La ville est obligatoire",
             })}
+          /> */}
+          <Controller
+            name="city"
+            control={control}
+            render={({ field: { onChange, onBlur, ref } }) => {
+              return (
+                <CityAutoComplete
+                  setCityLabel={(city: string) => {
+                    onChange(city);
+                  }}
+                  onBlur={onBlur}
+                  ref={ref}
+                  placeholder=""
+                />
+              );
+            }}
           />
           {errors.city && (
             <p className="error-message">{errors.city.message}</p>

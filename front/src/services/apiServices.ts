@@ -97,7 +97,7 @@ export const disconnectUser = () => {
 export const createUser = async (user: CustomUser): Promise<CustomUser> => {
   console.log("user:", user);
   const response = await apiClient.post<CustomUser>(
-    "users/",
+    "user/",
     user
   );
   return response.data;
@@ -107,12 +107,12 @@ export const updateCurrentUser = async (
   updatedData: Partial<CustomUser>
 ): Promise<CustomUser> => {
   console.log("updatedData:", updatedData);
-  const response = await apiClient.patch<CustomUser>("users/me/", updatedData);
+  const response = await apiClient.patch<CustomUser>("user/", updatedData);
   return response.data;
 };
 
 export const fetchCurrentUser = async (): Promise<CustomUser> => {
-  const response = await apiClient.get<CustomUser>("users/me/");
+  const response = await apiClient.get<CustomUser>("user/");
   return response.data;
 };
 

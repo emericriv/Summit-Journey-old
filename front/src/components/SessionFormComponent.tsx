@@ -34,7 +34,6 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
     PrepareDataForRequest,
     errors,
     control,
-    watch,
   } = useClimbingSessionForm();
 
   const location = useLocation();
@@ -106,7 +105,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   return (
     <div className="hero-banner d-flex align-items-center justify-content-center">
       <div
-        className="form-style global-appearance container py-5 py-md-0"
+        className="form-style global-appearance container py-2 py-md-0 m-4 m-d-0"
         id="props.session-tab-pane"
         role="tabpanel"
         aria-labelledby="session-tab"
@@ -116,7 +115,6 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
           <DateInput register={register} />
           <GymLocationSelectForm
             control={control}
-            watch={watch}
             initGymId={
               props.session?.location.id || user?.favoriteClimbingGym?.id
             }
