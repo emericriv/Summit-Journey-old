@@ -28,10 +28,16 @@ const ChangeInfoComponent = <T extends keyof CustomUser>({
   const [isRefreshing, setIsRefreshing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null); // Création du ref pour l'input
 
+  const newValueRef = useRef(newValue);
+
+  useEffect(() => {
+    newValueRef.current = newValue; // Met à jour la référence à chaque changement
+  }, [newValue]);
+
   const handleResponse = async () => {
     setIsRefreshing(true);
     try {
-      await updateCurrentUser({ [itemKey]: newValue });
+      await updateCurrentUser({ [itemKey]: newValueRef.current });
       onSave && (await onSave());
     } catch (error) {
       console.error("Erreur lors de la mise à jour :", error);
@@ -40,6 +46,21 @@ const ChangeInfoComponent = <T extends keyof CustomUser>({
       setIsChanging(false);
     }
   };
+
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.key === "Enter" && isChanging) {
+      handleResponse(); // Utilise toujours la valeur à jour depuis le ref
+    }
+  };
+
+  useEffect(() => {
+    if (isChanging) {
+      document.addEventListener("keydown", handleKeyPress);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [isChanging]);
 
   useEffect(() => {
     if (isChanging && inputRef.current) {

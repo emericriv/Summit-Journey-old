@@ -10,4 +10,8 @@ export interface CustomUser {
   city: string;
   favoriteClimbingGym?: ClimbingGymLocation;
   favoriteClimbingGymId?: number;
+  climbingShoes?: string;
+  climbingHarness?: string;
+  climbingHelmet?: string;
+  climbingRope?: string;
 }

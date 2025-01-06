@@ -51,6 +51,10 @@ class CustomUserAdmin(UserAdmin):
                     "zip_code",
                     "city",
                     "favorite_climbing_gym",
+                    "climbing_shoes",
+                    "climbing_harness",
+                    "climbing_helmet",
+                    "climbing_rope",
                 )
             },
         ),

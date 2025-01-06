@@ -1,9 +1,8 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
-import GymLocationSelect from "./GymLocationSelect";
 import ChangeInfoComponent from "./ChangeInfoComponent";
+import { useAuth } from "../context/AuthContext";
 
-const PersonnalInformations: React.FC = () => {
+const MaterialInfoComponent: React.FC = () => {
   const { user, refreshUser } = useAuth();
 
   if (!user) {
@@ -13,73 +12,68 @@ const PersonnalInformations: React.FC = () => {
   return (
     <>
       <div className="d-flex flex-column align-items-start justify-content-center row-gap-1">
-        <h1>
-          Profil de {user.firstName} {user.lastName}
-        </h1>
-        <p>Email : {user.email}</p>
+        <h3>Matériel et modèle</h3>
         <ChangeInfoComponent
-          content="Nom"
-          itemKey="lastName"
-          itemValue={user.lastName} // Nom utilisé pour la mise à jour
+          content="Chaussons d'escalade"
+          itemKey="climbingShoes"
+          itemValue={user.climbingShoes || "Non renseigné"}
           onSave={refreshUser}
         >
           {(onChange, ref) => (
             <input
               type="text"
               className="form-control"
-              defaultValue={user.lastName}
+              defaultValue={user.climbingShoes}
               onChange={(e) => onChange(e.target.value)}
               ref={ref}
             />
           )}
         </ChangeInfoComponent>
         <ChangeInfoComponent
-          content="Prénom"
-          itemKey="firstName"
-          itemValue={user.firstName}
+          content="Harnais"
+          itemKey="climbingHarness"
+          itemValue={user.climbingHarness || "Non renseigné"}
           onSave={refreshUser}
         >
           {(onChange, ref) => (
             <input
               type="text"
               className="form-control"
-              defaultValue={user.firstName}
+              defaultValue={user.climbingHarness}
               onChange={(e) => onChange(e.target.value)}
               ref={ref}
             />
           )}
         </ChangeInfoComponent>
         <ChangeInfoComponent
-          content="Ville"
-          itemKey="city"
-          itemValue={user.city} // Ville utilisée pour la mise à jour
+          content="Casque"
+          itemKey="climbingHelmet"
+          itemValue={user.climbingHelmet || "Non renseigné"}
           onSave={refreshUser}
         >
           {(onChange, ref) => (
             <input
               type="text"
               className="form-control"
-              defaultValue={user.city}
+              defaultValue={user.climbingHelmet}
               onChange={(e) => onChange(e.target.value)}
               ref={ref}
             />
           )}
         </ChangeInfoComponent>
         <ChangeInfoComponent
-          content="Salle d'escalade préférée"
-          itemKey="favoriteClimbingGymId"
-          itemValue={user.favoriteClimbingGym?.id} // ID utilisé pour la mise à jour
-          displayValue={user.favoriteClimbingGym?.gymName} // Nom affiché
+          content="Corde"
+          itemKey="climbingRope"
+          itemValue={user.climbingRope || "Non renseigné"}
           onSave={refreshUser}
         >
-          {(onChange) => (
-            <GymLocationSelect
-              initGymId={user.favoriteClimbingGym?.id}
-              onParentChange={(selectedOption: { value: any }) =>
-                onChange(
-                  selectedOption ? Number(selectedOption.value) : undefined
-                )
-              }
+          {(onChange, ref) => (
+            <input
+              type="text"
+              className="form-control"
+              defaultValue={user.climbingRope}
+              onChange={(e) => onChange(e.target.value)}
+              ref={ref}
             />
           )}
         </ChangeInfoComponent>
@@ -88,4 +82,4 @@ const PersonnalInformations: React.FC = () => {
   );
 };
 
-export default PersonnalInformations;
+export default MaterialInfoComponent;

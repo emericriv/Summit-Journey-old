@@ -1,8 +1,21 @@
 import React from "react";
 import SessionHistory from "../components/SessionHistory";
 import PersonnalInformations from "../components/PersonnalInformations";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import MaterialInfoComponent from "../components/MaterialInfoComponent";
 
 const ProfilePage: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!user) {
+    return <p>Chargement...</p>;
+  }
+
   return (
     <div className="hero-banner profile-grid">
       <div className="personnal-informations grid-card global-appearance">
@@ -13,13 +26,7 @@ const ProfilePage: React.FC = () => {
         <SessionHistory numberOfSessions={2} />
       </div>
       <div className="equipments grid-card global-appearance">
-        <h3>Matériel et modèle</h3>
-        <ul>
-          <li>Chaussons d'escalade : La Sportiva Solution</li>
-          <li>Harnais : Petzl Corax</li>
-          <li>Casque : Petzl Meteor</li>
-          <li>Corde : Beal Joker</li>
-        </ul>
+        <MaterialInfoComponent />
       </div>
       <div className="grid-card global-appearance">
         <h3>Potentiel nouvel élément</h3>

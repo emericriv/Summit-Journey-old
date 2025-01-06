@@ -11,6 +11,12 @@ class CustomUser(AbstractUser):
         ClimbingGymLocations, on_delete=models.SET_NULL, null=True, blank=True
     )
 
+    # climbing gear
+    climbing_shoes = models.CharField(blank=True, max_length=50)
+    climbing_harness = models.CharField(blank=True, max_length=50)
+    climbing_helmet = models.CharField(blank=True, max_length=50)
+    climbing_rope = models.CharField(blank=True, max_length=50)
+
     class Meta:
         verbose_name = "Utilisateur"
 
