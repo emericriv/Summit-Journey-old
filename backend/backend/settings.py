@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "ClimbingGymLocations",
     "SearchPlaces",
     "Locations",
+    "PlannedClimbingSession",
     "rest_framework",
     "rest_framework_simplejwt",
 ]

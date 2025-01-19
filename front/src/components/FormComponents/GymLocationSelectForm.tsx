@@ -7,13 +7,14 @@ const GymLocationSelectForm: React.FC<GymLocationSelectFormProps> = ({
   initGymId,
 }) => {
   return (
-    <div className="gym-location-select">
+    <>
       <label className="form-label mb-0" style={{ width: "100%" }}>
         Lieu
         {
           <Controller
             name="location"
             control={control}
+            defaultValue={initGymId}
             render={({ field: { onChange, onBlur, ref } }) => {
               return (
                 <GymLocationSelect
@@ -34,7 +35,7 @@ const GymLocationSelectForm: React.FC<GymLocationSelectFormProps> = ({
           />
         }
       </label>
-    </div>
+    </>
   );
 };
 

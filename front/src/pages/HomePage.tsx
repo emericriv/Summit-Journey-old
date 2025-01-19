@@ -27,10 +27,10 @@ const HomePage: React.FC = () => {
               </div>
               {isAuthenticated ? (
                 <Link
-                  to="/session"
+                  to="/planned-sessions"
                   className="custom-btn btn primary-transparent-bg mt-2 align-self-start"
                 >
-                  Nouvelle session
+                  Planifier une session
                 </Link>
               ) : (
                 <Link

@@ -25,6 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<CustomUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -35,6 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           console.log("Utilisateur récupéré :", userData);
           setUser(userData);
           setIsAuthenticated(true);
+          setLoading(false);
         })
         .catch((error) => {
           console.error(
@@ -42,7 +44,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             error
           );
           setIsAuthenticated(false);
+          setLoading(false);
         });
+    } else {
+      setIsAuthenticated(false);
+      setLoading(false);
     }
   }, []);
 
@@ -75,10 +81,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider
-      value={{ isAuthenticated, user, login, logout, refreshUser }}
-    >
-      {children}
-    </AuthContext.Provider>
+    !loading && (
+      <AuthContext.Provider
+        value={{ isAuthenticated, user, login, logout, refreshUser }}
+      >
+        {children}
+      </AuthContext.Provider>
+    )
   );
 };

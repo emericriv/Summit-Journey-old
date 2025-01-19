@@ -1,7 +1,7 @@
 import React from "react";
-import LoginComponent from "../components/LoginComponent";
 import { useAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
+import SignUpComponent from "../components/SignUpComponent";
 
 const LoginPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -10,7 +10,7 @@ const LoginPage: React.FC = () => {
     <Navigate to="/profile" />
   ) : (
     <div className="hero-banner d-flex align-items-center justify-content-evenly">
-      <LoginComponent />
+      <SignUpComponent />
     </div>
   );
 };

@@ -2,13 +2,13 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useClimbingSessionForm } from "../hooks/useClimbingSessionForm";
-import DateInput from "./SessionFormComponents/DateInput";
-import GymLocationSelectForm from "./SessionFormComponents/GymLocationSelectForm";
-import ClimbTypeSelect from "./SessionFormComponents/ClimbTypeSelect";
-import DifficultySetSelect from "./SessionFormComponents/DifficultySetSelect";
-import DifficultyList from "./SessionFormComponents/DifficultyList";
-import HeightInput from "./SessionFormComponents/HeightInput";
-import CommentInput from "./SessionFormComponents/CommentInput";
+import DateInput from "./FormComponents/DateInput";
+import GymLocationSelectForm from "./FormComponents/GymLocationSelectForm";
+import ClimbTypeSelect from "./FormComponents/ClimbTypeSelect";
+import DifficultySetSelect from "./FormComponents/DifficultySetSelect";
+import DifficultyList from "./FormComponents/DifficultyList";
+import HeightInput from "./FormComponents/HeightInput";
+import CommentInput from "./FormComponents/CommentInput";
 import { FieldValues } from "react-hook-form";
 import { SessionFormComponentProps } from "../models/PropsInterface";
 import { ClimbingSession } from "../models/ClimbingSession";
@@ -106,19 +106,21 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
     <div className="hero-banner d-flex align-items-center justify-content-center">
       <div
         className="form-style global-appearance container py-2 py-md-0 m-4 m-d-0"
-        id="props.session-tab-pane"
+        id="session-tab-pane"
         role="tabpanel"
         aria-labelledby="session-tab"
       >
         {/* Add props.session ands reset form on submit */}
         <form onSubmit={handleSubmit(onSubmit)} className="session-form-grid">
           <DateInput register={register} />
-          <GymLocationSelectForm
-            control={control}
-            initGymId={
-              props.session?.location.id || user?.favoriteClimbingGym?.id
-            }
-          />
+          <div className="gym-location-select">
+            <GymLocationSelectForm
+              control={control}
+              initGymId={
+                props.session?.location.id || user?.favoriteClimbingGym?.id
+              }
+            />
+          </div>
           <ClimbTypeSelect register={register} />
           <HeightInput register={register} />
           <DifficultySetSelect

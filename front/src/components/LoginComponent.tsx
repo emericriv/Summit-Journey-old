@@ -84,13 +84,22 @@ const LoginComponent: React.FC = () => {
         </div>
         <div>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="btn custom-btn primary-transparent-bg submit-btn mt-2"
-          >
-            Se connecter
-          </button>
+          <div className="d-flex justify-content-between">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn custom-btn primary-transparent-bg submit-btn mt-2"
+            >
+              Se connecter
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/register")}
+              className="btn custom-btn primary-transparent-bg submit-btn mt-2"
+            >
+              Inscription
+            </button>
+          </div>
         </div>
       </form>
     </div>

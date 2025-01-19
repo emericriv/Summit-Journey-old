@@ -11,6 +11,8 @@ import AllSessionPage from "./pages/AllSessionsPage";
 import LoginPage from "./pages/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import PlannedSessionsPage from "./pages/PlannedSessionPage";
+import SignUpPage from "./pages/SignUpPage";
 
 const MainComponent: React.FC = () => {
   return (
@@ -28,6 +30,10 @@ const MainComponent: React.FC = () => {
           element={<ProtectedRoute element={<ProfilePage />} />}
         />
         <Route
+          path="/planned-sessions"
+          element={<ProtectedRoute element={<PlannedSessionsPage />} />}
+        />
+        <Route
           path="/edit-session/:id"
           element={<ProtectedRoute element={<EditSessionPage />} />}
         />
@@ -36,6 +42,7 @@ const MainComponent: React.FC = () => {
           element={<ProtectedRoute element={<AllSessionPage />} />}
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<SignUpPage />} />
       </Routes>
       <Footer />
     </AuthProvider>

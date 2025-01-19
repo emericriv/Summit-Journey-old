@@ -52,8 +52,9 @@ const GymLocationSelect = forwardRef<HTMLDivElement, GymLocationSelectProps>(
           options?.find((option) => option.value === initGymId.toString()) ||
             null
         );
+        console.log("initGymId", initGymId);
       }
-    }, [options]);
+    }, [initGymId, options]);
 
     if (!options) {
       return <div className="col-md-6">Loading...</div>;

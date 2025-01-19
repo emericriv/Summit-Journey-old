@@ -1,5 +1,6 @@
 import { ClimbingSession, DifficultyOrder, DifficultySet } from '../models/ClimbingSession';
 import { ClimbingGymLocation } from '../models/ClimbingGymLocation';
+import { PlannedClimbingSession } from '../models/PlannedClimbingSession';
 import axios from "axios";
 import {AxiosError} from 'axios';
 import { CustomUser } from '../models/CustomUser';
@@ -186,7 +187,20 @@ export const getGymsByCityId = async ({ cityId }: { cityId: number }) => {
       }
       return [];
     }
-  };
+};
+
+export const getPlannedSessions = async (): Promise<PlannedClimbingSession[]> => {
+  const response = await apiClient.get<PlannedClimbingSession[]>("planned-sessions/");
+  return response.data;
+}
+
+export const createPlannedSession = async (session: PlannedClimbingSession): Promise<PlannedClimbingSession> => {
+  const response = await apiClient.post<PlannedClimbingSession>(
+    "planned-sessions/",
+    session
+  );
+  return response.data;
+}
 
 
 const displayErrors = (error: AxiosError) => {

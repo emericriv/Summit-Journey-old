@@ -26,4 +26,5 @@ urlpatterns = [
     path("api/", include("ClimbingSession.urls")),
     path("api/", include("SearchPlaces.urls")),
     path("api/", include("CustomUser.urls")),
+    path("api/", include("PlannedClimbingSession.urls")),
 ]

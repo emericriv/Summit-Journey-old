@@ -58,7 +58,7 @@ export interface HeightInputProps {
 }
 
 export interface GymLocationSelectFormProps {
-  control: Control<FormSessionProps>;
+  control: Control<any>;
   initGymId?: number;
 }
 
