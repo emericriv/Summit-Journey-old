@@ -202,6 +202,11 @@ export const createPlannedSession = async (session: PlannedClimbingSession): Pro
   return response.data;
 }
 
+export const deletePlannedSession = async (id: number): Promise<void> => {
+  const response = await apiClient.delete(`planned-sessions/${id}/`);
+  return response.data;
+}
+
 
 const displayErrors = (error: AxiosError) => {
   if (error.response) {

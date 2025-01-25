@@ -5,7 +5,7 @@ import { FormSessionProps,  } from "../models/PropsInterface";
 
 export const useClimbingSessionForm = () => {
   const defaultValues = {
-    date: new Date().toISOString().split("T")[0],
+    dateTimeStart: new Date().toISOString().split("T")[0],
     location: undefined,
     climbType: "IN",
     height: 5,
@@ -59,7 +59,7 @@ export const useClimbingSessionForm = () => {
 
     // Créer l'objet ClimbingSession à envoyer à l'API
     const newSession: ClimbingSession = {
-      date: data.date,
+      dateTimeStart: data.dateTimeStart,
       location: data.location,
       climbType: data.climbType,
       height: data.height,

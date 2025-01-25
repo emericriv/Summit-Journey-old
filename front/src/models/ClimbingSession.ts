@@ -2,7 +2,7 @@ import { ClimbingGymLocation } from "./ClimbingGymLocation";
 
 export interface ClimbingSession {
   id?: number;
-  date: string;
+  dateTimeStart: string;
   location: ClimbingGymLocation;
   climbType: string;
   height: number;

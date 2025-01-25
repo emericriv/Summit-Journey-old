@@ -28,7 +28,11 @@ END:VCALENDAR`;
     link.click();
   };
 
-  return <button onClick={generateICS}>Exporter vers calendrier</button>;
+  return (
+    <button onClick={generateICS} className="custom-btn primary-transparent-bg">
+      Exporter vers calendrier
+    </button>
+  );
 };
 
 export default ExportToICS;

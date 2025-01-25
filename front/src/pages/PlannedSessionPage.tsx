@@ -12,12 +12,27 @@ import {
 
 const PlannedSessionsPage = () => {
   const [sessions, setSessions] = useState<PlannedClimbingSession[]>([]);
+  const [filteredSessions, setFilteredSessions] = useState<
+    PlannedClimbingSession[]
+  >([]);
+
+  // filteredSessions est un tableau qui contient les sessions future,
+  // et les sessions passées si isCompleted est à False
+  useEffect(() => {
+    const now = new Date();
+
+    const filtered = sessions.filter((session) => {
+      const startTime = new Date(session.startTime);
+      return startTime > now || !session.isCompleted;
+    });
+
+    setFilteredSessions(filtered);
+  }, [sessions]); // Exécuter l'effet uniquement lorsque `sessions` change
 
   // Récupération des sessions depuis l'API
   useEffect(() => {
     getPlannedSessions().then((data) => {
       setSessions(data);
-      console.log("Sessions récupérées:", data);
     });
   }, []);
 
@@ -27,7 +42,6 @@ const PlannedSessionsPage = () => {
       const payload: PlannedClimbingSession = {
         startTime: data.startTime,
         location: data.location,
-        endTime: data.endTime ? data.endTime : null, // Conversion automatique
         isCompleted: false, // Assuming a default value for isCompleted
       };
       const response = await createPlannedSession(payload);
@@ -44,7 +58,7 @@ const PlannedSessionsPage = () => {
 
   return (
     <div className="hero-banner">
-      <div className="planned-sessions-grid max-height-80vh">
+      <div className="planned-sessions-grid">
         {/* Formulaire pour ajouter une nouvelle session */}
         <div className="plannning-session-form grid-card global-appearance d-flex flex-column">
           <h2 style={{ margin: 0, alignSelf: "center" }}>
@@ -69,7 +83,11 @@ const PlannedSessionsPage = () => {
         {/* Liste des sessions existantes */}
         <div className="planned-sessions-list grid-card global-appearance">
           <h2>📋 Sessions planifiées</h2>
-          <PlannedSessionList PlannedSessions={sessions} />
+          <PlannedSessionList
+            PlannedSessions={filteredSessions}
+            setPlannedSessions={setSessions}
+            DisplayOld={true}
+          />
         </div>
       </div>
     </div>

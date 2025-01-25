@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
 import SessionHistory from "../components/SessionHistory";
 import { useAuth } from "../context/AuthContext";
-// import axios from "axios";
+import { useEffect, useState } from "react";
+import { getPlannedSessions } from "../services/apiServices";
+import { PlannedClimbingSession } from "../models/PlannedClimbingSession";
+import PlannedSessionList from "../components/PlannedSessionList";
 
 const HomePage: React.FC = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
+
+  const [sessions, setSessions] = useState<PlannedClimbingSession[]>([]);
+
+  // Récupération des sessions depuis l'API
+  useEffect(() => {
+    getPlannedSessions().then((data) => {
+      setSessions(data);
+    });
+    console.log("sessions", sessions.length);
+  }, []);
 
   return (
     <div className="hero-banner d-flex justify-content-center align-items-center">
@@ -18,9 +31,22 @@ const HomePage: React.FC = () => {
           <div className="Dashboard-grid">
             <div className="home-next-session grid-card global-appearance d-flex flex-column justify-content-between">
               <div>
-                <h3>Prochaines sessions</h3>
                 {isAuthenticated ? (
-                  <p>Vous n'avez pas de session de prévue pour le moment.</p>
+                  sessions.length > 0 ? (
+                    <PlannedSessionList
+                      PlannedSessions={sessions}
+                      setPlannedSessions={setSessions}
+                      SessionsToDisplay={2}
+                      CompactDisplay={true}
+                    />
+                  ) : (
+                    <>
+                      <h3>Prochaines sessions</h3>
+                      <p>
+                        Vous n'avez pas de session de prévue pour le moment.
+                      </p>
+                    </>
+                  )
                 ) : (
                   <p>Connectez-vous pour pouvoir programmer une session.</p>
                 )}

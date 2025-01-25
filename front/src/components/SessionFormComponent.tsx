@@ -42,6 +42,22 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   const { user } = useAuth();
 
   const previousRoute = location.state?.from || "/"; // Par défaut, retourne à "/"
+  // Récupérer le startTime passé dans les query params
+  const searchParams = new URLSearchParams(location.search);
+  const startTime = searchParams.get("startTime");
+
+  // Convertir la date ISO en format compatible avec datetime-local
+  const formatDateForInput = (isoDate: string | null) => {
+    if (!isoDate) return "";
+    const date = new Date(isoDate);
+    const localDate = date.toISOString().slice(0, 16); // Retire le "Z"
+    return localDate;
+  };
+
+  if (startTime) {
+    const initialStartTime = formatDateForInput(startTime);
+    setValue("dateTimeStart", initialStartTime);
+  }
 
   const [isSaved, setIsSaved] = React.useState(false);
 
@@ -91,7 +107,9 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
     // Pré-remplir le formulaire avec les données de la session
     if (props.session) {
       reset({
-        date: props.session.date || new Date().toISOString().split("T")[0],
+        dateTimeStart:
+          formatDateForInput(props.session.dateTimeStart) ||
+          new Date().toISOString().slice(0, 16),
         location: props.session.location.id,
         climbType: props.session.climbType || "IN",
         height: props.session.height || 5,

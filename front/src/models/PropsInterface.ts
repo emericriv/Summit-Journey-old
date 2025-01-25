@@ -68,7 +68,7 @@ export interface GymOption {
 }
 
 export interface FormSessionProps {
-  date: string;
+  dateTimeStart: string;
   location: number;
   climbType: string;
   height: number;
@@ -83,6 +83,7 @@ export interface SessionHistoryProps {
 
 export interface SessionFormComponentProps {
   session?: ClimbingSession;
+  date_time ?: string;
 }
 
 export interface HighestDifficultiesCompletedProps {

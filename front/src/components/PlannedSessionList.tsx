@@ -1,12 +1,24 @@
 // PlannedSessionList.tsx
+import { Link } from "react-router-dom";
 import { PlannedClimbingSession } from "../models/PlannedClimbingSession";
+import { deletePlannedSession } from "../services/apiServices";
 
 interface PlannedSessionListProps {
   PlannedSessions: PlannedClimbingSession[];
+  setPlannedSessions: React.Dispatch<
+    React.SetStateAction<PlannedClimbingSession[]>
+  >;
+  DisplayOld?: boolean;
+  SessionsToDisplay?: number;
+  CompactDisplay?: boolean;
 }
 
 const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
   PlannedSessions,
+  setPlannedSessions,
+  DisplayOld = false,
+  SessionsToDisplay,
+  CompactDisplay = false,
 }) => {
   // Trier les sessions par ordre chronologique
   const sortedSessions = [...PlannedSessions].sort(
@@ -25,7 +37,7 @@ const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
   const formatDate = (dateString: string) => {
     try {
       return new Date(dateString).toLocaleString("fr-FR", {
-        dateStyle: "long",
+        dateStyle: CompactDisplay ? "short" : "long",
         timeStyle: "short",
         timeZone: "UTC", // Force l'affichage en UTC
       });
@@ -38,16 +50,35 @@ const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
   const renderSession = (
     session: PlannedClimbingSession,
     id: number,
+    past: boolean = false,
     ref: React.RefObject<HTMLLIElement> | null = null
   ) => (
     <li key={id} ref={ref as any} className="event-item">
-      <p>
-        {formatDate(session.startTime)} -{" "}
-        {session.endTime ? formatDate(session.endTime) : "Non spécifiée"}
-      </p>
+      <button
+        onClick={() => {
+          if (session.id !== undefined) {
+            deletePlannedSession(session.id);
+            setPlannedSessions((prevSessions) =>
+              prevSessions.filter((s) => s.id !== session.id)
+            );
+          }
+        }}
+        className="delete-button"
+      >
+        &times;
+      </button>
+      <p>{formatDate(session.startTime)}</p>
       <h6>{session.location.gymName}</h6>
       {session.participants && session.participants.length > 0 && (
         <p>Participants : {session.participants}</p>
+      )}
+      {past && (
+        <Link
+          to={`/session?startTime=${encodeURIComponent(session.startTime)}`}
+          className="link-button"
+        >
+          La créer
+        </Link>
       )}
     </li>
   );
@@ -58,18 +89,19 @@ const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
         <>
           <h4>Sessions à venir</h4>
           <ul style={{ padding: 0, listStyle: "none" }}>
-            {upcomingSessions.map((session, index) =>
-              renderSession(session, index)
-            )}
+            {upcomingSessions
+              .slice(0, SessionsToDisplay || upcomingSessions.length)
+              .map((session, index) => renderSession(session, index))}
           </ul>
         </>
       )}
-      {pastSessions.length > 0 && (
+      {/* On n'affiche pas les sessions passées si le nombre de sessions à afficher est limité */}
+      {!SessionsToDisplay && DisplayOld && pastSessions.length > 0 && (
         <>
-          <h4>Sessions passées</h4>
+          <h4>Sessions passées non renseignées</h4>
           <ul style={{ padding: 0, listStyle: "none" }}>
             {pastSessions.map((session, index) =>
-              renderSession(session, index)
+              renderSession(session, index, true)
             )}
           </ul>
         </>

@@ -10,7 +10,6 @@ class PlannedClimbingSessionAdmin(admin.ModelAdmin):
         "user",
         "location",
         "start_time",
-        "end_time",
         "participants",
         "is_completed",
     ]

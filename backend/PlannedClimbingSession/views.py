@@ -1,4 +1,6 @@
 # views.py
+from django.db.models import Q  # Import pour les requêtes complexes
+from django.utils.timezone import now
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
@@ -12,4 +14,8 @@ class PlannedClimbingSessionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        user = self.request.user
+        current_time = now()
+
+        # Filtrer par utilisateur et appliquer les conditions supplémentaires
+        return self.queryset.filter(user=user)

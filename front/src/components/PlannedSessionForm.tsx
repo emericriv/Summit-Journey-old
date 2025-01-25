@@ -37,18 +37,6 @@ const PlannedSessionForm = ({
             />
           </div>
 
-          <div className="end-time-input">
-            <label htmlFor="end-time" className="form-label">
-              Heure de fin
-            </label>
-            <input
-              id="end-time"
-              type="datetime-local"
-              className="form-control"
-              {...register("endTime")}
-            />
-          </div>
-
           <div className="participants-input">
             <label htmlFor="participants" className="form-label">
               Autres participants

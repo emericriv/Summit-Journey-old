@@ -2,6 +2,7 @@
 from ClimbingGymLocations.models import ClimbingGymLocations
 from django.conf import settings
 from django.db import models
+from django.db.models import F, Q, UniqueConstraint
 
 
 class PlannedClimbingSession(models.Model):
@@ -14,7 +15,6 @@ class PlannedClimbingSession(models.Model):
         ClimbingGymLocations, on_delete=models.SET_NULL, null=True
     )
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField(blank=True, null=True)
     participants = models.TextField(blank=True, help_text="Separate names with commas.")
     is_completed = models.BooleanField(default=False)
 
