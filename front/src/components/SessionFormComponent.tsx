@@ -50,7 +50,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
   const formatDateForInput = (isoDate: string | null) => {
     if (!isoDate) return "";
     const date = new Date(isoDate);
-    const localDate = date.toISOString().slice(0, 16); // Retire le "Z"
+    const localDate = date.toISOString().slice(0, 16);
     return localDate;
   };
 
@@ -109,7 +109,10 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
       reset({
         dateTimeStart:
           formatDateForInput(props.session.dateTimeStart) ||
-          new Date().toISOString().slice(0, 16),
+          new Date()
+            .toLocaleString(undefined, { timeZoneName: "short" })
+            .replace(" ", "T")
+            .slice(0, 16),
         location: props.session.location.id,
         climbType: props.session.climbType || "IN",
         height: props.session.height || 5,

@@ -111,6 +111,25 @@ class ClimbingSession(models.Model):
                 is_completed=True,
             )
 
+    def delete(self, *args, **kwargs):
+        # Récupérer l'utilisateur et la date de la session
+        user = self.climber
+        session_date = self.date_time_start.date()
+
+        # Vérifier s'il existe une PlannedClimbingSession pour ce jour-là et qu'elle est complétée
+        planned_session = PlannedClimbingSession.objects.filter(
+            user=user,
+            start_time__date=session_date,
+            is_completed=True,
+        ).first()
+
+        if planned_session:
+            # Supprimer la session planifiée
+            planned_session.delete()
+
+        # Appeler la méthode delete existante
+        super().delete(*args, **kwargs)
+
     class Meta:
         verbose_name = "Session"
         ordering = ["-date_time_start"]

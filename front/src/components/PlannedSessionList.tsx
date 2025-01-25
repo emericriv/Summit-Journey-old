@@ -35,8 +35,9 @@ const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
   );
 
   const formatDate = (dateString: string) => {
+    console.log("dateString", dateString);
     try {
-      return new Date(dateString).toLocaleString("fr-FR", {
+      return new Date(dateString).toLocaleString(undefined, {
         dateStyle: CompactDisplay ? "short" : "long",
         timeStyle: "short",
         timeZone: "UTC", // Force l'affichage en UTC
@@ -53,7 +54,26 @@ const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
     past: boolean = false,
     ref: React.RefObject<HTMLLIElement> | null = null
   ) => (
-    <li key={id} ref={ref as any} className="event-item">
+    <li
+      key={id}
+      ref={ref as any}
+      className="event-item d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <p>{formatDate(session.startTime)}</p>
+        <h6>{session.location.gymName}</h6>
+        {session.participants && session.participants.length > 0 && (
+          <p>Participants : {session.participants}</p>
+        )}
+      </div>
+      {past && (
+        <Link
+          to={`/session?startTime=${encodeURIComponent(session.startTime)}`}
+          className="btn custom-btn primary-transparent-bg"
+        >
+          Ajouter
+        </Link>
+      )}
       <button
         onClick={() => {
           if (session.id !== undefined) {
@@ -63,23 +83,10 @@ const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
             );
           }
         }}
-        className="delete-button"
+        className="delete-button btn-icon custom-btn-danger"
       >
-        &times;
+        <i className="bi bi-x-lg"></i>
       </button>
-      <p>{formatDate(session.startTime)}</p>
-      <h6>{session.location.gymName}</h6>
-      {session.participants && session.participants.length > 0 && (
-        <p>Participants : {session.participants}</p>
-      )}
-      {past && (
-        <Link
-          to={`/session?startTime=${encodeURIComponent(session.startTime)}`}
-          className="link-button"
-        >
-          La créer
-        </Link>
-      )}
     </li>
   );
 
@@ -98,7 +105,7 @@ const PlannedSessionList: React.FC<PlannedSessionListProps> = ({
       {/* On n'affiche pas les sessions passées si le nombre de sessions à afficher est limité */}
       {!SessionsToDisplay && DisplayOld && pastSessions.length > 0 && (
         <>
-          <h4>Sessions passées non renseignées</h4>
+          <h4>Sessions passées non complétées</h4>
           <ul style={{ padding: 0, listStyle: "none" }}>
             {pastSessions.map((session, index) =>
               renderSession(session, index, true)

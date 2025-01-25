@@ -5,7 +5,10 @@ import { FormSessionProps,  } from "../models/PropsInterface";
 
 export const useClimbingSessionForm = () => {
   const defaultValues = {
-    dateTimeStart: new Date().toISOString().split("T")[0],
+    dateTimeStart: new Date()
+      .toLocaleString("sv-SE", { timeZoneName: "short" })
+      .replace(" ", "T")
+      .slice(0, 16),
     location: undefined,
     climbType: "IN",
     height: 5,

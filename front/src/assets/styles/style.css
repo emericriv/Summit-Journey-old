@@ -589,16 +589,6 @@ p {
   position: relative;
 }
 
-.delete-button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-}
-
 .event-item p {
   margin: 0;
 }

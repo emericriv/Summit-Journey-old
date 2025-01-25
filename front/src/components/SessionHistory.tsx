@@ -98,13 +98,14 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                     <div className="session-bubble">
                       <div className="bubble-header">
                         {new Date(session.dateTimeStart).toLocaleDateString(
-                          "fr-FR",
+                          undefined,
                           {
                             day: "numeric",
                             month: "long",
                             year: "numeric",
                             hour: "numeric",
                             minute: "numeric",
+                            timeZone: "UTC",
                           }
                         )}
                       </div>
@@ -154,13 +155,14 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
                   <React.Fragment key={index}>
                     <div className="grid-cell">
                       {new Date(session.dateTimeStart).toLocaleDateString(
-                        "fr-FR",
+                        undefined,
                         {
                           day: "numeric",
                           month: "long",
                           year: "numeric",
                           hour: "numeric",
                           minute: "numeric",
+                          timeZone: "UTC",
                         }
                       )}
                     </div>

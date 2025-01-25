@@ -7,9 +7,11 @@ const ExportToICS = ({ session }: { session: PlannedClimbingSession }) => {
     const start = new Date(session.startTime)
       .toISOString()
       .replace(/-|:|\.\d+/g, "");
-    const end = session.endTime
-      ? new Date(session.endTime).toISOString().replace(/-|:|\.\d+/g, "")
-      : start;
+    const end = new Date(
+      new Date(session.startTime).getTime() + 2 * 60 * 60 * 1000
+    )
+      .toISOString()
+      .replace(/-|:|\.\d+/g, "");
     const content = `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
