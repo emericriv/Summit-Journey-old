@@ -1,7 +1,18 @@
-import { AdvancedMarkerProps } from '@vis.gl/react-google-maps';
-import { ClimbingGymLocation } from './ClimbingGymLocation';
-import { ClimbingSession, Difficulty, DifficultyCompletion, DifficultySet } from './ClimbingSession';
-import { Control, FieldArrayWithId, UseFormRegister, UseFormReset, UseFormWatch } from "react-hook-form";
+import { AdvancedMarkerProps } from "@vis.gl/react-google-maps";
+import { ClimbingGymLocation } from "./ClimbingGymLocation";
+import {
+  ClimbingSession,
+  Difficulty,
+  DifficultyCompletion,
+  DifficultySet,
+} from "./ClimbingSession";
+import {
+  Control,
+  FieldArrayWithId,
+  UseFormRegister,
+  UseFormReset,
+  UseFormWatch,
+} from "react-hook-form";
 
 export interface DifficultyInputProps {
   difficulty: Difficulty;
@@ -23,7 +34,7 @@ export interface MarkerWithInfoWindowProps {
   gym: ClimbingGymLocation; // Données du gymnase
   openInfoWindowId: number | null; // ID de l'info-bulle ouverte ou null si aucune n'est ouverte
   setOpenInfoWindowId: (id: number | null) => void; // Fonction pour ouvrir/fermer l'info-bulle
-  }
+}
 
 // Used for component in the new session form
 export interface ClimbTypeSelectProps {
@@ -35,7 +46,8 @@ export interface CommentInputProps {
 }
 
 export interface DateInputProps {
-  register: UseFormRegister<FormSessionProps>;
+  control: Control<any>;
+  initialDate?: string;
 }
 
 export interface DifficultyListProps {
@@ -45,9 +57,7 @@ export interface DifficultyListProps {
 }
 
 export interface DifficultySetSelectProps {
-  updateSelectedSet: (
-    set: DifficultySet
-  ) => void;
+  updateSelectedSet: (set: DifficultySet) => void;
   reset: UseFormReset<FormSessionProps>;
   register: UseFormRegister<FormSessionProps>;
   initSetId?: number;
@@ -78,12 +88,12 @@ export interface FormSessionProps {
 }
 
 export interface SessionHistoryProps {
-  numberOfSessions: number|"all";
+  numberOfSessions: number | "all";
 }
 
 export interface SessionFormComponentProps {
   session?: ClimbingSession;
-  date_time ?: string;
+  date_time?: string;
 }
 
 export interface HighestDifficultiesCompletedProps {
@@ -97,4 +107,4 @@ export interface CityAutocompleteProps {
   onParentChange?: (selectedOption: { value: any }) => void;
   extended?: boolean;
   [key: string]: any;
-};
+}

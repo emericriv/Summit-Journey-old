@@ -54,9 +54,9 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
     return localDate;
   };
 
+  let initialStartTime = "";
   if (startTime) {
-    const initialStartTime = formatDateForInput(startTime);
-    setValue("dateTimeStart", initialStartTime);
+    initialStartTime = formatDateForInput(startTime);
   }
 
   const [isSaved, setIsSaved] = React.useState(false);
@@ -133,7 +133,7 @@ const SessionFormComponent: React.FC<SessionFormComponentProps> = (
       >
         {/* Add props.session ands reset form on submit */}
         <form onSubmit={handleSubmit(onSubmit)} className="session-form-grid">
-          <DateInput register={register} />
+          <DateInput control={control} initialDate={initialStartTime} />
           <div className="gym-location-select">
             <GymLocationSelectForm
               control={control}

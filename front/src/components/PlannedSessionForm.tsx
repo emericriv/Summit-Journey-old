@@ -1,8 +1,17 @@
 // PlannedSessionForm.tsx
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { PlannedClimbingSession } from "../models/PlannedClimbingSession";
 import GymLocationSelectForm from "./FormComponents/GymLocationSelectForm";
 import { useAuth } from "../context/AuthContext";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { fr } from "date-fns/locale/fr";
+registerLocale("fr", fr);
+import { useState } from "react";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+// CSS Modules, react-datepicker-cssmodules.css
+// import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 const PlannedSessionForm = ({
   onSubmit,
@@ -11,6 +20,7 @@ const PlannedSessionForm = ({
 }) => {
   const { register, handleSubmit, control } = useForm<PlannedClimbingSession>();
   const { user } = useAuth();
+  const [date, setDate] = useState<Date | null>(new Date());
 
   return (
     <>
@@ -28,12 +38,28 @@ const PlannedSessionForm = ({
             <label htmlFor="start-time" className="form-label">
               Heure de début
             </label>
-            <input
-              id="start-time"
-              type="datetime-local"
-              {...register("startTime")}
-              className="form-control"
-              required
+            <Controller
+              name="startTime"
+              control={control}
+              defaultValue={date?.toISOString() || ""}
+              render={({ field }) => (
+                <DatePicker
+                  locale="fr"
+                  id="start-time"
+                  selected={date}
+                  dateFormat="dd/MM/yyyy, HH:mm"
+                  showWeekNumbers
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                  className="form-control"
+                  timeCaption="Heure"
+                  onChange={(selectedDate) => {
+                    setDate(selectedDate);
+                    field.onChange(selectedDate?.toISOString() || ""); // Met à jour la valeur dans react-hook-form
+                  }}
+                />
+              )}
             />
           </div>
 

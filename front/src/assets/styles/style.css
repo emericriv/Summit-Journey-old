@@ -497,7 +497,7 @@ p {
 
 /* Planned sessions calendar */
 /* Conteneur principal du calendrier */
-.calendar-view .react-calendar {
+.react-calendar {
   background-color: #474747;
   /* Fond sombre */
   color: white;
@@ -509,13 +509,13 @@ p {
 }
 
 /* Navigation (mois/années) */
-.calendar-view .react-calendar__navigation {
+.react-calendar__navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.calendar-view .react-calendar__navigation button {
+.react-calendar__navigation button {
   background-color: transparent;
   color: white;
   border: none;
@@ -524,24 +524,24 @@ p {
   cursor: pointer;
 }
 
-.calendar-view .react-calendar__navigation button:hover {
+.react-calendar__navigation button:hover {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
 }
 
 /* Jours de la semaine */
-.calendar-view .react-calendar__month-view__weekdays {
+.react-calendar__month-view__weekdays {
   text-transform: uppercase;
   font-size: 0.9rem;
   color: #bbb;
 }
 
-.calendar-view .react-calendar__month-view__weekdays__weekday {
+.react-calendar__month-view__weekdays__weekday {
   padding: 10px 0;
   text-align: center;
 }
 
-.calendar-view .react-calendar__month-view__days {
+.react-calendar__month-view__days {
   display: grid !important;
   grid-template-columns: repeat(7, 1fr) !important;
   gap: 0.5rem !important;
@@ -549,7 +549,7 @@ p {
 }
 
 /* Cases du calendrier */
-.calendar-view .react-calendar__tile {
+.react-calendar__tile {
   font-size: 0.8rem;
   background: none;
   aspect-ratio: 1 / 1;
@@ -559,21 +559,21 @@ p {
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.calendar-view .react-tile-with-session{
+.react-tile-with-session{
   color: #ffa07a;
 }
 
-.calendar-view .react-calendar__tile:hover {
+.react-calendar__tile:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Case sélectionnée */
-.calendar-view .react-calendar__tile--active {
+.react-calendar__tile--active {
   border: 1px solid rgba(255, 99, 71, 0.7);
 }
 
 /* Cas particulier : aujourd'hui */
-.calendar-view .react-calendar__tile--now {
+.react-calendar__tile--now {
   background-color: rgba(255, 255, 255, 0.1);
   /* Orange clair */
   font-weight: bold;
@@ -625,4 +625,9 @@ p {
 
 .list-container::-webkit-scrollbar-button {
   display: none;
+}
+
+.react-datepicker-wrapper{
+  display: block;
+  width: 100%;
 }
