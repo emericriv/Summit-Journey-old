@@ -20,3 +20,14 @@ class PlannedClimbingSession(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.location} on {self.start_time}"
+
+    def save(self, *args, **kwargs):
+        # Disallow overlapping sessions on the same date
+        if PlannedClimbingSession.objects.filter(
+            user=self.user,
+            start_time__date=self.start_time.date(),
+        ).exists():
+            raise ValueError(
+                "A planned session already exists for this user on this date and location."
+            )
+        super().save(*args, **kwargs)

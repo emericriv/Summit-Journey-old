@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SessionHistory from "../components/SessionHistory";
 import PersonnalInformations from "../components/PersonnalInformations";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import MaterialInfoComponent from "../components/MaterialInfoComponent";
+import PlannedSessionList from "../components/PlannedSessionList";
+import { getPlannedSessions } from "../services/apiServices";
+import { PlannedClimbingSession } from "../models/PlannedClimbingSession";
 
 const ProfilePage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -15,6 +18,16 @@ const ProfilePage: React.FC = () => {
   if (!user) {
     return <p>Chargement...</p>;
   }
+
+  const [sessions, setSessions] = useState<PlannedClimbingSession[]>([]);
+
+  // Récupération des sessions depuis l'API
+  useEffect(() => {
+    getPlannedSessions().then((data) => {
+      setSessions(data);
+    });
+    console.log("sessions", sessions.length);
+  }, []);
 
   return (
     <div className="hero-banner profile-grid">
@@ -29,8 +42,13 @@ const ProfilePage: React.FC = () => {
         <MaterialInfoComponent />
       </div>
       <div className="grid-card global-appearance">
-        <h3>Potentiel nouvel élément</h3>
-        <p>A venir</p>
+        <h3>Sessions planifiées</h3>
+        <PlannedSessionList
+          PlannedSessions={sessions}
+          setPlannedSessions={setSessions}
+          SessionsToDisplay={2}
+          CompactDisplay={true}
+        />
       </div>
     </div>
   );

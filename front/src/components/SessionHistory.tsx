@@ -217,7 +217,15 @@ const SessionHistory: React.FC<SessionHistoryProps> = ({
             )}
           </div>
         ) : (
-          <div className="alert alert-info">Aucune session enregistrée</div>
+          <>
+            <div className="alert alert-info">Aucune session enregistrée</div>
+            <Link
+              to="/session"
+              className="custom-btn btn primary-transparent-bg mt-2 align-self-start"
+            >
+              Enregistrer une session
+            </Link>
+          </>
         )
       ) : (
         <div className="placeholder" style={{ minHeight: 163 }}>

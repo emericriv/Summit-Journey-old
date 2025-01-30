@@ -9,7 +9,11 @@ const LoginPage: React.FC = () => {
   return isAuthenticated ? (
     <Navigate to="/profile" />
   ) : (
-    <div className="hero-banner d-flex align-items-center justify-content-evenly">
+    <div className="hero-banner d-flex flex-column align-items-center justify-content-evenly">
+      <div className="row global-appearance welcome">
+        <h1>Bienvenue sur Summit Journey</h1>
+        <p>Votre compagnon pour suivre vos aventures de grimpe !</p>
+      </div>
       <LoginComponent />
     </div>
   );

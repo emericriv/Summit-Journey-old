@@ -53,6 +53,7 @@ const PlannedSessionForm = ({
                   timeFormat="HH:mm"
                   timeIntervals={15}
                   className="form-control"
+                  minDate={new Date()}
                   timeCaption="Heure"
                   onChange={(selectedDate) => {
                     setDate(selectedDate);

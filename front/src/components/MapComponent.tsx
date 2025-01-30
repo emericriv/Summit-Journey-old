@@ -68,7 +68,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ gyms }) => {
     <div style={{ width: "100%", height: "100%" }}>
       <APIProvider apiKey={API_KEY} libraries={["marker"]}>
         <Map
-          mapId={"bf51a910020fa25a"}
+          mapId={"e137c415772357d2"}
           defaultZoom={5}
           defaultCenter={{ lat: 46.6034, lng: 1.8883 }}
           gestureHandling={"greedy"}

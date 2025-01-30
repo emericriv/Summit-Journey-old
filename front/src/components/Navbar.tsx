@@ -70,18 +70,31 @@ const Navbar: React.FC = () => {
               clicked ? "active" : ""
             }`}
           >
-            <NavButton to="/" isActive={location.pathname === "/"}>
-              Accueil
-            </NavButton>
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <>
+                <NavButton
+                  to="/profile"
+                  isActive={location.pathname === "/profile"}
+                >
+                  Dashboard
+                </NavButton>
                 <NavButton
                   to="/session"
                   isActive={location.pathname === "/session"}
                 >
-                  Nouvelle session
+                  Nouvelle Session
+                </NavButton>
+                <NavButton
+                  to="/planned-sessions"
+                  isActive={location.pathname === "/planned-sessions"}
+                >
+                  Planifier
                 </NavButton>
               </>
+            ) : (
+              <NavButton to="/" isActive={location.pathname === "/"}>
+                Accueil
+              </NavButton>
             )}
             <NavButton
               to="/locations"
@@ -89,22 +102,12 @@ const Navbar: React.FC = () => {
             >
               Où grimper ?
             </NavButton>
-            {isAuthenticated ? (
+            {isAuthenticated && (
               <>
-                <NavButton
-                  to="/profile"
-                  isActive={location.pathname === "/profile"}
-                >
-                  Profil
-                </NavButton>
                 <li className="nav-button mx-2" onClick={logout}>
                   <a href="#">Déconnexion</a>
                 </li>
               </>
-            ) : (
-              <NavButton to="/login" isActive={location.pathname === "/login"}>
-                Login
-              </NavButton>
             )}
           </ul>
           <div className="mobile" onClick={handleClick}>

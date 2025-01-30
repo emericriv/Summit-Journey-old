@@ -4,7 +4,6 @@ import { PlannedClimbingSession } from "../models/PlannedClimbingSession";
 import PlannedSessionForm from "../components/PlannedSessionForm";
 import PlannedSessionList from "../components/PlannedSessionList";
 import CalendarView from "../components/CalendarView";
-import ExportToICS from "../components/ExportToICS";
 import {
   createPlannedSession,
   getPlannedSessions,
@@ -12,22 +11,6 @@ import {
 
 const PlannedSessionsPage = () => {
   const [sessions, setSessions] = useState<PlannedClimbingSession[]>([]);
-  const [filteredSessions, setFilteredSessions] = useState<
-    PlannedClimbingSession[]
-  >([]);
-
-  // filteredSessions est un tableau qui contient les sessions future,
-  // et les sessions passées si isCompleted est à False
-  useEffect(() => {
-    const now = new Date();
-
-    const filtered = sessions.filter((session) => {
-      const startTime = new Date(session.startTime);
-      return startTime > now || !session.isCompleted;
-    });
-
-    setFilteredSessions(filtered);
-  }, [sessions]); // Exécuter l'effet uniquement lorsque `sessions` change
 
   // Récupération des sessions depuis l'API
   useEffect(() => {
@@ -71,20 +54,13 @@ const PlannedSessionsPage = () => {
         <div className="calendar-view grid-card global-appearance">
           <h2>📅 Calendrier des sessions</h2>
           <CalendarView sessions={sessions} />
-
-          {/* Exportation vers le calendrier externe */}
-          {sessions.length > 0 && (
-            <div style={{ marginTop: "1rem" }}>
-              <ExportToICS session={sessions[0]} />
-            </div>
-          )}
         </div>
 
         {/* Liste des sessions existantes */}
         <div className="planned-sessions-list grid-card global-appearance">
           <h2>📋 Sessions planifiées</h2>
           <PlannedSessionList
-            PlannedSessions={filteredSessions}
+            PlannedSessions={sessions}
             setPlannedSessions={setSessions}
             DisplayOld={true}
           />

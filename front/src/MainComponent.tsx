@@ -19,7 +19,7 @@ const MainComponent: React.FC = () => {
     <AuthProvider>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route
           path="/session"
           element={<ProtectedRoute element={<NewSessionPage />} />}

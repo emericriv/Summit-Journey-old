@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DateInputProps } from "../../models/PropsInterface";
 import { Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
+import { setHours, setMinutes } from "date-fns";
 const DateInput: React.FC<DateInputProps> = ({ control, initialDate }) => {
   const [date, setDate] = useState<Date | null>(new Date());
 
@@ -36,6 +37,7 @@ const DateInput: React.FC<DateInputProps> = ({ control, initialDate }) => {
             timeFormat="HH:mm"
             timeIntervals={15}
             className="form-control"
+            maxDate={new Date()}
             timeCaption="Heure"
             selected={date}
             onChange={(selectedDate) => {

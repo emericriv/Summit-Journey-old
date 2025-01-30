@@ -597,7 +597,7 @@ p {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-height: calc(80vh - 2*2.25rem);
+  height: calc(80vh - 2*2.25rem);
 }
 
 .list-container {
@@ -630,4 +630,8 @@ p {
 .react-datepicker-wrapper{
   display: block;
   width: 100%;
+}
+
+.delete-button {
+  margin-left: 1rem;
 }

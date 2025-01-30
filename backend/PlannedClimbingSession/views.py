@@ -15,7 +15,6 @@ class PlannedClimbingSessionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        current_time = now()
 
         # Filtrer par utilisateur et appliquer les conditions supplémentaires
         return self.queryset.filter(user=user)
